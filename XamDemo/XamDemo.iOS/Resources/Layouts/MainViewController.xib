@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+            <connections>
+                <outlet property="ContentLayout" destination="3BA-Kn-UTG" id="kN2-Kn-3bO"/>
+                <outlet property="LoadLayout" destination="XUU-HD-X45" id="eoK-Fs-mIw"/>
+                <outlet property="LoadProgress" destination="FDF-Ri-ba3" id="7xU-c8-gwx"/>
+                <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3BA-Kn-UTG" userLabel="ContentLayout">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XUU-HD-X45" userLabel="LoadLayout">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="FDF-Ri-ba3" userLabel="LoadProgress">
+                            <rect key="frame" x="177" y="324" width="20" height="20"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.19215686274509802" green="0.19215686274509802" blue="0.19215686274509802" alpha="0.80193965517241383" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="FDF-Ri-ba3" firstAttribute="centerY" secondItem="XUU-HD-X45" secondAttribute="centerY" id="aEb-Fa-SSg"/>
+                        <constraint firstItem="FDF-Ri-ba3" firstAttribute="centerX" secondItem="XUU-HD-X45" secondAttribute="centerX" id="vZr-rB-UaX"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="3BA-Kn-UTG" secondAttribute="bottom" id="00A-V4-VYc"/>
+                <constraint firstItem="3BA-Kn-UTG" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="0LC-dn-s8F"/>
+                <constraint firstAttribute="trailing" secondItem="3BA-Kn-UTG" secondAttribute="trailing" id="Cmd-oC-ero"/>
+                <constraint firstItem="3BA-Kn-UTG" firstAttribute="top" secondItem="2" secondAttribute="top" id="DHi-zb-1OK"/>
+                <constraint firstItem="XUU-HD-X45" firstAttribute="top" secondItem="2" secondAttribute="top" id="VZG-mU-I2Q"/>
+                <constraint firstItem="XUU-HD-X45" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="hmE-ZP-ptA"/>
+                <constraint firstAttribute="bottom" secondItem="XUU-HD-X45" secondAttribute="bottom" id="jeN-ED-R9R"/>
+                <constraint firstAttribute="trailing" secondItem="XUU-HD-X45" secondAttribute="trailing" id="qoE-Pd-JJi"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="567.5" y="406.5"/>
+        </view>
+    </objects>
+</document>
