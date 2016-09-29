@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Snow">
+    <ImageView
+        android:src="@drawable/image_cat"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/CatImage"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="-185dp" />
+    <TextView
+        android:text="Well done! You will receive a confirmation email."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/WelcomeLabel"
+        android:textColor="@color/PictonBlue"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif-light"
+        android:layout_toRightOf="@+id/CatImage"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp" />
+    <Button
+        android:text="Back to login"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:id="@+id/GoToLoginButton"
+        android:background="@drawable/image_button2"
+        android:textColor="@color/White"
+        android:textSize="20dp"
+        android:fontFamily="sans-serif-light"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp" />
+</RelativeLayout>

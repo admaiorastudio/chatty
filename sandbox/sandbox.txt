@@ -1,6 +1,0 @@
-// To use sand box services
-
-1.Go to https://getsandbox.com
-2.register an account
-3.copy the content of the main.js in your new sandbox
-4.enjoy services for chatty!

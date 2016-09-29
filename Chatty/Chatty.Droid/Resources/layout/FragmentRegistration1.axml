@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/OgreOdor">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/InputLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="200dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/PasswordLabel"
+            android:textColor="@color/White"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18dp"
+            android:text="2. Create a little secret word" />
+        <ImageView
+            android:src="@drawable/icon_cat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/CatImage"
+            android:background="@color/White"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:padding="4dp"
+            android:layout_below="@+id/PasswordLabel"
+            android:layout_marginTop="4dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/PasswordText"
+            android:background="#FFFFFF"
+            android:textColor="@color/Black"
+            android:textColorHint="#bababa"
+            android:hint="Password min 8 char"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-light"
+            android:textSize="20dp"
+            android:layout_toRightOf="@+id/CatImage"
+            android:layout_below="@+id/PasswordLabel"
+            android:layout_marginTop="4dp"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:saveEnabled="false" />
+    </RelativeLayout>
+</RelativeLayout>

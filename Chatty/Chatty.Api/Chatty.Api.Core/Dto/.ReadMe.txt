@@ -1,0 +1,14 @@
+﻿This is where you would put your DTO classes to be used 
+with RestSharp or any REST client. 
+
+DTO classes usually are POCO classes, which has no methods.
+
+You cand define all DTO classes inside the DTO.cs file.
+
+A simple example is shown here:
+
+class MyDTO
+{
+	public string StringValue;
+	public int NumericValue;
+}

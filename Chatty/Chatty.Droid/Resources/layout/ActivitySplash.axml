@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Jet">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:src="@drawable/image_cat"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/LogoImage"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:text="Yes, I'am a chat"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/LogoImage"
+            android:id="@+id/TitleLabel"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/White"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginTop="4dp" />
+    </RelativeLayout>
+    <TextView
+        android:text="v1.0.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/VersionLabel"
+        android:textSize="12dp"
+        android:textColor="@color/White"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="sans-serif-light" />
+</RelativeLayout>

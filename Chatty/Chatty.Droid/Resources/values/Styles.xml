@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+  <!-- Application theme -->
+  <style name="AppTheme" parent="AppTheme.Base">
+  </style>
+
+  <!-- Application splash theme -->
+  <style name="AppTheme.Toolbar" parent="AppTheme.Base">
+    <item name="android:textColorPrimary">@color/White</item>
+    <item name="android:textColorSecondary">@color/White</item>
+    <item name="actionMenuTextColor">@color/White</item>
+    <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
+    <!-- colorPrimary is used for the default action bar background -->
+    <item name="colorPrimary">@color/PictonBlue</item>
+    <!-- colorPrimaryDark is used for the status bar -->
+    <item name="colorPrimaryDark">@color/PictonBlue</item>
+  </style>
+
+  <!-- Application splash theme -->
+  <style name="AppTheme.Splash" parent="AppTheme.Base">
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowBackground">@color/Jet</item>
+    <!-- colorPrimaryDark is used for the status bar -->
+    <item name="android:colorPrimaryDark">@color/Jet</item>
+  </style>
+
+  <!-- Base application theme -->
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
+
+    <!-- Customize your theme here. -->
+
+    <!--We will be using the toolbar so no need to show ActionBar-->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+
+    <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
+    <!-- colorPrimary is used for the default action bar background -->
+    <item name="colorPrimary">@color/PictonBlue</item>
+    <!-- colorPrimaryDark is used for the status bar -->
+    <item name="colorPrimaryDark">@color/PictonBlue</item>
+
+    <!-- Disable text capitalization -->
+    <item name="android:textAllCaps">false</item>        
+
+    <!--<item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>-->
+    <item name="android:buttonStyle">@style/AppTheme.Button</item>
+    <!--<item name="android:buttonStyleToggle">@style/AppTheme.ToggleButton</item> -->
+    <!--<item name="android:checkboxStyle">@style/AppTheme.CheckBox</item>-->
+    <!--<item name="android:radioButtonStyle">@style/AppTheme.RadioButton</item> -->
+    <!--<item name="android:progressBarStyleHorizontal">@style/AppTheme.ProgressBarHorizontal</item> -->
+    <!--<item name="android:spinnerStyle">@style/AppTheme.Spinner</item>  -->
+    <!--<item name="android:spinnerItemStyle">@style/AppTheme.SpinnerItemText</item> -->
+    <!--<item name="android:seekBarStyle">@style/AppTheme.SeekBar</item> -->
+    <!--<item name="android:editTextStyle">@style/AppTheme.EditText</item>-->
+    <!--<item name="android:textViewStyle">@style/AppTheme.TextView</item>-->
+  </style>
+
+  <style name="AppTheme.Button" parent="@android:style/Widget.Button">
+    <item name="android:gravity">center</item>
+  </style>
+
+</resources>

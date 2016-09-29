@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/CalloutLayout"
+        android:layout_margin="8dp"
+        android:background="@drawable/image_callout">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ContentLayout"
+            android:layout_centerInParent="true"
+            android:layout_margin="4dp"
+            android:padding="4dp">
+            <TextView
+                android:text="Sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/SenderLabel"
+                android:textColor="@color/White"
+                android:lines="1"
+                android:maxLines="1"
+                android:textSize="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:scrollHorizontally="false"
+                android:ellipsize="none"
+                android:singleLine="true"
+                android:textStyle="italic"
+                android:layout_marginRight="4dp" />
+            <TextView
+                android:text="Your message here..."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/MessageLabel"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/White"
+                android:textSize="18dp"
+                android:scrollHorizontally="false"
+                android:ellipsize="none"
+                android:layout_below="@+id/SenderLabel"
+                android:minWidth="70dp" />
+            <TextView
+                android:text="14/09/2016"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/DateLabel"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/MessageLabel"
+                android:textColor="@color/White"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="10dp"
+                android:layout_marginTop="2dp"
+                android:alpha="0.7"
+                android:minWidth="60dp"
+                android:gravity="right"
+                android:singleLine="true"
+                android:scrollHorizontally="false"
+                android:lines="1"
+                android:maxLines="1"
+                android:ellipsize="none"
+                android:layout_marginLeft="4dp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatty.Api", "Chatty.Api\Chatty.Api.csproj", "{209FA716-A7AD-4095-BD70-C8710FC66FA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatty.Api.Core", "Chatty.Api.Core\Chatty.Api.Core.csproj", "{4A79A9A6-D74B-4AE4-B82E-E4C970F78EB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Api.Core", "0.Api.Core", "{3518BC06-7AFA-4B99-BCD5-DC366E5D10E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Api.Endpoints", "1.Api.Endpoints", "{66EF5EF7-3B21-4D5E-8B67-DBFD19A0CB0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A79A9A6-D74B-4AE4-B82E-E4C970F78EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A79A9A6-D74B-4AE4-B82E-E4C970F78EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A79A9A6-D74B-4AE4-B82E-E4C970F78EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A79A9A6-D74B-4AE4-B82E-E4C970F78EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{209FA716-A7AD-4095-BD70-C8710FC66FA7} = {66EF5EF7-3B21-4D5E-8B67-DBFD19A0CB0E}
+		{4A79A9A6-D74B-4AE4-B82E-E4C970F78EB4} = {3518BC06-7AFA-4B99-BCD5-DC366E5D10E4}
+	EndGlobalSection
+EndGlobal
