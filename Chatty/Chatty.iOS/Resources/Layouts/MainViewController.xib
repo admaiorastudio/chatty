@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+            <connections>
+                <outlet property="ContentLayout" destination="cht-MR-HB9" id="Hq9-Gx-gCh"/>
+                <outlet property="LoadLayout" destination="WXE-SM-JSh" id="cQf-VP-dOU"/>
+                <outlet property="LoadProgress" destination="nUu-No-Qr0" id="Xdh-BW-eZa"/>
+                <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cht-MR-HB9"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WXE-SM-JSh">
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="nUu-No-Qr0"/>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.49665692101226994" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="nUu-No-Qr0" firstAttribute="centerX" secondItem="WXE-SM-JSh" secondAttribute="centerX" id="6Fy-cB-2ey"/>
+                        <constraint firstItem="nUu-No-Qr0" firstAttribute="centerY" secondItem="WXE-SM-JSh" secondAttribute="centerY" id="Upf-St-QSp"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.14133137464523315" green="0.14070096611976624" blue="0.15983618795871735" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="cht-MR-HB9" secondAttribute="bottom" id="1x4-uT-G4H"/>
+                <constraint firstItem="cht-MR-HB9" firstAttribute="top" secondItem="2" secondAttribute="top" id="4bB-0s-Khw"/>
+                <constraint firstItem="WXE-SM-JSh" firstAttribute="top" secondItem="2" secondAttribute="top" id="615-vf-mry"/>
+                <constraint firstItem="WXE-SM-JSh" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="DHG-VW-q81"/>
+                <constraint firstAttribute="trailing" secondItem="cht-MR-HB9" secondAttribute="trailing" id="Jzr-mv-kuc"/>
+                <constraint firstAttribute="trailing" secondItem="WXE-SM-JSh" secondAttribute="trailing" id="UOJ-rL-W5b"/>
+                <constraint firstItem="cht-MR-HB9" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="h4G-dj-tcZ"/>
+                <constraint firstAttribute="bottom" secondItem="WXE-SM-JSh" secondAttribute="bottom" id="sBd-Qg-bzf"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <point key="canvasLocation" x="159" y="-10"/>
+        </view>
+    </objects>
+</document>

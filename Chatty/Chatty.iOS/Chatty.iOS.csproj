@@ -190,7 +190,12 @@
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
-    <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="UI\MainControllers\SplashViewController.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\LoginViewController.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\MainViewController.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\Registration0ViewController.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\Registration1ViewController.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\RegistrationDoneViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -202,9 +207,29 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewController.cs" />
-    <Compile Include="ViewController.designer.cs">
-      <DependentUpon>ViewController.cs</DependentUpon>
+    <Compile Include="UI\MainControllers\MainViewController.cs" />
+    <Compile Include="UI\MainControllers\MainViewController.designer.cs">
+      <DependentUpon>MainViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainControllers\SplashViewController.cs" />
+    <Compile Include="UI\MainControllers\SplashViewController.designer.cs">
+      <DependentUpon>SplashViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainControllers\LoginViewController.cs" />
+    <Compile Include="UI\MainControllers\LoginViewController.designer.cs">
+      <DependentUpon>LoginViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainControllers\Registration0ViewController.cs" />
+    <Compile Include="UI\MainControllers\Registration0ViewController.designer.cs">
+      <DependentUpon>Registration0ViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainControllers\Registration1ViewController.cs" />
+    <Compile Include="UI\MainControllers\Registration1ViewController.designer.cs">
+      <DependentUpon>Registration1ViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainControllers\RegistrationDoneViewController.cs" />
+    <Compile Include="UI\MainControllers\RegistrationDoneViewController.designer.cs">
+      <DependentUpon>RegistrationDoneViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />
@@ -217,6 +242,30 @@
       <Project>{3b02ba45-4189-485e-98ec-5aa9018c735c}</Project>
       <Name>Chatty.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Layouts\" />
+    <Folder Include="UI\" />
+    <Folder Include="UI\MainControllers\" />
+    <Folder Include="UI\SubControllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\button_send.png" />
+    <BundleResource Include="Resources\icon_cat.png" />
+    <BundleResource Include="Resources\image_admaiora.png" />
+    <BundleResource Include="Resources\image_callout_lb.png" />
+    <BundleResource Include="Resources\image_callout_lm.png" />
+    <BundleResource Include="Resources\image_callout_lt.png" />
+    <BundleResource Include="Resources\image_callout_mb.png" />
+    <BundleResource Include="Resources\image_callout_mm.png" />
+    <BundleResource Include="Resources\image_callout_mt.png" />
+    <BundleResource Include="Resources\image_callout_rb.png" />
+    <BundleResource Include="Resources\image_callout_rm.png" />
+    <BundleResource Include="Resources\image_callout_rt.png" />
+    <BundleResource Include="Resources\image_callout_v.png" />
+    <BundleResource Include="Resources\image_cat.png" />
+    <BundleResource Include="Resources\image_cat2.png" />
+    <BundleResource Include="Resources\image_cat3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Registration1ViewController">
+            <connections>
+                <outlet property="CatImage" destination="ktB-c8-3Mn" id="sWh-W0-3Rw"/>
+                <outlet property="InputLayout" destination="7Ft-Nf-atS" id="N6s-7o-Hj3"/>
+                <outlet property="PasswordLabel" destination="vt0-17-OzV" id="reR-GN-AG0"/>
+                <outlet property="PasswordText" destination="Afi-gI-we5" id="Gaj-Hb-gpd"/>
+                <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2">
+            <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ft-Nf-atS">
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. Create a little secret word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vt0-17-OzV">
+                            <constraints>
+                                <constraint firstAttribute="width" constant="336" id="AGV-Ir-XWN"/>
+                                <constraint firstAttribute="height" constant="28" id="TuV-he-S7Y"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                            <color key="textColor" red="1" green="0.99997437" blue="0.99999129769999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cat.png" translatesAutoresizingMaskIntoConstraints="NO" id="ktB-c8-3Mn">
+                            <color key="backgroundColor" red="1" green="0.99997437" blue="0.99999129769999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="JBq-UB-r63"/>
+                                <constraint firstAttribute="width" constant="40" id="UzV-bh-cEf"/>
+                            </constraints>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Afi-gI-we5">
+                            <color key="backgroundColor" red="1" green="0.99997437" blue="0.99999129769999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="GUm-IQ-btN"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="73" id="2sn-pn-FHu"/>
+                        <constraint firstItem="ktB-c8-3Mn" firstAttribute="leading" secondItem="7Ft-Nf-atS" secondAttribute="leading" id="8ul-sV-36Z"/>
+                        <constraint firstAttribute="trailing" secondItem="Afi-gI-we5" secondAttribute="trailing" id="LIT-Uy-MAC"/>
+                        <constraint firstItem="vt0-17-OzV" firstAttribute="top" secondItem="7Ft-Nf-atS" secondAttribute="top" id="V8g-gg-jJZ"/>
+                        <constraint firstItem="Afi-gI-we5" firstAttribute="leading" secondItem="ktB-c8-3Mn" secondAttribute="trailing" id="XpU-2Z-Upi"/>
+                        <constraint firstItem="ktB-c8-3Mn" firstAttribute="top" secondItem="vt0-17-OzV" secondAttribute="bottom" constant="4" id="lgZ-Va-yCV"/>
+                        <constraint firstItem="Afi-gI-we5" firstAttribute="top" secondItem="vt0-17-OzV" secondAttribute="bottom" constant="4" id="mSz-1d-SSQ"/>
+                        <constraint firstItem="vt0-17-OzV" firstAttribute="leading" secondItem="7Ft-Nf-atS" secondAttribute="leading" id="p0L-TE-7NT"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.97255700826644897" green="0.22135674953460693" blue="0.14576007425785065" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="7Ft-Nf-atS" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="16" id="GmM-0G-g6o"/>
+                <constraint firstAttribute="trailing" secondItem="7Ft-Nf-atS" secondAttribute="trailing" constant="17" id="eN8-OS-aCa"/>
+                <constraint firstItem="7Ft-Nf-atS" firstAttribute="top" secondItem="2" secondAttribute="top" constant="131" id="hAT-bC-Ubd"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <point key="canvasLocation" x="-697" y="58"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_cat.png" width="64" height="64"/>
+    </resources>
+</document>
