@@ -40,9 +40,7 @@
         // Numbers of logged user limit 
         public const int USERS_MAX_LOGGED = 50;
         // Interval to consider an user active (in minutes)
-        public const int USERS_MAX_INACTIVE_TIME = 30;
-
-        public const string MAIL_SENDGRID_APIKEY = "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";
+        public const int USERS_MAX_INACTIVE_TIME = 30;        
 
         private NotificationHubClient _nhclient;
 
@@ -82,7 +80,8 @@
                     ctx.Users.Add(user);
                     ctx.SaveChanges();
 
-                    SendGridAPIClient mc = new SendGridAPIClient(UsersController.MAIL_SENDGRID_APIKEY);
+                    string apiKey = System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+                    SendGridAPIClient mc = new SendGridAPIClient(apiKey);
 
                     Email to = new Email(user.Email);
                     Email from = new Email("info@admaiorastudio.com");
@@ -136,7 +135,8 @@
                     if (p1 != p2)
                         return InternalServerError(new InvalidOperationException("Your credentials seem to be not valid!"));
 
-                    SendGridAPIClient mc = new SendGridAPIClient(UsersController.MAIL_SENDGRID_APIKEY);
+                    string apiKey = System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+                    SendGridAPIClient mc = new SendGridAPIClient(apiKey);
 
                     Email to = new Email(user.Email);
                     Email from = new Email("info@admaiorastudio.com");
