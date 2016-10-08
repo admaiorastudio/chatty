@@ -71,7 +71,7 @@
       <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\Xamarin.iOS10\AdMaiora.AppKit.Core.iOS.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6114.27032, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6117.28697, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\Xamarin.iOS10\AdMaiora.AppKit.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -129,6 +129,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Azure.NotificationHubs.iOS, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Azure.NotificationHubs.iOS.1.2.5\lib\Xamarin.iOS10\Xamarin.Azure.NotificationHubs.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
-    <InterfaceDefinition Include="UI\MainControllers\SplashViewController.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\SplashViewController.xib" />
     <InterfaceDefinition Include="Resources\Layouts\LoginViewController.xib" />
     <InterfaceDefinition Include="Resources\Layouts\MainViewController.xib" />
     <InterfaceDefinition Include="Resources\Layouts\Registration0ViewController.xib" />
@@ -202,11 +206,13 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
+    <InterfaceDefinition Include="Resources\Layouts\ChatViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\MainControllers\%40ViewController.cs" />
     <Compile Include="UI\MainControllers\MainViewController.cs" />
     <Compile Include="UI\MainControllers\MainViewController.designer.cs">
       <DependentUpon>MainViewController.cs</DependentUpon>
@@ -215,24 +221,34 @@
     <Compile Include="UI\MainControllers\SplashViewController.designer.cs">
       <DependentUpon>SplashViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainControllers\LoginViewController.cs" />
-    <Compile Include="UI\MainControllers\LoginViewController.designer.cs">
+    <Compile Include="UI\SubControllers\%40SubController.cs" />
+    <Compile Include="UI\SubControllers\ChatViewController.cs" />
+    <Compile Include="UI\SubControllers\ChatViewController.designer.cs">
+      <DependentUpon>ChatViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SubControllers\LoginViewController.cs" />
+    <Compile Include="UI\SubControllers\LoginViewController.designer.cs">
       <DependentUpon>LoginViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainControllers\Registration0ViewController.cs" />
-    <Compile Include="UI\MainControllers\Registration0ViewController.designer.cs">
+    <Compile Include="UI\SubControllers\Registration0ViewController.cs" />
+    <Compile Include="UI\SubControllers\Registration0ViewController.designer.cs">
       <DependentUpon>Registration0ViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainControllers\Registration1ViewController.cs" />
-    <Compile Include="UI\MainControllers\Registration1ViewController.designer.cs">
+    <Compile Include="UI\SubControllers\Registration1ViewController.cs" />
+    <Compile Include="UI\SubControllers\Registration1ViewController.designer.cs">
       <DependentUpon>Registration1ViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainControllers\RegistrationDoneViewController.cs" />
-    <Compile Include="UI\MainControllers\RegistrationDoneViewController.designer.cs">
+    <Compile Include="UI\SubControllers\RegistrationDoneViewController.cs" />
+    <Compile Include="UI\SubControllers\RegistrationDoneViewController.designer.cs">
       <DependentUpon>RegistrationDoneViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <XamarinComponentReference Include="azure-messaging">
+      <Visible>False</Visible>
+      <Version>1.2.5.1</Version>
+    </XamarinComponentReference>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chatty.Api\Chatty.Api.Core\Chatty.Api.Core.csproj">
       <Project>{4a79a9a6-d74b-4ae4-b82e-e4c970f78eb4}</Project>
@@ -243,12 +259,7 @@
       <Name>Chatty.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Layouts\" />
-    <Folder Include="UI\" />
-    <Folder Include="UI\MainControllers\" />
-    <Folder Include="UI\SubControllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BundleResource Include="Resources\button_send.png" />
     <BundleResource Include="Resources\icon_cat.png" />

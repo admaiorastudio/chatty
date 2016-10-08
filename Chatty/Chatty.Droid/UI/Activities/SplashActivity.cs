@@ -28,7 +28,7 @@ namespace AdMaiora.Chatty
             ConfigChanges.Orientation | ConfigChanges.ScreenSize |
             ConfigChanges.KeyboardHidden | ConfigChanges.Keyboard
     )]
-    public class SplashActivity : Android.Support.V7.App.AppCompatActivity
+    public class SplashActivity : AdMaiora.AppKit.UI.App.AppCompactActivity
     {
         #region Inner Classes
         #endregion
@@ -75,7 +75,7 @@ namespace AdMaiora.Chatty
 
             #region Desinger Stuff
 
-            this.SetContentViewWithWidgets(Resource.Layout.ActivitySplash);            
+            SetContentView(Resource.Layout.ActivitySplash);            
 
             #endregion
             
@@ -98,10 +98,7 @@ namespace AdMaiora.Chatty
                 () =>
                 {
                     if (!RestoreUser())
-                    {
-                        StartActivity(typeof(MainActivity));
-                        Finish();
-                    }
+                        MakeRoot(typeof(MainActivity));
                 });
         }
 
@@ -135,21 +132,21 @@ namespace AdMaiora.Chatty
             AppController.RestoreUser(_cts, AppController.Settings.AuthAccessToken,
                 // Service call success                 
                 (data) =>
-                {                    
-                    Intent i = new Intent(this, typeof(MainActivity));
-                    i.PutExtra("UserRestored", true);
-                    i.PutExtra("Email", data.Email);                    
-                    StartActivity(i);
-                    
-                    Finish();                    
+                {
+                    Bundle b = new Bundle();
+                    b.PutBoolean("UserRestored", true);
+                    b.PutString("Email", data.Email);                    
+                    MakeRoot(typeof(MainActivity), b);
                 },
                 // Service call error
                 (error) =>
                 {
                     Toast.MakeText(this.Application, error, ToastLength.Long).Show();
 
-                    StartActivity(typeof(MainActivity));
-                    Finish();                    
+                    //StartActivity(typeof(MainActivity));
+                    //Finish();           
+
+                    MakeRoot(typeof(MainActivity));
                 },
                 // Service call finished 
                 () =>

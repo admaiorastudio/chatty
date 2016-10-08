@@ -22,7 +22,7 @@ namespace AdMaiora.Chatty
     using AdMaiora.AppKit.UI;
 
     #pragma warning disable CS4014
-    public class LoginFragment : Android.Support.V4.App.Fragment
+    public class LoginFragment : AdMaiora.AppKit.UI.App.Fragment
     {
         #region Inner Classes
         #endregion
@@ -96,66 +96,16 @@ namespace AdMaiora.Chatty
             // Use this to return your custom view for this Fragment
             var view = inflater.InflateWithWidgets(Resource.Layout.FragmentLogin, this, container, false);
 
-            this.SlideUpToShowKeyboard();
+            SlideUpToShowKeyboard();
 
             #endregion            
 
-            this.GetActionBar().Hide();
-            
-            this.StartNotifyKeyboardStatus(view,
-                () =>
-                {
-                    long duration = 500;
-
-                    AnimatorSet set1 = new AnimatorSet();
-                    set1.SetInterpolator(new AccelerateDecelerateInterpolator());
-                    set1.SetTarget(this.LogoImage);
-                    set1.SetDuration(duration);
-                    set1.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleX", .5f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleY", .5f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "translationY", ViewBuilder.AsPixels(-38f))
-                    });
-                    set1.Start();
-
-                    AnimatorSet set2 = new AnimatorSet();
-                    set2.SetInterpolator(new AccelerateDecelerateInterpolator());
-                    set2.SetTarget(this.InputLayout);
-                    set2.SetDuration(duration);
-                    set2.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.InputLayout, "translationY", ViewBuilder.AsPixels(-130f))
-                    });
-                    set2.Start();
-                },
-                () =>
-                {
-                    long duration = 300;
-
-                    AnimatorSet set = new AnimatorSet();
-                    set.SetInterpolator(new AccelerateDecelerateInterpolator());
-                    set.SetTarget(this.LogoImage);
-                    set.SetDuration(duration);
-                    set.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleX", 1f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleY", 1f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "translationY", 0f)
-                    });
-                    set.Start();
-
-                    AnimatorSet set2 = new AnimatorSet();
-                    set2.SetInterpolator(new AccelerateDecelerateInterpolator());
-                    set2.SetTarget(this.InputLayout);
-                    set2.SetDuration(duration);
-                    set2.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.InputLayout, "translationY", 0f)
-                    });
-                    set2.Start();
-                });
-
+            this.ActionBar.Hide();
+           
             this.EmailText.Text = AppController.Settings.LastLoginUsernameUsed;
-            this.PasswordText.Text = String.Empty;
-            
-            this.PasswordText.EditorAction += LoginText_EditorAction;
+
+            this.PasswordText.Text = String.Empty;            
+            this.PasswordText.EditorAction += PasswordText_EditorAction;
 
             this.LoginButton.Click += LoginButton_Click;
 
@@ -167,17 +117,73 @@ namespace AdMaiora.Chatty
             return view;
         }
 
+        public override void OnKeyboardShow()
+        {
+            base.OnKeyboardShow();
+
+            long duration = 500;
+
+            AnimatorSet set1 = new AnimatorSet();
+            set1.SetInterpolator(new AccelerateDecelerateInterpolator());
+            set1.SetTarget(this.LogoImage);
+            set1.SetDuration(duration);
+            set1.PlayTogether(new[] {
+                    ObjectAnimator.OfFloat(this.LogoImage, "scaleX", .5f),
+                    ObjectAnimator.OfFloat(this.LogoImage, "scaleY", .5f),
+                    ObjectAnimator.OfFloat(this.LogoImage, "translationY", ViewBuilder.AsPixels(-38f))
+                    });
+            set1.Start();
+
+            AnimatorSet set2 = new AnimatorSet();
+            set2.SetInterpolator(new AccelerateDecelerateInterpolator());
+            set2.SetTarget(this.InputLayout);
+            set2.SetDuration(duration);
+            set2.PlayTogether(new[] {
+                    ObjectAnimator.OfFloat(this.InputLayout, "translationY", ViewBuilder.AsPixels(-130f))
+                    });
+            set2.Start();
+        }
+
+        public override void OnKeyboardHide()
+        {
+            base.OnKeyboardHide();
+
+            long duration = 300;
+
+            AnimatorSet set = new AnimatorSet();
+            set.SetInterpolator(new AccelerateDecelerateInterpolator());
+            set.SetTarget(this.LogoImage);
+            set.SetDuration(duration);
+            set.PlayTogether(new[] {
+                    ObjectAnimator.OfFloat(this.LogoImage, "scaleX", 1f),
+                    ObjectAnimator.OfFloat(this.LogoImage, "scaleY", 1f),
+                    ObjectAnimator.OfFloat(this.LogoImage, "translationY", 0f)
+                    });
+            set.Start();
+
+            AnimatorSet set2 = new AnimatorSet();
+            set2.SetInterpolator(new AccelerateDecelerateInterpolator());
+            set2.SetTarget(this.InputLayout);
+            set2.SetDuration(duration);
+            set2.PlayTogether(new[] {
+                    ObjectAnimator.OfFloat(this.InputLayout, "translationY", 0f)
+                    });
+            set2.Start();
+        }
+
         public override void OnDestroyView()
         {
             base.OnDestroyView();
-            
-            // Cancel the request in case is in progress
+
+            if (_cts0 != null)
+                _cts0.Cancel();
+
             if (_cts1 != null)
                 _cts1.Cancel();
 
-            this.StopNotifyKeyboardStatus();
+            StopNotifyKeyboardStatus();
 
-            this.PasswordText.EditorAction -= LoginText_EditorAction;
+            this.PasswordText.EditorAction -= PasswordText_EditorAction;
 
             this.LoginButton.Click -= LoginButton_Click;
 
@@ -207,8 +213,8 @@ namespace AdMaiora.Chatty
                 ((MainActivity)this.Activity).BlockUI();
 
                 // Create a new cancellation token for this request                
-                _cts1 = new CancellationTokenSource();
-                AppController.LoginUser(_cts1, _email, _password,
+                _cts0 = new CancellationTokenSource();
+                AppController.LoginUser(_cts0, _email, _password,
                     // Service call success                 
                     (data) =>
                     {                        
@@ -249,10 +255,10 @@ namespace AdMaiora.Chatty
         {
             if (ValidateInput())
             {
-                if (_isLogginUser)
+                if (_isConfirmingUser)
                     return;
 
-                _isLogginUser = true;
+                _isConfirmingUser = true;
 
                 _email = this.EmailText.Text;
                 _password = this.PasswordText.Text;
@@ -278,7 +284,7 @@ namespace AdMaiora.Chatty
                     // Service call finished 
                     () =>
                     {
-                        _isLogginUser = false;
+                        _isConfirmingUser = false;
 
                         // Allow user to tap views
                         ((MainActivity)this.Activity).UnblockUI();
@@ -309,7 +315,7 @@ namespace AdMaiora.Chatty
 
         #region Event Handlers     
 
-        private void LoginText_EditorAction(object sender, TextView.EditorActionEventArgs e)
+        private void PasswordText_EditorAction(object sender, TextView.EditorActionEventArgs e)
         {            
             if (e.ActionId == Android.Views.InputMethods.ImeAction.Done)
             {
@@ -317,7 +323,7 @@ namespace AdMaiora.Chatty
 
                 e.Handled = true;
 
-                this.DismissKeyboard();                
+                DismissKeyboard();                
             }
         }
 
@@ -325,25 +331,25 @@ namespace AdMaiora.Chatty
         {
             LoginUser();
 
-            this.DismissKeyboard();            
+            DismissKeyboard();            
         }
 
         private void RegisterButton_Click(object sender, EventArgs e)
-        {
-            this.DismissKeyboard();
-
+        {            
             var f = new Registration0Fragment();            
             this.FragmentManager.BeginTransaction()
                 .AddToBackStack("BeforeRegistration0Fragment")
                 .Replace(Resource.Id.ContentLayout, f, "Registration0Fragment")
                 .Commit();
+
+            DismissKeyboard();
         }
 
         private void VerifyButton_Click(object sender, EventArgs e)
         {
             VerifyUser();
 
-            this.DismissKeyboard();
+            DismissKeyboard();
         }
 
         #endregion

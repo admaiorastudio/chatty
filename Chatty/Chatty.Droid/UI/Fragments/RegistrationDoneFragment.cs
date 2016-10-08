@@ -15,8 +15,9 @@ namespace AdMaiora.Chatty
     using Android.Widget;
 
     using AdMaiora.AppKit.UI;
+    using AdMaiora.AppKit.UI.App;
 
-    public class RegistrationDoneFragment : Android.Support.V4.App.Fragment
+    public class RegistrationDoneFragment : AdMaiora.AppKit.UI.App.Fragment, IBackButton
     {
         #region Inner Classes
         #endregion
@@ -28,7 +29,6 @@ namespace AdMaiora.Chatty
 
         [Widget]
         private Button GoToLoginButton;
-
 
         #endregion
 
@@ -48,7 +48,6 @@ namespace AdMaiora.Chatty
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -57,20 +56,28 @@ namespace AdMaiora.Chatty
 
             View view = inflater.InflateWithWidgets(Resource.Layout.FragmentRegistrationDone, this, container, false);
 
-            this.ResizeToShowKeyboard();
+            ResizeToShowKeyboard();
 
             #endregion
 
-            this.GetActionBar().Hide();
+            this.ActionBar.Hide();
 
             this.GoToLoginButton.Click += GoToLoginButton_Click;       
 
             return view;
         }
 
+        public bool OnBackButton()
+        {
+            this.FragmentManager.PopBackStack();
+            return true;
+        }
+
         public override void OnDestroyView()
         {
             base.OnDestroyView();
+
+            this.GoToLoginButton.Click -= GoToLoginButton_Click;
         }
 
         #endregion

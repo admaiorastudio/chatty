@@ -17,7 +17,7 @@ namespace AdMaiora.Chatty
     using AdMaiora.AppKit.UI;
 
     #pragma warning disable CS4014
-    public class Registration0Fragment : Android.Support.V4.App.Fragment
+    public class Registration0Fragment : AdMaiora.AppKit.UI.App.Fragment
     {
         #region Inner Classes
         #endregion
@@ -59,11 +59,11 @@ namespace AdMaiora.Chatty
 
             View view = inflater.InflateWithWidgets(Resource.Layout.FragmentRegistration0, this, container, false);
 
-            this.SlideUpToShowKeyboard();
+            SlideUpToShowKeyboard();
 
             #endregion
 
-            this.GetActionBar().Hide();
+            this.ActionBar.Show();
 
             this.EmailText.Text = _email;
             this.EmailText.EditorAction += EmailText_EditorAction;

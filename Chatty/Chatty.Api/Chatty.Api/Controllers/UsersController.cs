@@ -199,7 +199,7 @@
 
             if (string.IsNullOrWhiteSpace(credentials.Password))
                 return BadRequest("The password is not valid!");
-
+            
             try
             {
                 using (var ctx = new ChattyDbContext())

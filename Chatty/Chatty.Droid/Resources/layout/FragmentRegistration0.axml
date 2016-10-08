@@ -26,7 +26,6 @@
             android:background="@color/White"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:padding="4dp"
             android:layout_below="@+id/EmailLabel"
             android:layout_marginTop="4dp" />
         <EditText

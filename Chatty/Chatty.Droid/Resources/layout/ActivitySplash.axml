@@ -16,7 +16,7 @@
             android:scaleType="fitXY"
             android:layout_centerHorizontal="true" />
         <TextView
-            android:text="Yes, I'am a chat"
+            android:text="Yes, I am a chat"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/LogoImage"

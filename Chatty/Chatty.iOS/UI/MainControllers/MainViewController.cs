@@ -1,26 +1,124 @@
-﻿using System;
-
-using UIKit;
-
-namespace AdMaiora.Chatty
+﻿namespace AdMaiora.Chatty
 {
-    public partial class MainViewController : UIViewController
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using Foundation;
+    using UIKit;
+
+    using AdMaiora.AppKit.UI;
+    using AdMaiora.AppKit.UI.App;
+
+    public partial class MainViewController : AdMaiora.AppKit.UI.App.UIMainViewController
     {
-        public MainViewController () : base ("MainViewController", null)
+        #region Inner Classes
+        #endregion
+
+        #region Constants and Fields
+
+        private bool _userRestored;
+        private string _email;
+
+        #endregion
+
+        #region Widgets
+
+
+        #endregion
+
+        #region Constructors
+
+        public MainViewController()
+            : base("MainViewController", null)
         {
         }
 
-        public override void ViewDidLoad ()
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region ViewController Methods
+
+        public override void ViewDidLoad()
         {
-            base.ViewDidLoad ();
-            // Perform any additional setup after loading the view, typically from a nib.
+            base.ViewDidLoad();
+
+            #region Designer Stuff
+
+            SetContentView(this.ContentLayout);
+
+            this.ContentController.NavigationBar.TintColor = ViewBuilder.ColorFromARGB(AppController.Colors.PictonBlue);
+
+            #endregion
+
+            this.LoadLayout.UserInteractionEnabled = true;
+            this.LoadLayout.Hidden = true;
+
+            bool isResuming = this.ContentController.ViewControllers.Length > 0;
+            if(!isResuming)
+            {
+                this.ContentController.PushViewController(new LoginViewController(), false);
+
+                _userRestored = this.Arguments.GetBoolean("UserRestored");
+                if (_userRestored)
+                {
+                    _email = this.Arguments.GetString("Email");
+
+                    var c = new ChatViewController();
+                    c.Arguments = new UIBundle();
+                    c.Arguments.PutString("Email", _email);
+                    this.ContentController.PushViewController(c, false);
+                }
+            }
         }
 
-        public override void DidReceiveMemoryWarning ()
+        public override bool ShouldPopItem()
         {
-            base.DidReceiveMemoryWarning ();
-            // Release any cached data, images, etc that aren't in use.
+            UIViewController controller = this.NavigationController.TopViewController;
+            if (controller is IBackButton)
+                return !((IBackButton)controller).ViewWillPop();
+
+            return base.ShouldPopItem();
         }
+
+        public override void ViewDidUnload()
+        {
+            base.ViewDidUnload();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Block the main UI, preventing user from tapping any view
+        /// </summary>
+        public void BlockUI()
+        {
+            if (this.LoadLayout != null)
+                this.LoadLayout.Hidden = false;
+        }
+
+        /// <summary>
+        /// Unblock the main UI, allowing user tapping views
+        /// </summary>
+        public void UnblockUI()
+        {
+            if (this.LoadLayout != null)
+                this.LoadLayout.Hidden = true;
+        }
+
+        #endregion
+
+        #region Methods
+        #endregion
+
+        #region Event Handlers
+        #endregion
     }
 }
+
 

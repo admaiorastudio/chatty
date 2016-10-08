@@ -17,11 +17,12 @@ namespace AdMaiora.Chatty
     using Android.Media;
 
     using AdMaiora.AppKit.UI;
+    using AdMaiora.AppKit.UI.App;
 
     using AdMaiora.Chatty.Api;
 
     #pragma warning disable CS4014
-    public class ChatFragment : Android.Support.V4.App.Fragment, IBackButton
+    public class ChatFragment : AdMaiora.AppKit.UI.App.Fragment, IBackButton
     {
         #region Inner Classes
 
@@ -174,7 +175,6 @@ namespace AdMaiora.Chatty
         private SoundPool _sp;
         private int _dingSoundId;
 
-
         #endregion
 
         #region Widgets
@@ -221,16 +221,15 @@ namespace AdMaiora.Chatty
             #region Desinger Stuff
             
             View view = inflater.InflateWithWidgets(Resource.Layout.FragmentChat, this, container, false);
-
-            this.ResizeToShowKeyboard();
-
             this.HasOptionsMenu = true;
+
+            ResizeToShowKeyboard();            
 
             #endregion
 
             ((ChattyApplication)this.Activity.Application).PushNotificationReceived += Application_PushNotificationReceived;
 
-            this.GetActionBar().Show();
+            this.ActionBar.Show();
 
             this.MessageList.SetAdapter(_adapter);
 
@@ -493,7 +492,7 @@ namespace AdMaiora.Chatty
 
         private void SendButton_Click(object sender, EventArgs e)
         {
-            this.DismissKeyboard();            
+            DismissKeyboard();            
 
             SendMessage();
         }

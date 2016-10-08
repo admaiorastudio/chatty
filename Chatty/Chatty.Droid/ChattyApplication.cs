@@ -14,11 +14,11 @@
     using Android.Gms.Common;
     using Android.Gms.Gcm.Iid;
     using Android.Gms.Gcm;
+    using Android.Support.V4.App;
 
     using WindowsAzure.Messaging;
 
-    using AdMaiora.AppKit;
-    using Android.Support.V4.App;
+    using AdMaiora.AppKit;   
 
     public class PushEventArgs : EventArgs
     {
@@ -75,7 +75,7 @@
 
         #endregion
 
-        #region Constructors and Destructors
+        #region Constructors
 
         public ChattyApplication(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer) 
@@ -214,7 +214,6 @@
                     // We have already created our notification hub
                     if (_hub == null)
                     {
-
                         _hub = new NotificationHub(
                             AppController.Globals.AzureNHubName,
                             AppController.Globals.AzureNHubConnectionString,
@@ -227,8 +226,8 @@
                     }
                     catch (Exception ex)
                     {
-                        //AppController.Logger.Error("Azure HUB, UnregisterAllAsync Error: {0}", ex.ToString());
-                    }
+                        AppController.Utility.DebugOutput("Chatty", "Azure HUB, UnregisterAll Error: " + ex.ToString());
+                   }
 
                     try
                     {
@@ -238,7 +237,6 @@
                         };
 
                         var hubRegistration = _hub.Register(_notificationDeviceToken, tags.ToArray());
-
                         this.IsNotificationHubConnected = true;
 
                         PushNotificationRegistered?.Invoke(this, EventArgs.Empty);
@@ -248,7 +246,7 @@
                     catch (Exception ex)
                     {
                         PushNotificationRegistrationFailed?.Invoke(this, new PushEventArgs(ex));                        
-                        AppController.Utility.DebugOutput("Chatty", "Azure HUB, RegisterNativeAsync Error: " + ex.ToString());
+                        AppController.Utility.DebugOutput("Chatty", "Azure HUB, Register Error: " + ex.ToString());
 
                         AppController.Utility.ExecuteOnMainThread(() => Toast.MakeText(this.ApplicationContext, ex.Message, ToastLength.Long).Show());
                     }
