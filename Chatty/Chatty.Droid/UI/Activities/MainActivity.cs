@@ -81,7 +81,7 @@
                     .Add(Resource.Id.ContentLayout, new LoginFragment(), "LoginFragment")
                     .Commit();
 
-                _userRestored = this.Intent.GetBooleanExtra("UserRestored", false);
+                _userRestored = this.Arguments.GetBoolean("UserRestored", false);
                 if (_userRestored)
                 {
                     _email = this.Intent.GetStringExtra("Email");
