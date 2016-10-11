@@ -8,6 +8,8 @@
 
     using Foundation;
     using UIKit;
+    using CoreGraphics;
+    using CoreAnimation;
 
     using AdMaiora.AppKit.UI;
 
@@ -87,6 +89,35 @@
             base.KeyboardWillShow();
 
             long duration = 500;
+
+            UIView.Animate(duration, 0, UIViewAnimationOptions.CurveEaseInOut,
+                () =>
+                {
+                    CAAnimationGroup group1 = CAAnimationGroup.CreateAnimation();
+                    group1.TimingFunction = CAMediaTimingFunction.FromName(CAMediaTimingFunction.EaseInEaseOut);
+                    group1.Duration = duration;
+                    group1.Animations = new CAAnimation[]
+                    {
+                        new CABasicAnimation
+                        {
+                            KeyPath = "transform.scale",
+                            From = NSNumber.FromFloat(1f),
+                            To = NSNumber.FromFloat(.5f)
+                        },
+                        new CABasicAnimation
+                        {
+                            KeyPath = "position",
+                            From = NSValue.FromCGPoint(this.LogoImage.Frame.Location),
+                            To = NSValue.FromCGPoint(new CGPoint(this.LogoImage.Frame.Location.X, this.LogoImage.Frame.Location.Y - 38f)) 
+                        }
+                    };
+
+                    this.LogoImage.Layer.AddAnimation(group1, null);
+                },
+                () =>
+                {
+
+                });
         }
 
         public override void KeyboardWillHide()
