@@ -96,7 +96,7 @@
                 _password = this.PasswordText.Text;
 
                 // Prevent user form tapping views while logging
-                ((MainViewController)this.RootViewController).BlockUI();
+                ((MainViewController)this.MainViewController).BlockUI();
 
                 // Create a new cancellation token for this request                
                 _cts = new CancellationTokenSource();
@@ -123,7 +123,7 @@
                         _isRegisteringUser = false;
 
                         // Allow user to tap views
-                        ((MainViewController)this.RootViewController).UnblockUI();
+                        ((MainViewController)this.MainViewController).UnblockUI();
                     });
             }
         }

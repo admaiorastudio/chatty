@@ -132,7 +132,7 @@
                 _password = this.PasswordText.Text;
 
                 // Prevent user form tapping views while logging
-                ((MainViewController)this.RootViewController).BlockUI();
+                ((MainViewController)this.MainViewController).BlockUI();
 
                 // Create a new cancellation token for this request                
                 _cts1 = new CancellationTokenSource();
@@ -165,7 +165,7 @@
                         _isLogginUser = false;
 
                         // Allow user to tap views
-                        ((MainViewController)this.RootViewController).UnblockUI();
+                        ((MainViewController)this.MainViewController).UnblockUI();
                     });
             }
         }
@@ -183,7 +183,7 @@
                 _password = this.PasswordText.Text;
 
                 // Prevent user form tapping views while logging
-                ((MainViewController)this.RootViewController).BlockUI();
+                ((MainViewController)this.MainViewController).BlockUI();
 
                 this.VerifyButton.Hidden = true;
 
@@ -206,7 +206,7 @@
                         _isLogginUser = false;
 
                         // Allow user to tap views
-                        ((MainViewController)this.RootViewController).UnblockUI();
+                        ((MainViewController)this.MainViewController).UnblockUI();
                     });
             }
         }
