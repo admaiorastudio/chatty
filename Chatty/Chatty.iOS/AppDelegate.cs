@@ -10,7 +10,7 @@
     using AdMaiora.AppKit;
     using AdMaiora.AppKit.UI;
 
-    using WindowsAzure.Messaging;
+    //using WindowsAzure.Messaging;
 
     public class PushEventArgs : EventArgs
     {
@@ -51,7 +51,7 @@
 	{
         #region Constants and Fields
 
-        private SBNotificationHub _hub;
+        //private SBNotificationHub _hub;
 
         private NSData _notificationDeviceToken;
 
@@ -143,62 +143,62 @@
 
         public void RegisterToNotificationsHub(NSData deviceToken = null)
         {
-            this.IsNotificationHubConnected = false;
+            //this.IsNotificationHubConnected = false;
 
-            // Refresh current device token
-            if (deviceToken != null)
-                _notificationDeviceToken = deviceToken;
+            //// Refresh current device token
+            //if (deviceToken != null)
+            //    _notificationDeviceToken = deviceToken;
 
-            // Do we have a current device token;
-            if (_notificationDeviceToken == null)
-                return;
+            //// Do we have a current device token;
+            //if (_notificationDeviceToken == null)
+            //    return;
 
-            if (!AppController.IsUserRestorable)
-                return;
+            //if (!AppController.IsUserRestorable)
+            //    return;
 
-            // We have already registered our notification hub
-            if (_hub == null)
-            {
-                _hub = new SBNotificationHub(
-                    AppController.Globals.AzureNHubConnectionString,
-                    AppController.Globals.AzureNHubName);
-            }
+            //// We have already registered our notification hub
+            //if (_hub == null)
+            //{
+            //    _hub = new SBNotificationHub(
+            //        AppController.Globals.AzureNHubConnectionString,
+            //        AppController.Globals.AzureNHubName);
+            //}
 
-            _hub.UnregisterAllAsync(_notificationDeviceToken,
-                (error) =>
-                {
-                    if (error != null)
-                    {          
-                        AppController.Utility.DebugOutput("Chatty", "Azure HUB, UnregisterAll Error: " + error.Description);
-                        return;
-                    }
+            //_hub.UnregisterAllAsync(_notificationDeviceToken,
+            //    (error) =>
+            //    {
+            //        if (error != null)
+            //        {          
+            //            AppController.Utility.DebugOutput("Chatty", "Azure HUB, UnregisterAll Error: " + error.Description);
+            //            return;
+            //        }
 
-                    NSSet tags = new NSSet(new[]
-                    {
-                        AppController.Settings.LastLoginUsernameUsed
-                    });
+            //        NSSet tags = new NSSet(new[]
+            //        {
+            //            AppController.Settings.LastLoginUsernameUsed
+            //        });
 
-                    _hub.RegisterNativeAsync(_notificationDeviceToken, tags,
-                        (err) =>
-                        {
-                            if (err == null)
-                            {
-                                this.IsNotificationHubConnected = true;
+            //        _hub.RegisterNativeAsync(_notificationDeviceToken, tags,
+            //            (err) =>
+            //            {
+            //                if (err == null)
+            //                {
+            //                    this.IsNotificationHubConnected = true;
 
-                                PushNotificationRegistered?.Invoke(this, EventArgs.Empty);
+            //                    PushNotificationRegistered?.Invoke(this, EventArgs.Empty);
 
-                                AppController.Utility.ExecuteOnMainThread(() => UIToast.MakeText("You are connected!", UIToastLength.Long).Show());
-                            }
-                            else
-                            {
-                                PushNotificationRegistrationFailed?.Invoke(this, new PushEventArgs(new InvalidOperationException(err.Description)));
-                                AppController.Utility.DebugOutput("Chatty", "Azure HUB, Register Error: " + err.Description);
+            //                    AppController.Utility.ExecuteOnMainThread(() => UIToast.MakeText("You are connected!", UIToastLength.Long).Show());
+            //                }
+            //                else
+            //                {
+            //                    PushNotificationRegistrationFailed?.Invoke(this, new PushEventArgs(new InvalidOperationException(err.Description)));
+            //                    AppController.Utility.DebugOutput("Chatty", "Azure HUB, Register Error: " + err.Description);
 
-                                AppController.Utility.ExecuteOnMainThread(() => UIToast.MakeText(err.Description, UIToastLength.Long).Show());
+            //                    AppController.Utility.ExecuteOnMainThread(() => UIToast.MakeText(err.Description, UIToastLength.Long).Show());
 
-                            }                            
-                        });
-                });
+            //                }                            
+            //            });
+            //    });
         }
 
         #endregion

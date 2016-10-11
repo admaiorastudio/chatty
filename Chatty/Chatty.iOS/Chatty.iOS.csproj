@@ -250,12 +250,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <XamarinComponentReference Include="azure-messaging">
-      <Visible>False</Visible>
-      <Version>1.2.5.1</Version>
-    </XamarinComponentReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Chatty.Api\Chatty.Api.Core\Chatty.Api.Core.csproj">
       <Project>{4a79a9a6-d74b-4ae4-b82e-e4c970f78eb4}</Project>
       <Name>Chatty.Api.Core</Name>
