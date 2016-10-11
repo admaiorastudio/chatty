@@ -25,6 +25,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>true</MtouchProfiling>
+    <CodesignKey>iPhone Developer: Francesco Colombo (H9JWRT77L7)</CodesignKey>
+    <CodesignProvision>d368f9b9-f17c-4a2d-b85f-b356e4f68558</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -35,7 +37,8 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Francesco Colombo (EJ5V48D3MF)</CodesignKey>
+    <CodesignProvision>6a2e1bd0-968e-4cb5-8a3d-cbaa85b348ae</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -46,6 +49,8 @@
     <MtouchArch>i386</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
+    <CodesignKey>iPhone Distribution: Francesco Colombo (EJ5V48D3MF)</CodesignKey>
+    <CodesignProvision>6a2e1bd0-968e-4cb5-8a3d-cbaa85b348ae</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,8 +64,9 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>true</MtouchProfiling>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Francesco Colombo (H9JWRT77L7)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>d368f9b9-f17c-4a2d-b85f-b356e4f68558</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AdMaiora.AppKit.Core, Version=1.0.6115.23671, Culture=neutral, processorArchitecture=MSIL">
