@@ -44,6 +44,7 @@
         #endregion
 
         #region Properties
+
         #endregion
 
         #region ViewController Methods
@@ -84,6 +85,8 @@
         public override void KeyboardWillShow()
         {
             base.KeyboardWillShow();
+
+            long duration = 500;
         }
 
         public override void KeyboardWillHide()
