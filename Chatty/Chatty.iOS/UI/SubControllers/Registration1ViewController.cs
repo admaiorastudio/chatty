@@ -60,7 +60,7 @@
 
             #endregion
 
-            this.NavigationController.SetNavigationBarHidden(true, false);
+            this.NavigationController.SetNavigationBarHidden(false, true);
 
             this.PasswordText.Text = _password;
             this.PasswordText.BecomeFirstResponder();

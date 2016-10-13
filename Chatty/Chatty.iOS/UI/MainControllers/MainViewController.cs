@@ -77,11 +77,16 @@
 
         public override bool ShouldPopItem()
         {
-            UIViewController controller = this.NavigationController.TopViewController;
+            UIViewController controller = this.ContentController.TopViewController;
             if (controller is IBackButton)
                 return !((IBackButton)controller).ViewWillPop();
 
             return base.ShouldPopItem();
+        }
+
+        public override UIStatusBarStyle PreferredStatusBarStyle()
+        {
+            return UIStatusBarStyle.LightContent;
         }
 
         public override void ViewDidUnload()

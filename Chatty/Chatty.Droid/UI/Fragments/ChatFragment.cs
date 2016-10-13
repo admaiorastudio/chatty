@@ -254,9 +254,7 @@ namespace AdMaiora.Chatty
 
                 default:
                     return base.OnOptionsItemSelected(item);
-            }
-
-            
+            }            
         }
 
         public bool OnBackButton()

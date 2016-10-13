@@ -11,7 +11,7 @@
     using AdMaiora.AppKit.UI;
     using AdMaiora.AppKit.UI.App;
 
-    public partial class RegistrationDoneViewController : AdMaiora.AppKit.UI.App.UISubViewController, IBackButton
+    public partial class RegistrationDoneViewController : AdMaiora.AppKit.UI.App.UISubViewController
     {
         #region Inner Classes
         #endregion
@@ -48,7 +48,7 @@
 
             #endregion
 
-            this.NavigationController.SetNavigationBarHidden(true, false);
+            this.NavigationController.SetNavigationBarHidden(false, true);
 
             this.GoToLoginButton.TouchUpOutside += GoToLoginButton_TouchUpOutside;
         }

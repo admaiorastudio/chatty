@@ -41,7 +41,8 @@
                 android:singleLine="true"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="sans-serif-light"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:privateImeOptions="noMicrophoneKey" />
             <EditText
                 android:inputType="textPassword"
                 android:layout_width="300dp"

@@ -62,11 +62,13 @@
 
             #region Designer Stuff
 
+            AutoShouldReturnTextFields(new[] { this.EmailText, this.PasswordText });
+
             SlideUpToShowKeyboard();
 
             #endregion
 
-            this.NavigationController.SetNavigationBarHidden(true, false);
+            this.NavigationController.SetNavigationBarHidden(true, true);
 
             StartNotifyKeyboardStatus();
 
@@ -81,48 +83,50 @@
 
             this.VerifyButton.Hidden = true;
             this.VerifyButton.TouchUpInside += VerifyButton_TouchUpInside;
-
         }
 
         public override void KeyboardWillShow()
         {
             base.KeyboardWillShow();
 
-            long duration = 500;
+            double duration = .5f;
 
-            UIView.Animate(duration, 0, UIViewAnimationOptions.CurveEaseInOut,
+            UIView.Animate(duration, 0f,
+                UIViewAnimationOptions.CurveEaseInOut, 
                 () =>
                 {
-                    CAAnimationGroup group1 = CAAnimationGroup.CreateAnimation();
-                    group1.TimingFunction = CAMediaTimingFunction.FromName(CAMediaTimingFunction.EaseInEaseOut);
-                    group1.Duration = duration;
-                    group1.Animations = new CAAnimation[]
-                    {
-                        new CABasicAnimation
-                        {
-                            KeyPath = "transform.scale",
-                            From = NSNumber.FromFloat(1f),
-                            To = NSNumber.FromFloat(.5f)
-                        },
-                        new CABasicAnimation
-                        {
-                            KeyPath = "position",
-                            From = NSValue.FromCGPoint(this.LogoImage.Frame.Location),
-                            To = NSValue.FromCGPoint(new CGPoint(this.LogoImage.Frame.Location.X, this.LogoImage.Frame.Location.Y - 38f)) 
-                        }
-                    };
+                    this.LogoImage.Transform =
+                        CGAffineTransform.MakeScale(.5f, .5f) *
+                        CGAffineTransform.MakeTranslation(0f, -38);
 
-                    this.LogoImage.Layer.AddAnimation(group1, null);
+                    this.InputLayout.Transform =
+                        CGAffineTransform.MakeTranslation(0f, -110f);
                 },
                 () =>
                 {
-
                 });
         }
 
         public override void KeyboardWillHide()
         {
             base.KeyboardWillHide();
+
+            double duration = .3f;
+
+            UIView.Animate(duration, 0f,
+                UIViewAnimationOptions.CurveEaseInOut,
+                () =>
+                {
+                    this.LogoImage.Transform =
+                        CGAffineTransform.MakeScale(1f, 1f) *
+                        CGAffineTransform.MakeTranslation(0f, 0f);
+
+                    this.InputLayout.Transform =
+                        CGAffineTransform.MakeTranslation(0f, 0f);
+                },
+                () =>
+                {
+                });
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -286,7 +290,7 @@
 
         private void RegisterButton_TouchUpInside(object sender, EventArgs e)
         {
-            var c = new Registration0ViewController();
+            var c = new Registration1ViewController();
             this.NavigationController.PushViewController(c, true);
 
             DismissKeyboard();

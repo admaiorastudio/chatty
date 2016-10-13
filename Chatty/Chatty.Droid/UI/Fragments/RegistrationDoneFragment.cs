@@ -17,7 +17,7 @@ namespace AdMaiora.Chatty
     using AdMaiora.AppKit.UI;
     using AdMaiora.AppKit.UI.App;
 
-    public class RegistrationDoneFragment : AdMaiora.AppKit.UI.App.Fragment, IBackButton
+    public class RegistrationDoneFragment : AdMaiora.AppKit.UI.App.Fragment
     {
         #region Inner Classes
         #endregion
@@ -60,17 +60,24 @@ namespace AdMaiora.Chatty
 
             #endregion
 
-            this.ActionBar.Hide();
+            this.ActionBar.Show();
 
             this.GoToLoginButton.Click += GoToLoginButton_Click;       
 
             return view;
         }
 
-        public bool OnBackButton()
+        public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            this.FragmentManager.PopBackStack();
-            return true;
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    this.FragmentManager.PopBackStack();
+                    return true;
+
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
         }
 
         public override void OnDestroyView()

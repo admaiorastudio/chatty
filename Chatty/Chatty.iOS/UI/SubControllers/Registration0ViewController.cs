@@ -51,7 +51,7 @@
 
             #endregion
 
-            this.NavigationController.SetNavigationBarHidden(true, false);
+            this.NavigationController.SetNavigationBarHidden(false, true);
 
             this.EmailText.Text = _email;
             this.EmailText.ShouldReturn += EmailText_ShouldReturn;
@@ -106,6 +106,8 @@
 
         private bool EmailText_ShouldReturn(UITextField sender)
         {
+            DismissKeyboard();
+
             RegisterUser();
 
             return true;

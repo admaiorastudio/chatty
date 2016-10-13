@@ -66,6 +66,7 @@ namespace AdMaiora.Chatty
             #region Desinger Stuff
 
             View view = inflater.InflateWithWidgets(Resource.Layout.FragmentRegistration1, this, container, false);
+            this.HasOptionsMenu = true;
 
             SlideUpToShowKeyboard();
 
@@ -78,6 +79,19 @@ namespace AdMaiora.Chatty
             this.PasswordText.EditorAction += PasswordText_EditorAction;
 
             return view;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    this.FragmentManager.PopBackStack();
+                    return true;
+
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
         }
 
         public override void OnDestroyView()
