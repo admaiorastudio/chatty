@@ -62,9 +62,9 @@
 
             this.NavigationController.SetNavigationBarHidden(false, true);
 
-            this.PasswordText.Text = _password;
-            this.PasswordText.BecomeFirstResponder();
+            this.PasswordText.Text = _password;            
             this.PasswordText.ShouldReturn += PasswordText_ShouldReturn;
+            this.PasswordText.RequestUserInput(500f);
         }
 
         public override void ViewWillDisappear(bool animated)

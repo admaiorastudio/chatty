@@ -101,6 +101,10 @@
             this.Window.RootViewController = new SplashViewController();
             this.Window.MakeKeyAndVisible();
 
+            UINavigationBar.Appearance.BarTintColor = ViewBuilder.ColorFromARGB(AppController.Colors.PictonBlue);
+            UINavigationBar.Appearance.TintColor = ViewBuilder.ColorFromARGB(AppController.Colors.White);
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes { TextColor = ViewBuilder.ColorFromARGB(AppController.Colors.White) });
+
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
             return true;            

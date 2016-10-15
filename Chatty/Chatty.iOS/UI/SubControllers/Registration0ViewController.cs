@@ -46,8 +46,8 @@
             base.ViewWillAppear(animated);
 
             #region Designer Stuff
-
-            SlideUpToShowKeyboard();
+            
+            SlideUpToShowKeyboard();           
 
             #endregion
 
@@ -55,6 +55,7 @@
 
             this.EmailText.Text = _email;
             this.EmailText.ShouldReturn += EmailText_ShouldReturn;
+            this.EmailText.RequestUserInput(500f);                            
         }
 
         public override void ViewWillDisappear(bool animated)

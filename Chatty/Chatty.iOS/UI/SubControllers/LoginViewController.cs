@@ -290,7 +290,7 @@
 
         private void RegisterButton_TouchUpInside(object sender, EventArgs e)
         {
-            var c = new Registration1ViewController();
+            var c = new Registration0ViewController();            
             this.NavigationController.PushViewController(c, true);
 
             DismissKeyboard();

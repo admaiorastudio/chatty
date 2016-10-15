@@ -49,9 +49,7 @@
             #region Designer Stuff
 
             SetContentView(this.ContentLayout);
-
-            this.ContentController.NavigationBar.TintColor = ViewBuilder.ColorFromARGB(AppController.Colors.PictonBlue);
-
+            
             #endregion
 
             this.LoadLayout.UserInteractionEnabled = true;
