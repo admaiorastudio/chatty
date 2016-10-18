@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
-  <dependencies>
-    <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703" />
-  </dependencies>
-  <objects>
-    <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatViewController">
-      <connections>
-        <outlet property="view" destination="2" id="RRd-Eg-VrN" />
-      </connections>
-    </placeholder>
-    <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder" />
-    <view contentMode="scaleToFill" id="2">
-      <rect key="frame" x="0.0" y="0.0" width="600" height="600" />
-      <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite" />
-    </view>
-  </objects>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatViewController">
+            <connections>
+                <outlet property="BackLayout" destination="qVc-I0-NPN" id="yy0-x9-a7S"/>
+                <outlet property="InputLayout" destination="gAE-3X-1sQ" id="jAf-On-KYE"/>
+                <outlet property="MessageList" destination="1EF-gN-YXe" id="UdQ-ed-N4P"/>
+                <outlet property="MessageText" destination="MSS-9f-ffW" id="ouM-rV-uMi"/>
+                <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1EF-gN-YXe" customClass="UIItemListView">
+                    <color key="backgroundColor" red="0.14133137464523315" green="0.14070096611976624" blue="0.15983618795871735" alpha="1" colorSpace="calibratedRGB"/>
+                </tableView>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAE-3X-1sQ">
+                    <subviews>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVc-I0-NPN">
+                            <color key="backgroundColor" red="0.16892845928668976" green="0.68082153797149658" blue="0.91064661741256714" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MSS-9f-ffW">
+                            <color key="backgroundColor" red="0.44666028022766113" green="0.44425016641616821" blue="0.51677966117858887" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="57" id="vVc-Qz-Pv1"/>
+                            </constraints>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.97255700826644897" green="0.22135674953460693" blue="0.14576007425785065" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="qVc-I0-NPN" secondAttribute="bottom" id="2PF-qW-tRV"/>
+                        <constraint firstItem="qVc-I0-NPN" firstAttribute="leading" secondItem="gAE-3X-1sQ" secondAttribute="leading" constant="17" id="6bE-Cm-onF"/>
+                        <constraint firstItem="MSS-9f-ffW" firstAttribute="leading" secondItem="gAE-3X-1sQ" secondAttribute="leading" constant="22" id="O6T-Ow-ckk"/>
+                        <constraint firstAttribute="trailing" secondItem="MSS-9f-ffW" secondAttribute="trailing" constant="5" id="Pcg-wq-W76"/>
+                        <constraint firstAttribute="trailing" secondItem="qVc-I0-NPN" secondAttribute="trailing" id="ayU-Ar-hkN"/>
+                        <constraint firstAttribute="bottom" secondItem="MSS-9f-ffW" secondAttribute="bottom" constant="4" id="jP9-En-djH"/>
+                        <constraint firstItem="qVc-I0-NPN" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" id="k5R-fe-21F"/>
+                        <constraint firstItem="MSS-9f-ffW" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" constant="-1" id="tpk-52-Y7L"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="1EF-gN-YXe" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="IKl-7W-jCw"/>
+                <constraint firstItem="gAE-3X-1sQ" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="MiB-xX-SYg"/>
+                <constraint firstItem="1EF-gN-YXe" firstAttribute="top" secondItem="2" secondAttribute="top" constant="64" id="VBA-q4-sLE"/>
+                <constraint firstAttribute="trailing" secondItem="1EF-gN-YXe" secondAttribute="trailing" id="c57-eQ-WsB"/>
+                <constraint firstItem="gAE-3X-1sQ" firstAttribute="top" secondItem="1EF-gN-YXe" secondAttribute="bottom" id="e7R-Ha-78s"/>
+                <constraint firstAttribute="trailing" secondItem="gAE-3X-1sQ" secondAttribute="trailing" id="est-k7-Cmp"/>
+                <constraint firstAttribute="bottom" secondItem="gAE-3X-1sQ" secondAttribute="bottom" constant="3" id="kqa-bO-Ba1"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <point key="canvasLocation" x="-82" y="40"/>
+        </view>
+    </objects>
 </document>

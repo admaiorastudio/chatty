@@ -45,7 +45,7 @@
                             </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                         </textField>
                     </subviews>
                     <constraints>
@@ -67,7 +67,7 @@
                 <constraint firstItem="vqW-HP-cYC" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="16" id="JWs-Yl-fSJ"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-            <point key="canvasLocation" x="257" y="53"/>
+            <point key="canvasLocation" x="24" y="60"/>
         </view>
     </objects>
     <resources>
