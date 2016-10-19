@@ -77,7 +77,8 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="vwP-v4-JsR" firstAttribute="top" secondItem="YTl-1W-gDM" secondAttribute="topMargin" id="EMN-V1-ab1"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="vwP-v4-JsR" secondAttribute="bottom" constant="-1.5" id="EKH-jj-pft"/>
+                    <constraint firstAttribute="topMargin" secondItem="vwP-v4-JsR" secondAttribute="top" id="gX0-gX-TRV"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.9993361234664917" green="0.97391700744628906" blue="0.99995321035385132" alpha="1" colorSpace="calibratedRGB"/>
