@@ -16,6 +16,9 @@ namespace AdMaiora.Chatty
 		UIKit.UIView BackLayout { get; set; }
 
 		[Outlet]
+		UIKit.UIImageView CalloutImage { get; set; }
+
+		[Outlet]
 		UIKit.UIView InputLayout { get; set; }
 
 		[Outlet]
@@ -23,12 +26,15 @@ namespace AdMaiora.Chatty
 
 		[Outlet]
 		UIKit.UITextView MessageText { get; set; }
+
+		[Outlet]
+		UIKit.UIButton SendButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (MessageList != null) {
-				MessageList.Dispose ();
-				MessageList = null;
+			if (BackLayout != null) {
+				BackLayout.Dispose ();
+				BackLayout = null;
 			}
 
 			if (InputLayout != null) {
@@ -36,14 +42,24 @@ namespace AdMaiora.Chatty
 				InputLayout = null;
 			}
 
+			if (MessageList != null) {
+				MessageList.Dispose ();
+				MessageList = null;
+			}
+
 			if (MessageText != null) {
 				MessageText.Dispose ();
 				MessageText = null;
 			}
 
-			if (BackLayout != null) {
-				BackLayout.Dispose ();
-				BackLayout = null;
+			if (CalloutImage != null) {
+				CalloutImage.Dispose ();
+				CalloutImage = null;
+			}
+
+			if (SendButton != null) {
+				SendButton.Dispose ();
+				SendButton = null;
 			}
 		}
 	}
