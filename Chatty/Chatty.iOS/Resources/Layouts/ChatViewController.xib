@@ -74,6 +74,14 @@
                                         <constraint firstAttribute="height" constant="8" id="ipZ-1L-v1P"/>
                                     </constraints>
                                 </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR0-12-ilF">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="i7Y-U1-bd8"/>
+                                        <constraint firstAttribute="height" constant="30" id="zak-0S-Jk7"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                    <state key="normal" image="button_send.png"/>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="Qxo-33-myN" firstAttribute="top" secondItem="B7j-9A-Qgc" secondAttribute="bottom" id="14k-uk-8Gx"/>
@@ -90,6 +98,7 @@
                                 <constraint firstItem="MgG-xn-duZ" firstAttribute="leading" secondItem="Qxo-33-myN" secondAttribute="trailing" id="TNa-bz-cyv"/>
                                 <constraint firstItem="Uhu-UK-j5k" firstAttribute="leading" secondItem="PPY-r9-Yg4" secondAttribute="trailing" id="Zrr-n6-mp9"/>
                                 <constraint firstItem="PPY-r9-Yg4" firstAttribute="top" secondItem="MgG-xn-duZ" secondAttribute="bottom" id="a9p-Xm-FoC"/>
+                                <constraint firstItem="HR0-12-ilF" firstAttribute="top" secondItem="qVc-I0-NPN" secondAttribute="top" id="erR-O6-tCg"/>
                                 <constraint firstItem="Uhu-UK-j5k" firstAttribute="top" secondItem="7cn-Ls-7cu" secondAttribute="bottom" id="k19-7b-lmx"/>
                                 <constraint firstItem="L4b-aG-Bpy" firstAttribute="leading" secondItem="b16-PZ-mcr" secondAttribute="trailing" id="mGz-ja-7q5"/>
                                 <constraint firstAttribute="bottom" secondItem="Uhu-UK-j5k" secondAttribute="bottom" id="qTT-fr-PC8"/>
@@ -100,6 +109,7 @@
                                 <constraint firstItem="b16-PZ-mcr" firstAttribute="top" secondItem="qVc-I0-NPN" secondAttribute="top" id="w8U-YC-aAi"/>
                                 <constraint firstAttribute="trailing" secondItem="Uhu-UK-j5k" secondAttribute="trailing" id="ync-N9-bO4"/>
                                 <constraint firstItem="Iod-dI-cLG" firstAttribute="top" secondItem="Qxo-33-myN" secondAttribute="bottom" id="z1h-zE-ypr"/>
+                                <constraint firstAttribute="trailing" secondItem="HR0-12-ilF" secondAttribute="trailing" constant="2" id="ztk-I1-1jC"/>
                             </constraints>
                         </view>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_callout_v.png" translatesAutoresizingMaskIntoConstraints="NO" id="CIu-aO-sWE">
@@ -119,14 +129,6 @@
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR0-12-ilF">
-                            <constraints>
-                                <constraint firstAttribute="width" constant="60" id="i7Y-U1-bd8"/>
-                                <constraint firstAttribute="height" constant="60" id="zak-0S-Jk7"/>
-                            </constraints>
-                            <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                            <state key="normal" image="button_send.png"/>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.9993361234664917" green="0.97391700744628906" blue="0.99995321035385132" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -136,10 +138,8 @@
                         <constraint firstItem="MSS-9f-ffW" firstAttribute="leading" secondItem="gAE-3X-1sQ" secondAttribute="leading" constant="22" id="O6T-Ow-ckk"/>
                         <constraint firstAttribute="trailing" secondItem="MSS-9f-ffW" secondAttribute="trailing" constant="60" id="Pcg-wq-W76"/>
                         <constraint firstAttribute="trailing" secondItem="qVc-I0-NPN" secondAttribute="trailing" constant="3" id="ayU-Ar-hkN"/>
-                        <constraint firstAttribute="trailing" secondItem="HR0-12-ilF" secondAttribute="trailing" constant="5" id="bjj-rU-bJR"/>
                         <constraint firstAttribute="bottom" secondItem="MSS-9f-ffW" secondAttribute="bottom" constant="4" id="jP9-En-djH"/>
                         <constraint firstItem="qVc-I0-NPN" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" id="k5R-fe-21F"/>
-                        <constraint firstItem="HR0-12-ilF" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" id="t9r-pa-Z4L"/>
                         <constraint firstItem="MSS-9f-ffW" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" constant="4" id="tpk-52-Y7L"/>
                         <constraint firstItem="CIu-aO-sWE" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" id="wJD-qB-yyr"/>
                     </constraints>
