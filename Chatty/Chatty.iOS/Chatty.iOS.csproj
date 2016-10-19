@@ -214,7 +214,6 @@
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
     <InterfaceDefinition Include="Resources\Layouts\ChatViewController.xib" />
-    <InterfaceDefinition Include="Resources\Layouts\View1.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

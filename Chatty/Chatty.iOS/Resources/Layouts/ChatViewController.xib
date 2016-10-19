@@ -76,8 +76,8 @@
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR0-12-ilF">
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="30" id="i7Y-U1-bd8"/>
-                                        <constraint firstAttribute="height" constant="30" id="zak-0S-Jk7"/>
+                                        <constraint firstAttribute="width" constant="40" id="i7Y-U1-bd8"/>
+                                        <constraint firstAttribute="height" constant="40" id="zak-0S-Jk7"/>
                                     </constraints>
                                     <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                     <state key="normal" image="button_send.png"/>
@@ -135,8 +135,8 @@
                         <constraint firstAttribute="bottom" secondItem="qVc-I0-NPN" secondAttribute="bottom" id="2PF-qW-tRV"/>
                         <constraint firstItem="qVc-I0-NPN" firstAttribute="leading" secondItem="gAE-3X-1sQ" secondAttribute="leading" constant="5" id="6bE-Cm-onF"/>
                         <constraint firstItem="CIu-aO-sWE" firstAttribute="leading" secondItem="gAE-3X-1sQ" secondAttribute="leading" id="Hgr-00-SFn"/>
-                        <constraint firstItem="MSS-9f-ffW" firstAttribute="leading" secondItem="gAE-3X-1sQ" secondAttribute="leading" constant="22" id="O6T-Ow-ckk"/>
-                        <constraint firstAttribute="trailing" secondItem="MSS-9f-ffW" secondAttribute="trailing" constant="60" id="Pcg-wq-W76"/>
+                        <constraint firstItem="MSS-9f-ffW" firstAttribute="leading" secondItem="gAE-3X-1sQ" secondAttribute="leading" constant="16" id="O6T-Ow-ckk"/>
+                        <constraint firstAttribute="trailing" secondItem="MSS-9f-ffW" secondAttribute="trailing" constant="47" id="Pcg-wq-W76"/>
                         <constraint firstAttribute="trailing" secondItem="qVc-I0-NPN" secondAttribute="trailing" constant="3" id="ayU-Ar-hkN"/>
                         <constraint firstAttribute="bottom" secondItem="MSS-9f-ffW" secondAttribute="bottom" constant="4" id="jP9-En-djH"/>
                         <constraint firstItem="qVc-I0-NPN" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" id="k5R-fe-21F"/>
@@ -156,7 +156,7 @@
                 <constraint firstAttribute="bottom" secondItem="gAE-3X-1sQ" secondAttribute="bottom" constant="3" id="kqa-bO-Ba1"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-            <point key="canvasLocation" x="-223" y="47"/>
+            <point key="canvasLocation" x="-223.5" y="46.5"/>
         </view>
     </objects>
     <resources>

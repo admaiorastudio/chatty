@@ -95,11 +95,13 @@ namespace AdMaiora.Chatty
                 if (!isYours && !_colors.ContainsKey(item.Sender))
                     _colors.Add(item.Sender, _palette[_rnd.Next(_palette.Count)]);
 
-                //((RelativeLayout)view).SetGravity(isYours ? GravityFlags.Right : GravityFlags.Left);
+                var margins = cell.ContentView.LayoutMarginsGuide;
+                cell.CalloutLayout.LeadingAnchor.ConstraintEqualTo(margins.LeadingAnchor, 4).Active = !isYours;
+                cell.CalloutLayout.TrailingAnchor.ConstraintEqualTo(margins.TrailingAnchor, 4).Active = isYours;
 
                 cell.SenderLabel.Text = String.Concat(isYours ? "YOU" : item.Sender.Split('@')[0], "   ");
 
-                cell.CalloutLayout.BackgroundColor =
+                cell.CalloutLayout.BackgroundColor = 
                     ViewBuilder.ColorFromARGB(isYours ? AppController.Colors.PictonBlue : _colors[item.Sender]);
 
                 cell.CalloutLayout.Alpha = isSent ? 1 : .35f;
@@ -166,7 +168,7 @@ namespace AdMaiora.Chatty
             base.ViewDidLoad();
 
             _email = this.Arguments.GetString("Email");
-            _username = (_email?.Split('@')[0]) ?? "franz";
+            _username = (_email?.Split('@')[0]);
 
             _source = new ChatViewSource(this, new Message[0]);
         }
@@ -194,6 +196,7 @@ namespace AdMaiora.Chatty
 
             this.MessageList.RowHeight = UITableView.AutomaticDimension;
             this.MessageList.EstimatedRowHeight = 100;
+            this.MessageList.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             this.MessageList.BackgroundColor = ViewBuilder.ColorFromARGB(AppController.Colors.Snow);
             this.MessageList.TableFooterView = new UIView(CoreGraphics.CGRect.Empty);            
 
