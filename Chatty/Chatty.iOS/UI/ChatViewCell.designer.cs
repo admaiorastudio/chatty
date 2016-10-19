@@ -13,19 +13,19 @@ namespace AdMaiora.Chatty
 	partial class ChatViewCell
 	{
 		[Outlet]
-		UIKit.UIView CalloutLayout { get; set; }
+		public UIKit.UIView CalloutLayout { get; set; }
 
 		[Outlet]
-		UIKit.UIView ContentLayout { get; set; }
+		public UIKit.UIView ContentLayout { get; set; }
 
 		[Outlet]
-		UIKit.UILabel DateLabel { get; set; }
+		public UIKit.UILabel DateLabel { get; set; }
 
 		[Outlet]
-		UIKit.UILabel MessageLabel { get; set; }
+		public UIKit.UILabel MessageLabel { get; set; }
 
 		[Outlet]
-		UIKit.UILabel SenderLabel { get; set; }
+		public UIKit.UILabel SenderLabel { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{

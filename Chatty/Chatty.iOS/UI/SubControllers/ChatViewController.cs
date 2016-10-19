@@ -12,6 +12,9 @@ namespace AdMaiora.Chatty
     using AdMaiora.AppKit.UI;
     using AdMaiora.AppKit.UI.App;
 
+    using AdMaiora.Chatty.Api;
+
+    #pragma warning disable CS4014
     public partial class ChatViewController : AdMaiora.AppKit.UI.App.UISubViewController, IBackButton
     {
         #region Inner Classes
@@ -47,6 +50,75 @@ namespace AdMaiora.Chatty
             #endregion
         }
 
+        private class ChatViewSource : UIItemListViewSource<Message>
+        {
+            #region Constants and Fields
+
+            private Random _rnd;
+
+            private List<string> _palette;
+            private Dictionary<string, string> _colors;
+
+            #endregion
+
+            #region Constructors
+
+            public ChatViewSource(UIViewController controller, IEnumerable<Message> source)
+                : base(controller, "ChatViewCell", source)
+            {
+                _rnd = new Random(DateTime.Now.Second);
+
+                _palette = new List<string>
+                {
+                    "C3BEF7", "8A4FFF", "273C2C", "626868", "80727B", "62929E",
+                    "F79256", "66101F", "DB995A", "654236", "6369D1", "22181C ",
+                    "998FC7", "5B2333", "564D4A"
+
+                };
+
+                _colors = new Dictionary<string, string>();
+            }
+
+            #endregion
+
+            #region Public Methods
+
+            public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath, UITableViewCell cellView, Message item)
+            {
+                var cell = cellView as ChatViewCell;
+
+                bool isYours = String.IsNullOrWhiteSpace(item.Sender);
+                bool isSending = item.SendDate == DateTime.MinValue;
+                bool isSent = item.SendDate != DateTime.MinValue && item.SendDate != DateTime.MaxValue;
+                bool isLost = item.SendDate == DateTime.MaxValue;
+
+                if (!isYours && !_colors.ContainsKey(item.Sender))
+                    _colors.Add(item.Sender, _palette[_rnd.Next(_palette.Count)]);
+
+                //((RelativeLayout)view).SetGravity(isYours ? GravityFlags.Right : GravityFlags.Left);
+
+                cell.SenderLabel.Text = String.Concat(isYours ? "YOU" : item.Sender.Split('@')[0], "   ");
+
+                cell.CalloutLayout.BackgroundColor =
+                    ViewBuilder.ColorFromARGB(isYours ? AppController.Colors.PictonBlue : _colors[item.Sender]);
+
+                cell.CalloutLayout.Alpha = isSent ? 1 : .35f;
+
+                cell.MessageLabel.Text = String.Concat(item.Content, "   ");
+
+                cell.DateLabel.Text = isSent ? String.Format("  sent @ {0:G}", item.SendDate) : String.Empty;
+
+                return cell;
+            }
+
+            public bool HasMessage(int messageId)
+            {
+                return this.SourceItems.Count(x => x.MessageId == messageId) > 0;
+            }
+
+            #endregion
+        }
+
         #endregion
 
         #region Constants and Fields
@@ -57,6 +129,8 @@ namespace AdMaiora.Chatty
         private string _username;
 
         private int _lastMessageId;
+
+        private ChatViewSource _source;
 
         //private ChatAdapter _adapter;
 
@@ -90,6 +164,11 @@ namespace AdMaiora.Chatty
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+            _email = this.Arguments.GetString("Email");
+            _username = (_email?.Split('@')[0]) ?? "franz";
+
+            _source = new ChatViewSource(this, new Message[0]);
         }
 
         public override void ViewWillAppear(bool animated)
@@ -102,10 +181,240 @@ namespace AdMaiora.Chatty
 
             #endregion
 
-            this.MessageText.Text = String.Empty;
+            //((ChattyApplication)this.Activity.Application).PushNotificationReceived += Application_PushNotificationReceived;
+
+            this.NavigationController.SetNavigationBarHidden(false, true);
+
+            this.MessageList.Source = _source;
+
+            this.SendButton.TouchUpInside += SendButton_TouchUpInside;
+
             this.MessageText.Constraints.Single(x => x.GetIdentifier() == "Height").Constant = 30f;                       
             this.MessageText.Changed += MessageText_Changed;
+
+            this.MessageList.RowHeight = UITableView.AutomaticDimension;
+            this.MessageList.EstimatedRowHeight = 100;
+            this.MessageList.BackgroundColor = ViewBuilder.ColorFromARGB(AppController.Colors.Snow);
+            this.MessageList.TableFooterView = new UIView(CoreGraphics.CGRect.Empty);            
+
+            InitSound();
+
+            RefreshMessages();
+
+            WaitConnection();
         }
+
+        public bool ViewWillPop()
+        {
+            QuitChat();
+            return true;
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+
+            if (_cts0 != null)
+                _cts0.Cancel();
+
+            if (_cts1 != null)
+                _cts1.Cancel();
+
+            if (_cts2 != null)
+                _cts2.Cancel();
+
+            this.SendButton.TouchUpInside -= SendButton_TouchUpInside;
+
+            //((ChattyApplication)this.Activity.Application).PushNotificationReceived -= Application_PushNotificationReceived;
+        }
+
+        #endregion
+
+        #region Public Methods
+        #endregion
+
+        #region Methods
+
+        private void SendMessage()
+        {
+            string content = this.MessageText.Text;
+            if (!String.IsNullOrWhiteSpace(content))
+            {
+                //if (_isSendingMessage)
+                //    return;
+
+                //_isSendingMessage = true;
+
+                // Add message to the message list 
+                Message message = new Message { Sender = null, Content = content, SendDate = DateTime.MinValue };
+                _source.AddItem(message);
+                this.MessageList.ReloadData();
+                this.MessageList.ScrollToRow(
+                    NSIndexPath.FromItemSection((nint)(_source.Count - 1), 0),
+                        UITableViewScrollPosition.Bottom,
+                        false);
+
+                //_cts1 = new CancellationTokenSource();
+                //AppController.SendMessage(_cts1,
+                //    _email,
+                //    content,
+                //    (data) =>
+                //    {
+                //        message.MessageId = data.MessageId;
+                //        message.SendDate = data.SendDate.GetValueOrDefault();
+                //        this.MessageList.ReloadData();
+                //    },
+                //    (error) =>
+                //    {
+                //        message.SendDate = DateTime.MaxValue;
+                //        this.MessageList.ReloadData();
+
+                //        UIToast.MakeText(error, UIToastLength.Long).Show();
+                //    },
+                //    () =>
+                //    {
+                //        _isSendingMessage = false;
+                //    });
+
+                // Ready to send new message
+                this.MessageText.Text = String.Empty;
+            }
+        }
+
+        private void RefreshMessages()
+        {
+            lock (ReceiverLock)
+            {
+                if (_lastMessageId == 0)
+                {
+                    if (AppController.Settings.LastMessageId == 0)
+                        return;
+
+                    _lastMessageId = AppController.Settings.LastMessageId;
+                    AppController.Settings.LastMessageId = 0;
+                }
+
+                if (_cts2 != null && !_cts2.IsCancellationRequested)
+                    _cts2.Cancel();
+
+                _cts2 = new CancellationTokenSource();
+
+                var cts = _cts2;
+                Poco.Message[] newMessages = null;
+                AppController.RefreshMessages(
+                    _cts2,
+                    _lastMessageId,
+                    _email,
+                    (data) =>
+                    {
+                        if (cts.IsCancellationRequested)
+                            return;
+
+                        lock (ReceiverLock)
+                        {
+                            newMessages = data.Messages?.ToArray();
+                            _lastMessageId = (newMessages?.Last().MessageId).GetValueOrDefault(0);
+                        }
+                    },
+                    (error) =>
+                    {
+                        // Do Nothing
+                    },
+                    () =>
+                    {
+                        if (cts.IsCancellationRequested)
+                            return;
+
+                        lock (ReceiverLock)
+                        {
+                            bool playSound = false;
+                            if (newMessages != null)
+                            {
+                                foreach (var m in newMessages)
+                                {
+                                    if (!_source.HasMessage(m.MessageId))
+                                    {
+                                        playSound = true;
+
+                                        // Add message to the message list 
+                                        Message message = new Message
+                                        {
+                                            MessageId = m.MessageId,
+                                            Sender = m.Sender,
+                                            Content = m.Content,
+                                            SendDate = m.SendDate.GetValueOrDefault()
+                                        };
+
+                                        _source.AddItem(message);
+                                    }
+                                }
+                            }
+
+                            this.MessageList.ReloadData();
+                            this.MessageList.ScrollToRow(
+                                NSIndexPath.FromItemSection((nint)(_source.Count - 1), 0),
+                                    UITableViewScrollPosition.Bottom,
+                                    false);
+
+                            if (playSound)
+                                PlaySound();
+                        }
+                    });
+            }
+        }
+
+        private void QuitChat()
+        {            
+            (new UIAlertViewBuilder(new UIAlertView()))
+                .SetTitle("Leave the chat?")
+                .SetMessage("Press ok to leave the chat now!")
+                .AddButton("Ok",
+                    (s, ea) =>
+                    {
+                        AppController.Settings.AuthAccessToken = null;
+                        AppController.Settings.AuthExpirationDate = null;
+
+                        this.DismissKeyboard();
+                        this.NavigationController.PopViewController(true);
+                    })
+                .AddButton("Take me back",
+                    (s, ea) =>
+                    {
+                    })
+                .Show();
+        }
+
+        private void WaitConnection()
+        {
+            //((MainViewController)this.MainViewController).BlockUI();
+            //_cts0 = new CancellationTokenSource();
+            //AppController.Utility.ExecuteOnAsyncTask(_cts0.Token,
+            //    () =>
+            //    {
+            //        while (!_cts0.IsCancellationRequested)
+            //        {
+            //            System.Threading.Tasks.Task.Delay(100, _cts0.Token).Wait();
+            //            if (((ChattyApplication)this.Activity.Application).IsNotificationHubConnected)
+            //                break;
+            //        }
+            //    },
+            //    () =>
+            //    {
+            //        ((MainViewController)this.MainViewController).UnblockUI();
+            //    });
+        }
+
+        private void InitSound()
+        {
+        }
+
+        private void PlaySound()
+        {
+        }
+
+        #endregion
+
+        #region Event Handlers
 
         private void MessageText_Changed(object sender, EventArgs e)
         {
@@ -113,13 +422,13 @@ namespace AdMaiora.Chatty
 
             nfloat textWidth = t.TextContainerInset.InsetRect(t.Frame).Width;
             textWidth -= 2.0f * t.TextContainer.LineFragmentPadding;
-            
+
             var size = (new NSString(t.Text)).GetBoundingRect(
                 (new CoreGraphics.CGSize(textWidth, Double.MaxValue)),
                 NSStringDrawingOptions.UsesLineFragmentOrigin,
                 new UIStringAttributes() { Font = t.Font },
                 null).Size;
-            
+
             int numberOfLines = (int)Math.Round(size.Height / t.Font.LineHeight);
 
             if (numberOfLines > 0 && numberOfLines < 4)
@@ -132,24 +441,13 @@ namespace AdMaiora.Chatty
             }
         }
 
-        public bool ViewWillPop()
+        private void SendButton_TouchUpInside(object sender, EventArgs e)
         {
-            return true;
+            DismissKeyboard();
+
+            SendMessage();
         }
 
-        public override void ViewWillDisappear(bool animated)
-        {
-            base.ViewWillDisappear(animated);
-        }
-        #endregion
-
-        #region Public Methods
-        #endregion
-
-        #region Methods
-        #endregion
-
-        #region Event Handlers
         #endregion
     }
 }
