@@ -66,11 +66,11 @@
 
             SlideUpToShowKeyboard();
 
+            StartNotifyKeyboardStatus();
+
             #endregion
 
-            this.NavigationController.SetNavigationBarHidden(true, true);
-
-            StartNotifyKeyboardStatus();
+            this.NavigationController.SetNavigationBarHidden(true, true);            
 
             this.EmailText.Text = AppController.Settings.LastLoginUsernameUsed;
             this.PasswordText.Text = String.Empty;

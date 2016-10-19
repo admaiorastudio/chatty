@@ -58,7 +58,7 @@
             bool isResuming = this.ContentController.ViewControllers.Length > 0;
             if(!isResuming)
             {
-                this.ContentController.PushViewController(new LoginViewController(), false);
+                this.ContentController.PushViewController(new ChatViewController(), false);
 
                 _userRestored = this.Arguments.GetBoolean("UserRestored");
                 if (_userRestored)

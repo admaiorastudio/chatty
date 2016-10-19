@@ -77,7 +77,7 @@
       <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\Xamarin.iOS10\AdMaiora.AppKit.Core.iOS.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6130.35779, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6134.29284, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\Xamarin.iOS10\AdMaiora.AppKit.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -213,6 +213,7 @@
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
     <InterfaceDefinition Include="Resources\Layouts\ChatViewController.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\View1.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

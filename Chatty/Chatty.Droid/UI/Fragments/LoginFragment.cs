@@ -98,6 +98,8 @@ namespace AdMaiora.Chatty
 
             SlideUpToShowKeyboard();
 
+            StartNotifyKeyboardStatus();
+
             #endregion            
 
             this.ActionBar.Hide();

@@ -53,7 +53,7 @@
       <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\MonoAndroid10\AdMaiora.AppKit.Core.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6130.35779, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6134.29284, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\MonoAndroid10\AdMaiora.AppKit.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>

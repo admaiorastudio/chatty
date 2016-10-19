@@ -97,7 +97,39 @@ namespace AdMaiora.Chatty
             base.ViewWillAppear(animated);
 
             #region Designer Stuff
+
+            ResizeToShowKeyboard();
+
             #endregion
+
+            this.MessageText.Text = String.Empty;
+            this.MessageText.Constraints.Single(x => x.GetIdentifier() == "Height").Constant = 30f;                       
+            this.MessageText.Changed += MessageText_Changed;
+        }
+
+        private void MessageText_Changed(object sender, EventArgs e)
+        {
+            UITextView t = sender as UITextView;
+
+            nfloat textWidth = t.TextContainerInset.InsetRect(t.Frame).Width;
+            textWidth -= 2.0f * t.TextContainer.LineFragmentPadding;
+            
+            var size = (new NSString(t.Text)).GetBoundingRect(
+                (new CoreGraphics.CGSize(textWidth, Double.MaxValue)),
+                NSStringDrawingOptions.UsesLineFragmentOrigin,
+                new UIStringAttributes() { Font = t.Font },
+                null).Size;
+            
+            int numberOfLines = (int)Math.Round(size.Height / t.Font.LineHeight);
+
+            if (numberOfLines > 0 && numberOfLines < 4)
+                this.MessageText.Constraints.Single(x => x.GetIdentifier() == "Height").Constant = 30f + (numberOfLines - 1) * t.Font.LineHeight;
+
+            if (numberOfLines == 2)
+            {
+                this.MessageText.SetContentOffset(CoreGraphics.CGPoint.Empty, true);
+                this.MessageText.SetNeedsDisplay();
+            }
         }
 
         public bool ViewWillPop()

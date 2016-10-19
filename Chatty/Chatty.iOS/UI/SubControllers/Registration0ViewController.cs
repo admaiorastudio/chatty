@@ -54,8 +54,14 @@
             this.NavigationController.SetNavigationBarHidden(false, true);
 
             this.EmailText.Text = _email;
-            this.EmailText.ShouldReturn += EmailText_ShouldReturn;
-            this.EmailText.RequestUserInput(500f);                            
+            this.EmailText.ShouldReturn += EmailText_ShouldReturn;            
+        }
+        
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+            this.EmailText.RequestUserInput();
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -76,19 +82,25 @@
         {
             if (ValidateInput())
             {
-                _email = this.EmailText.Text;
+                DismissKeyboard();
 
-                var c = new Registration1ViewController();
-                c.Arguments = new UIBundle();
-                c.Arguments.PutString("Email", _email);
-                this.NavigationController.PushViewController(c, true);
+                AppController.Utility.ExecuteDelayedAction(300, default(System.Threading.CancellationToken),
+                    () =>
+                    {
+                        _email = this.EmailText.Text;
+
+                        var c = new Registration1ViewController();
+                        c.Arguments = new UIBundle();
+                        c.Arguments.PutString("Email", _email);
+                        this.NavigationController.PushViewController(c, true);
+                    });
             }
         }
 
         private bool ValidateInput()
         {
             var validator = new WidgetValidator()
-                .AddValidator(() => this.EmailText.Text, WidgetValidator.IsNotNullOrEmpty, "Please insert an email.")
+                .AddValidator(() => this.EmailText.Text, WidgetValidator.IsNotNullOrEmpty, "Please insert a valid email")
                 .AddValidator(() => this.EmailText.Text, WidgetValidator.IsEmail, "Your email is not valid!");
 
             string errorMessage;
@@ -107,10 +119,7 @@
 
         private bool EmailText_ShouldReturn(UITextField sender)
         {
-            DismissKeyboard();
-
             RegisterUser();
-
             return true;
         }
 

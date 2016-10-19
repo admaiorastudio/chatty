@@ -427,6 +427,7 @@ namespace AdMaiora.Chatty
                         AppController.Settings.AuthAccessToken = null;
                         AppController.Settings.AuthExpirationDate = null;
 
+                        this.DismissKeyboard();
                         this.FragmentManager.PopBackStack();
                     })
                 .SetNegativeButton("Take me back",
