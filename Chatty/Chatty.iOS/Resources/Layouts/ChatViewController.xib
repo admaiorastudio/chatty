@@ -28,10 +28,14 @@
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVc-I0-NPN">
                             <color key="backgroundColor" red="0.16892845928668976" green="0.68082153797149658" blue="0.91064661741256714" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MSS-9f-ffW">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MSS-9f-ffW">
                             <color key="backgroundColor" red="0.44666028022766113" green="0.44425016641616821" blue="0.51677966117858887" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="57" id="vVc-Qz-Pv1"/>
+                                <constraint firstAttribute="height" constant="52" id="vVc-Qz-Pv1">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="identifier" value="Height"/>
+                                    </userDefinedRuntimeAttributes>
+                                </constraint>
                             </constraints>
                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -47,7 +51,7 @@
                         <constraint firstAttribute="trailing" secondItem="qVc-I0-NPN" secondAttribute="trailing" id="ayU-Ar-hkN"/>
                         <constraint firstAttribute="bottom" secondItem="MSS-9f-ffW" secondAttribute="bottom" constant="4" id="jP9-En-djH"/>
                         <constraint firstItem="qVc-I0-NPN" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" id="k5R-fe-21F"/>
-                        <constraint firstItem="MSS-9f-ffW" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" constant="-1" id="tpk-52-Y7L"/>
+                        <constraint firstItem="MSS-9f-ffW" firstAttribute="top" secondItem="gAE-3X-1sQ" secondAttribute="top" constant="4" id="tpk-52-Y7L"/>
                     </constraints>
                 </view>
             </subviews>
