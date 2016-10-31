@@ -69,6 +69,22 @@
     <CodesignProvision>d427c254-03b2-4aa1-bd84-249c31830b10</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdMaiora.AppKit.Core, Version=1.0.6148.37478, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\Xamarin.iOS10\AdMaiora.AppKit.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AdMaiora.AppKit.Core.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\Xamarin.iOS10\AdMaiora.AppKit.Core.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6148.37518, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\Xamarin.iOS10\AdMaiora.AppKit.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AdMaiora.AppKit.UI.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\Xamarin.iOS10\AdMaiora.AppKit.UI.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Mobile, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Azure.Mobile.Client.2.1.1\lib\Xamarin.iOS10\Microsoft.WindowsAzure.Mobile.dll</HintPath>
       <Private>True</Private>
