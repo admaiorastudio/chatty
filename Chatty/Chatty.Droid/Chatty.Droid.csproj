@@ -30,7 +30,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
     <AndroidKeyStore>True</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\Users\Francesco\AppData\Local\Xamarin\Mono for Android\Keystore\chatty\chatty.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>chatty.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>ch@tty2016</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>chatty</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>ch@tty2016</AndroidSigningKeyPass>
@@ -43,24 +43,13 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <ConsolePause>false</ConsolePause>
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningKeyStore>chatty.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>ch@tty2016</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>chatty</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>ch@tty2016</AndroidSigningKeyPass>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdMaiora.AppKit.Core, Version=1.0.6115.23671, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\MonoAndroid10\AdMaiora.AppKit.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AdMaiora.AppKit.Core.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\MonoAndroid10\AdMaiora.AppKit.Core.Android.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6134.29284, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\MonoAndroid10\AdMaiora.AppKit.UI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AdMaiora.AppKit.UI.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\MonoAndroid10\AdMaiora.AppKit.UI.Android.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Messaging.Android">
       <HintPath>..\..\Components\azure-messaging-1.1.5.6\lib\android\Microsoft.WindowsAzure.Messaging.Android.dll</HintPath>
     </Reference>

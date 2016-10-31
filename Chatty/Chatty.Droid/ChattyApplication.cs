@@ -18,45 +18,14 @@
 
     using WindowsAzure.Messaging;
 
-    using AdMaiora.AppKit;   
-
-    public class PushEventArgs : EventArgs
-    {
-        public int Action
-        {
-            get;
-            private set;
-        } 
-
-        public string Payload
-        {
-            get;
-            private set;
-        }
-
-        public Exception Error
-        {
-            get;
-            private set;
-        }
-
-        public PushEventArgs(int action, string payload)
-        {
-            this.Action = action;
-            this.Payload = payload;
-        }
-
-        public PushEventArgs(Exception error)
-        {
-            this.Error = error;
-        }
-    }
-
+    using AdMaiora.AppKit;
+   
 #if DEBUG
     [Application(Name = "admaiora.chatty.ChattyApplication")]
 #else
     [Application(Name = "admaiora.chatty.ChattyApplication", Debuggable = false)]
 #endif
+    #pragma warning disable CS4014
     public class ChattyApplication : AppKitApplication
     {
         #region Constants and Fields
@@ -227,7 +196,7 @@
                     catch (Exception ex)
                     {
                         AppController.Utility.DebugOutput("Chatty", "Azure HUB, UnregisterAll Error: " + ex.ToString());
-                   }
+					}
 
                     try
                     {

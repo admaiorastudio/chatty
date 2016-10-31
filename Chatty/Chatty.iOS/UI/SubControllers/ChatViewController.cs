@@ -8,14 +8,15 @@ namespace AdMaiora.Chatty
 
     using Foundation;
     using UIKit;
+    using AudioToolbox;
 
     using AdMaiora.AppKit.UI;
     using AdMaiora.AppKit.UI.App;
 
-    using AdMaiora.Chatty.Api;
+    using AdMaiora.Chatty.Api;    
 
     #pragma warning disable CS4014
-    public partial class ChatViewController : AdMaiora.AppKit.UI.App.UISubViewController, IBackButton
+    public partial class ChatViewController : AdMaiora.AppKit.UI.App.UISubViewController
     {
         #region Inner Classes
 
@@ -87,6 +88,8 @@ namespace AdMaiora.Chatty
             {
                 var cell = cellView as ChatViewCell;
 
+                cell.SelectionStyle = UITableViewCellSelectionStyle.None;
+
                 bool isYours = String.IsNullOrWhiteSpace(item.Sender);
                 bool isSending = item.SendDate == DateTime.MinValue;
                 bool isSent = item.SendDate != DateTime.MinValue && item.SendDate != DateTime.MaxValue;
@@ -133,9 +136,7 @@ namespace AdMaiora.Chatty
         private int _lastMessageId;
 
         private ChatViewSource _source;
-
-        //private ChatAdapter _adapter;
-
+            
         // This cancellation token is used to cancel the UI blocking until connection is done
         private CancellationTokenSource _cts0;
 
@@ -146,6 +147,8 @@ namespace AdMaiora.Chatty
 
         // This cancellation token is used to cancel the rest refresh messages request
         private CancellationTokenSource _cts2;
+
+        private SystemSound _sound; 
 
         #endregion
 
@@ -183,7 +186,9 @@ namespace AdMaiora.Chatty
 
             #endregion
 
-            //((ChattyApplication)this.Activity.Application).PushNotificationReceived += Application_PushNotificationReceived;
+            ((AppDelegate)UIApplication.SharedApplication.Delegate).PushNotificationReceived += Application_PushNotificationReceived;
+
+            this.Title = "Chatty";
 
             this.NavigationController.SetNavigationBarHidden(false, true);
 
@@ -195,7 +200,7 @@ namespace AdMaiora.Chatty
             this.MessageText.Changed += MessageText_Changed;
 
             this.MessageList.RowHeight = UITableView.AutomaticDimension;
-            this.MessageList.EstimatedRowHeight = 100;
+            this.MessageList.EstimatedRowHeight = 90;            
             this.MessageList.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             this.MessageList.BackgroundColor = ViewBuilder.ColorFromARGB(AppController.Colors.Snow);
             this.MessageList.TableFooterView = new UIView(CoreGraphics.CGRect.Empty);            
@@ -226,9 +231,15 @@ namespace AdMaiora.Chatty
             if (_cts2 != null)
                 _cts2.Cancel();
 
+            if(_sound != null)
+            {
+                _sound.Dispose();
+                _sound = null;
+            }
+
             this.SendButton.TouchUpInside -= SendButton_TouchUpInside;
 
-            //((ChattyApplication)this.Activity.Application).PushNotificationReceived -= Application_PushNotificationReceived;
+            ((AppDelegate)UIApplication.SharedApplication.Delegate).PushNotificationReceived -= Application_PushNotificationReceived;
         }
 
         #endregion
@@ -243,10 +254,10 @@ namespace AdMaiora.Chatty
             string content = this.MessageText.Text;
             if (!String.IsNullOrWhiteSpace(content))
             {
-                //if (_isSendingMessage)
-                //    return;
+                if (_isSendingMessage)
+                    return;
 
-                //_isSendingMessage = true;
+                _isSendingMessage = true;
 
                 // Add message to the message list 
                 Message message = new Message { Sender = null, Content = content, SendDate = DateTime.MinValue };
@@ -257,30 +268,33 @@ namespace AdMaiora.Chatty
                         UITableViewScrollPosition.Bottom,
                         false);
 
-                //_cts1 = new CancellationTokenSource();
-                //AppController.SendMessage(_cts1,
-                //    _email,
-                //    content,
-                //    (data) =>
-                //    {
-                //        message.MessageId = data.MessageId;
-                //        message.SendDate = data.SendDate.GetValueOrDefault();
-                //        this.MessageList.ReloadData();
-                //    },
-                //    (error) =>
-                //    {
-                //        message.SendDate = DateTime.MaxValue;
-                //        this.MessageList.ReloadData();
+                _cts1 = new CancellationTokenSource();
+                AppController.SendMessage(_cts1,
+                    _email,
+                    content,
+                    (data) =>
+                    {
+                        message.MessageId = data.MessageId;
+                        message.SendDate = data.SendDate.GetValueOrDefault();
+                        this.MessageList.ReloadData();
+                    },
+                    (error) =>
+                    {
+                        message.SendDate = DateTime.MaxValue;
+                        this.MessageList.ReloadData();
 
-                //        UIToast.MakeText(error, UIToastLength.Long).Show();
-                //    },
-                //    () =>
-                //    {
-                //        _isSendingMessage = false;
-                //    });
+                        UIToast.MakeText(error, UIToastLength.Long).Show();
+                    },
+                    () =>
+                    {
+                        _isSendingMessage = false;
+                    });
 
                 // Ready to send new message
                 this.MessageText.Text = String.Empty;
+                AdjustMessageTextHeight();
+
+                PlaySound();
             }
         }
 
@@ -389,39 +403,38 @@ namespace AdMaiora.Chatty
 
         private void WaitConnection()
         {
-            //((MainViewController)this.MainViewController).BlockUI();
-            //_cts0 = new CancellationTokenSource();
-            //AppController.Utility.ExecuteOnAsyncTask(_cts0.Token,
-            //    () =>
-            //    {
-            //        while (!_cts0.IsCancellationRequested)
-            //        {
-            //            System.Threading.Tasks.Task.Delay(100, _cts0.Token).Wait();
-            //            if (((ChattyApplication)this.Activity.Application).IsNotificationHubConnected)
-            //                break;
-            //        }
-            //    },
-            //    () =>
-            //    {
-            //        ((MainViewController)this.MainViewController).UnblockUI();
-            //    });
+            ((MainViewController)this.MainViewController).BlockUI();
+            _cts0 = new CancellationTokenSource();
+            AppController.Utility.ExecuteOnAsyncTask(_cts0.Token,
+                () =>
+                {
+                    while (!_cts0.IsCancellationRequested)
+                    {
+                        System.Threading.Tasks.Task.Delay(100, _cts0.Token).Wait();
+                        if (((AppDelegate)UIApplication.SharedApplication.Delegate).IsNotificationHubConnected)
+                            break;
+                    }
+                },
+                () =>
+                {
+                    ((MainViewController)this.MainViewController).UnblockUI();
+                });
         }
 
         private void InitSound()
         {
+            _sound = SystemSound.FromFile(NSUrl.FromString(NSBundle.MainBundle.PathForResource("Raws/sound_ding", "wav")));
         }
 
         private void PlaySound()
         {
+            if (_sound != null)
+                _sound.PlayAlertSoundAsync();
         }
 
-        #endregion
-
-        #region Event Handlers
-
-        private void MessageText_Changed(object sender, EventArgs e)
+        private void AdjustMessageTextHeight()
         {
-            UITextView t = sender as UITextView;
+            UITextView t = this.MessageText;
 
             nfloat textWidth = t.TextContainerInset.InsetRect(t.Frame).Width;
             textWidth -= 2.0f * t.TextContainer.LineFragmentPadding;
@@ -442,6 +455,16 @@ namespace AdMaiora.Chatty
                 this.MessageText.SetContentOffset(CoreGraphics.CGPoint.Empty, true);
                 this.MessageText.SetNeedsDisplay();
             }
+
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void MessageText_Changed(object sender, EventArgs e)
+        {
+            AdjustMessageTextHeight();
         }
 
         private void SendButton_TouchUpInside(object sender, EventArgs e)
@@ -449,6 +472,36 @@ namespace AdMaiora.Chatty
             DismissKeyboard();
 
             SendMessage();
+        }
+
+        private void Application_PushNotificationReceived(object sender, PushEventArgs e)
+        {
+            AppController.Utility.ExecuteOnMainThread(
+                () =>
+                {
+                    switch (e.Action)
+                    {
+                        case 1:
+
+                            _lastMessageId = Int32.Parse(e.Payload);
+                            RefreshMessages();
+
+                            break;
+
+                        case 2:
+
+                            if (e.Payload != _email.Split('@')[0])
+                            {
+                                PlaySound();
+
+                                UIToast
+                                    .MakeText(String.Format("Say welocome to '{0}'", e.Payload), UIToastLength.Long)
+                                    .Show();
+                            }
+
+                            break;
+                    }
+                });
         }
 
         #endregion

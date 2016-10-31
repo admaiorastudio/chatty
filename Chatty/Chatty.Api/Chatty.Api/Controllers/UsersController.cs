@@ -14,6 +14,7 @@
     using System.Linq;
     using System.Data.Entity;
     using System.Threading.Tasks;
+    using System.Configuration;
 
     using AdMaiora.Chatty.Api.Models;
     using AdMaiora.Chatty.Api.DataObjects;    
@@ -49,9 +50,9 @@
         #region Constructors
 
         public UsersController()
-        {            
+        {                        
             _nhclient = NotificationHubClient.CreateClientFromConnectionString(
-                "Endpoint=sb://admaiora.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=Bee6TFs/KoDfbzMMtzUSJ7vJ00Pk7/uPOX4qpK80AKs=", "Chatty");
+                ConfigurationManager.ConnectionStrings["MS_NotificationHubConnectionString"].ConnectionString, "Chatty");
         }
 
         #endregion
@@ -257,6 +258,14 @@
                             credentials.Email.Split('@')[0]
                             )), String.Concat("!", user.Email));
 
+                    _nhclient.SendAppleNativeNotificationAsync(
+                        Newtonsoft.Json.JsonConvert.SerializeObject(Push.iOS.Make(
+                            "New user connected",
+                            String.Format("User {0} has joined the chat.", credentials.Email.Split('@')[0]),
+                            2,
+                            credentials.Email.Split('@')[0]
+                            )), String.Concat("!", user.Email));
+
                     return Ok(Dto.Wrap(new Poco.User
                     {
                         UserId = user.UserId,
@@ -320,6 +329,14 @@
 
                     _nhclient.SendGcmNativeNotificationAsync(
                         Newtonsoft.Json.JsonConvert.SerializeObject(Push.Android.Make(
+                            "New user connected",
+                            String.Format("User {0} has joined the chat.", user.Email.Split('@')[0]),
+                            2,
+                            user.Email.Split('@')[0]
+                            )), String.Concat("!", user.Email));
+
+                    _nhclient.SendAppleNativeNotificationAsync(
+                        Newtonsoft.Json.JsonConvert.SerializeObject(Push.iOS.Make(
                             "New user connected",
                             String.Format("User {0} has joined the chat.", user.Email.Split('@')[0]),
                             2,

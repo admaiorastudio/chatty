@@ -49,7 +49,11 @@
             #region Designer Stuff
 
             SetContentView(this.ContentLayout);
-            
+
+            UINavigationBar.Appearance.BarTintColor = ViewBuilder.ColorFromARGB(AppController.Colors.PictonBlue);
+            UINavigationBar.Appearance.TintColor = ViewBuilder.ColorFromARGB(AppController.Colors.White);
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes { TextColor = ViewBuilder.ColorFromARGB(AppController.Colors.White) });
+
             #endregion
 
             this.LoadLayout.UserInteractionEnabled = true;
@@ -58,7 +62,7 @@
             bool isResuming = this.ContentController.ViewControllers.Length > 0;
             if(!isResuming)
             {
-                this.ContentController.PushViewController(new ChatViewController(), false);
+                this.ContentController.PushViewController(new LoginViewController(), false);
 
                 _userRestored = this.Arguments.GetBoolean("UserRestored");
                 if (_userRestored)
@@ -71,15 +75,6 @@
                     this.ContentController.PushViewController(c, false);
                 }
             }
-        }
-
-        public override bool ShouldPopItem()
-        {
-            UIViewController controller = this.ContentController.TopViewController;
-            if (controller is IBackButton)
-                return !((IBackButton)controller).ViewWillPop();
-
-            return base.ShouldPopItem();
         }
 
         public override UIStatusBarStyle PreferredStatusBarStyle()
