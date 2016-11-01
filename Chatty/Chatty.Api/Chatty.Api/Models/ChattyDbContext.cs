@@ -18,12 +18,12 @@
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
 
-        private const string connectionStringName = "Name=MS_TableConnectionString";
+        private const string _connectionStringName = "MS_TableConnectionString";
 
         public DbSet<User> Users { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        public ChattyDbContext() : base(connectionStringName)
+        public ChattyDbContext() : base(_connectionStringName)
         {
         } 
 

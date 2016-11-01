@@ -66,6 +66,7 @@ namespace AdMaiora.Chatty
             #region Desinger Stuff
 
             View view = inflater.InflateWithWidgets(Resource.Layout.FragmentRegistration1, this, container, false);
+            this.HasOptionsMenu = true;
 
             SlideUpToShowKeyboard();
 
@@ -78,6 +79,27 @@ namespace AdMaiora.Chatty
             this.PasswordText.EditorAction += PasswordText_EditorAction;
 
             return view;
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+
+            this.PasswordText.RequestUserInput();
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    this.DismissKeyboard();
+                    this.FragmentManager.PopBackStack();
+                    return true;
+
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
         }
 
         public override void OnDestroyView()
@@ -101,45 +123,52 @@ namespace AdMaiora.Chatty
         {
             if(ValidateInput())
             {
-                if (_isRegisteringUser)
-                    return;
+                DismissKeyboard();
 
-                _isRegisteringUser = true;
-                
-                _password = this.PasswordText.Text;
-
-                // Prevent user form tapping views while logging
-                ((MainActivity)this.Activity).BlockUI();
-
-                // Create a new cancellation token for this request                
-                _cts = new CancellationTokenSource();
-                AppController.RegisterUser(_cts, 
-                    _email, 
-                    _password,
-                    // Service call success                 
-                    (data) =>
-                    {
-                        var f = new RegistrationDoneFragment();
-                        this.FragmentManager.PopBackStack("BeforeRegistration0Fragment", (int)PopBackStackFlags.Inclusive);
-                        this.FragmentManager.BeginTransaction()
-                            .AddToBackStack("BeforeRegistrationDoneFragment")
-                            .Replace(Resource.Id.ContentLayout, f, "RegistrationDoneFragment")
-                            .Commit();
-                    },
-                    // Service call error
-                    (error) =>
-                    {
-                        this.PasswordText.RequestFocus();
-
-                        Toast.MakeText(this.Activity.Application, error, ToastLength.Long).Show();
-                    },
-                    // Service call finished 
+                AppController.Utility.ExecuteDelayedAction(300, default(System.Threading.CancellationToken),
                     () =>
                     {
-                        _isRegisteringUser = false;
 
-                        // Allow user to tap views
-                        ((MainActivity)this.Activity).UnblockUI();
+                        if (_isRegisteringUser)
+                            return;
+
+                        _isRegisteringUser = true;
+
+                        _password = this.PasswordText.Text;
+
+                        // Prevent user form tapping views while logging
+                        ((MainActivity)this.Activity).BlockUI();
+
+                        // Create a new cancellation token for this request                
+                        _cts = new CancellationTokenSource();
+                        AppController.RegisterUser(_cts,
+                            _email,
+                            _password,
+                            // Service call success                 
+                            (data) =>
+                            {
+                                var f = new RegistrationDoneFragment();
+                                this.FragmentManager.PopBackStack("BeforeRegistration0Fragment", (int)PopBackStackFlags.Inclusive);
+                                this.FragmentManager.BeginTransaction()
+                                    .AddToBackStack("BeforeRegistrationDoneFragment")
+                                    .Replace(Resource.Id.ContentLayout, f, "RegistrationDoneFragment")
+                                    .Commit();
+                            },
+                            // Service call error
+                            (error) =>
+                            {
+                                this.PasswordText.RequestFocus();
+
+                                Toast.MakeText(this.Activity.Application, error, ToastLength.Long).Show();
+                            },
+                            // Service call finished 
+                            () =>
+                            {
+                                _isRegisteringUser = false;
+
+                                // Allow user to tap views
+                                ((MainActivity)this.Activity).UnblockUI();
+                            });
                     });
             }
         }
@@ -168,11 +197,8 @@ namespace AdMaiora.Chatty
         {
             if (e.ActionId == Android.Views.InputMethods.ImeAction.Done)
             {
-                RegisterUser();
-
                 e.Handled = true;
-
-                DismissKeyboard();                
+                RegisterUser();                
             }
             else
             {

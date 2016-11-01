@@ -50,7 +50,9 @@
 
             SetContentView(this.ContentLayout);
 
-            this.ContentController.NavigationBar.TintColor = ViewBuilder.ColorFromARGB(AppController.Colors.PictonBlue);
+            UINavigationBar.Appearance.BarTintColor = ViewBuilder.ColorFromARGB(AppController.Colors.PictonBlue);
+            UINavigationBar.Appearance.TintColor = ViewBuilder.ColorFromARGB(AppController.Colors.White);
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes { TextColor = ViewBuilder.ColorFromARGB(AppController.Colors.White) });
 
             #endregion
 
@@ -75,13 +77,9 @@
             }
         }
 
-        public override bool ShouldPopItem()
+        public override UIStatusBarStyle PreferredStatusBarStyle()
         {
-            UIViewController controller = this.NavigationController.TopViewController;
-            if (controller is IBackButton)
-                return !((IBackButton)controller).ViewWillPop();
-
-            return base.ShouldPopItem();
+            return UIStatusBarStyle.LightContent;
         }
 
         public override void ViewDidUnload()

@@ -32,9 +32,6 @@
         #endregion
 
         #region Widgets
-
-        [Widget]
-        private Android.Support.V7.Widget.Toolbar Toolbar;
         
         [Widget]
         private FrameLayout LoadLayout;
@@ -62,10 +59,10 @@
             #region Desinger Stuff
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.ActivityMain, this.Toolbar);
+            SetContentView(Resource.Layout.ActivityMain, Resource.Id.Toolbar);
 
             this.SupportActionBar.SetDisplayShowHomeEnabled(true);
-            this.SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            this.SupportActionBar.SetDisplayHomeAsUpEnabled(true);            
 
             #endregion
 
@@ -80,8 +77,8 @@
                 this.SupportFragmentManager.BeginTransaction()
                     .Add(Resource.Id.ContentLayout, new LoginFragment(), "LoginFragment")
                     .Commit();
-
-                _userRestored = this.Intent.GetBooleanExtra("UserRestored", false);
+                                
+                _userRestored = this.Arguments.GetBoolean("UserRestored", false);
                 if (_userRestored)
                 {
                     _email = this.Intent.GetStringExtra("Email");

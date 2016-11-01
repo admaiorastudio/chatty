@@ -60,11 +60,17 @@
 
             #endregion
 
-            this.NavigationController.SetNavigationBarHidden(true, false);
+            this.NavigationController.SetNavigationBarHidden(false, true);
 
-            this.PasswordText.Text = _password;
-            this.PasswordText.BecomeFirstResponder();
-            this.PasswordText.ShouldReturn += PasswordText_ShouldReturn;
+            this.PasswordText.Text = _password;            
+            this.PasswordText.ShouldReturn += PasswordText_ShouldReturn;            
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+            this.PasswordText.RequestUserInput();
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -88,42 +94,48 @@
         {
             if (ValidateInput())
             {
-                if (_isRegisteringUser)
-                    return;
+                DismissKeyboard();
 
-                _isRegisteringUser = true;
-
-                _password = this.PasswordText.Text;
-
-                // Prevent user form tapping views while logging
-                ((MainViewController)this.RootViewController).BlockUI();
-
-                // Create a new cancellation token for this request                
-                _cts = new CancellationTokenSource();
-                AppController.RegisterUser(_cts,
-                    _email,
-                    _password,
-                    // Service call success                 
-                    (data) =>
-                    {
-                        var c = new RegistrationDoneViewController();
-                        this.NavigationController.PopToViewController(this.NavigationController.ViewControllers.Single(x => x is LoginViewController), false);
-                        this.NavigationController.PushViewController(c, true);
-                    },
-                    // Service call error
-                    (error) =>
-                    {
-                        this.PasswordText.BecomeFirstResponder();
-
-                        UIToast.MakeText(error, UIToastLength.Long).Show();
-                    },
-                    // Service call finished 
+                AppController.Utility.ExecuteDelayedAction(300, default(System.Threading.CancellationToken),
                     () =>
                     {
-                        _isRegisteringUser = false;
+                        if (_isRegisteringUser)
+                            return;
 
-                        // Allow user to tap views
-                        ((MainViewController)this.RootViewController).UnblockUI();
+                        _isRegisteringUser = true;
+
+                        _password = this.PasswordText.Text;
+
+                        // Prevent user form tapping views while logging
+                        ((MainViewController)this.MainViewController).BlockUI();
+
+                        // Create a new cancellation token for this request                
+                        _cts = new CancellationTokenSource();
+                        AppController.RegisterUser(_cts,
+                            _email,
+                            _password,
+                            // Service call success                 
+                            (data) =>
+                            {
+                                var c = new RegistrationDoneViewController();
+                                this.NavigationController.PopToViewController(this.NavigationController.ViewControllers.Single(x => x is LoginViewController), false);
+                                this.NavigationController.PushViewController(c, true);
+                            },
+                            // Service call error
+                            (error) =>
+                            {
+                                this.PasswordText.RequestUserInput();
+
+                                UIToast.MakeText(error, UIToastLength.Long).Show();
+                            },
+                            // Service call finished 
+                            () =>
+                            {
+                                _isRegisteringUser = false;
+
+                                // Allow user to tap views
+                                ((MainViewController)this.MainViewController).UnblockUI();
+                            });
                     });
             }
         }
@@ -150,10 +162,7 @@
 
         private bool PasswordText_ShouldReturn(UITextField sender)
         {
-            RegisterUser();
-
-            DismissKeyboard();
-
+            RegisterUser();            
             return true;
         }
 

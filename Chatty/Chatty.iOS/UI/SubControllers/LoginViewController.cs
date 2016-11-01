@@ -8,6 +8,8 @@
 
     using Foundation;
     using UIKit;
+    using CoreGraphics;
+    using CoreAnimation;
 
     using AdMaiora.AppKit.UI;
 
@@ -44,6 +46,7 @@
         #endregion
 
         #region Properties
+
         #endregion
 
         #region ViewController Methods
@@ -59,13 +62,15 @@
 
             #region Designer Stuff
 
+            AutoShouldReturnTextFields(new[] { this.EmailText, this.PasswordText });
+
             SlideUpToShowKeyboard();
+
+            StartNotifyKeyboardStatus();
 
             #endregion
 
-            this.NavigationController.SetNavigationBarHidden(true, false);
-
-            StartNotifyKeyboardStatus();
+            this.NavigationController.SetNavigationBarHidden(true, true);            
 
             this.EmailText.Text = AppController.Settings.LastLoginUsernameUsed;
             this.PasswordText.Text = String.Empty;
@@ -78,17 +83,50 @@
 
             this.VerifyButton.Hidden = true;
             this.VerifyButton.TouchUpInside += VerifyButton_TouchUpInside;
-
         }
 
         public override void KeyboardWillShow()
         {
             base.KeyboardWillShow();
+
+            double duration = .5f;
+
+            UIView.Animate(duration, 0f,
+                UIViewAnimationOptions.CurveEaseInOut, 
+                () =>
+                {
+                    this.LogoImage.Transform =
+                        CGAffineTransform.MakeScale(.5f, .5f) *
+                        CGAffineTransform.MakeTranslation(0f, -38);
+
+                    this.InputLayout.Transform =
+                        CGAffineTransform.MakeTranslation(0f, -110f);
+                },
+                () =>
+                {
+                });
         }
 
         public override void KeyboardWillHide()
         {
             base.KeyboardWillHide();
+
+            double duration = .3f;
+
+            UIView.Animate(duration, 0f,
+                UIViewAnimationOptions.CurveEaseInOut,
+                () =>
+                {
+                    this.LogoImage.Transform =
+                        CGAffineTransform.MakeScale(1f, 1f) *
+                        CGAffineTransform.MakeTranslation(0f, 0f);
+
+                    this.InputLayout.Transform =
+                        CGAffineTransform.MakeTranslation(0f, 0f);
+                },
+                () =>
+                {
+                });
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -132,7 +170,7 @@
                 _password = this.PasswordText.Text;
 
                 // Prevent user form tapping views while logging
-                ((MainViewController)this.RootViewController).BlockUI();
+                ((MainViewController)this.MainViewController).BlockUI();
 
                 // Create a new cancellation token for this request                
                 _cts1 = new CancellationTokenSource();
@@ -165,7 +203,7 @@
                         _isLogginUser = false;
 
                         // Allow user to tap views
-                        ((MainViewController)this.RootViewController).UnblockUI();
+                        ((MainViewController)this.MainViewController).UnblockUI();
                     });
             }
         }
@@ -183,7 +221,7 @@
                 _password = this.PasswordText.Text;
 
                 // Prevent user form tapping views while logging
-                ((MainViewController)this.RootViewController).BlockUI();
+                ((MainViewController)this.MainViewController).BlockUI();
 
                 this.VerifyButton.Hidden = true;
 
@@ -206,7 +244,7 @@
                         _isLogginUser = false;
 
                         // Allow user to tap views
-                        ((MainViewController)this.RootViewController).UnblockUI();
+                        ((MainViewController)this.MainViewController).UnblockUI();
                     });
             }
         }
@@ -252,7 +290,7 @@
 
         private void RegisterButton_TouchUpInside(object sender, EventArgs e)
         {
-            var c = new Registration0ViewController();
+            var c = new Registration0ViewController();            
             this.NavigationController.PushViewController(c, true);
 
             DismissKeyboard();

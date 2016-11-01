@@ -254,9 +254,7 @@ namespace AdMaiora.Chatty
 
                 default:
                     return base.OnOptionsItemSelected(item);
-            }
-
-            
+            }            
         }
 
         public bool OnBackButton()
@@ -429,6 +427,7 @@ namespace AdMaiora.Chatty
                         AppController.Settings.AuthAccessToken = null;
                         AppController.Settings.AuthExpirationDate = null;
 
+                        this.DismissKeyboard();
                         this.FragmentManager.PopBackStack();
                     })
                 .SetNegativeButton("Take me back",
@@ -499,7 +498,7 @@ namespace AdMaiora.Chatty
 
         private void Application_PushNotificationReceived(object sender, PushEventArgs e)
         {
-            AppController.Utility.ExecuteOnMainThread(this.Activity,
+            AppController.Utility.ExecuteOnMainThread(
                 () =>
                 {
                     switch(e.Action)

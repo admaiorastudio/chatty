@@ -70,6 +70,11 @@
                 });
         }
 
+        public override UIStatusBarStyle PreferredStatusBarStyle()
+        {
+            return UIStatusBarStyle.LightContent;
+        }
+
         public override void ViewDidUnload()
         {
             base.ViewDidUnload();

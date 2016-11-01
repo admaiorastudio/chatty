@@ -31,7 +31,7 @@ namespace AdMaiora.Chatty
         #region Widgets
 
         [Widget]
-        private TextView EmailText;
+        private EditText EmailText;        
 
         #endregion
 
@@ -58,6 +58,7 @@ namespace AdMaiora.Chatty
             #region Desinger Stuff
 
             View view = inflater.InflateWithWidgets(Resource.Layout.FragmentRegistration0, this, container, false);
+            this.HasOptionsMenu = true;
 
             SlideUpToShowKeyboard();
 
@@ -69,6 +70,27 @@ namespace AdMaiora.Chatty
             this.EmailText.EditorAction += EmailText_EditorAction;
 
             return view;
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+
+            this.EmailText.RequestUserInput();
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    this.DismissKeyboard();
+                    this.FragmentManager.PopBackStack();
+                    return true;
+
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
         }
 
         public override void OnDestroyView()
@@ -89,15 +111,21 @@ namespace AdMaiora.Chatty
         {
             if (ValidateInput())
             {
-                _email = this.EmailText.Text;
+                DismissKeyboard();
 
-                var f = new Registration1Fragment();
-                f.Arguments = new Bundle();
-                f.Arguments.PutString("Email", _email);
-                this.FragmentManager.BeginTransaction()
-                    .AddToBackStack("BeforeRegistration1Fragment")
-                    .Replace(Resource.Id.ContentLayout, f, "Registration1Fragment")
-                    .Commit();
+                AppController.Utility.ExecuteDelayedAction(300, default(System.Threading.CancellationToken),
+                    () =>
+                    {
+                        _email = this.EmailText.Text;
+
+                        var f = new Registration1Fragment();
+                        f.Arguments = new Bundle();
+                        f.Arguments.PutString("Email", _email);
+                        this.FragmentManager.BeginTransaction()
+                            .AddToBackStack("BeforeRegistration1Fragment")
+                            .Replace(Resource.Id.ContentLayout, f, "Registration1Fragment")
+                            .Commit();
+                    });
             }
         }
 
@@ -126,7 +154,6 @@ namespace AdMaiora.Chatty
             if (e.ActionId == Android.Views.InputMethods.ImeAction.Next)
             {
                 e.Handled = true;
-
                 RegisterUser();
             }
             else

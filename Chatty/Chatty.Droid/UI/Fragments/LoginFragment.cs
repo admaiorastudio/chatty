@@ -112,6 +112,8 @@ namespace AdMaiora.Chatty
 
             SlideUpToShowKeyboard();
 
+            StartNotifyKeyboardStatus();
+
             #endregion            
 
             this.ActionBar.Hide();
@@ -144,10 +146,10 @@ namespace AdMaiora.Chatty
             set1.SetTarget(this.LogoImage);
             set1.SetDuration(duration);
             set1.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleX", .5f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleY", .5f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "translationY", ViewBuilder.AsPixels(-38f))
-                    });
+                ObjectAnimator.OfFloat(this.LogoImage, "scaleX", .5f),
+                ObjectAnimator.OfFloat(this.LogoImage, "scaleY", .5f),
+                ObjectAnimator.OfFloat(this.LogoImage, "translationY", ViewBuilder.AsPixels(-38f))
+            });
             set1.Start();
 
             AnimatorSet set2 = new AnimatorSet();
@@ -155,8 +157,8 @@ namespace AdMaiora.Chatty
             set2.SetTarget(this.InputLayout);
             set2.SetDuration(duration);
             set2.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.InputLayout, "translationY", ViewBuilder.AsPixels(-130f))
-                    });
+                ObjectAnimator.OfFloat(this.InputLayout, "translationY", ViewBuilder.AsPixels(-130f))
+            });
             set2.Start();
         }
 
@@ -171,10 +173,10 @@ namespace AdMaiora.Chatty
             set.SetTarget(this.LogoImage);
             set.SetDuration(duration);
             set.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleX", 1f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "scaleY", 1f),
-                    ObjectAnimator.OfFloat(this.LogoImage, "translationY", 0f)
-                    });
+                ObjectAnimator.OfFloat(this.LogoImage, "scaleX", 1f),
+                ObjectAnimator.OfFloat(this.LogoImage, "scaleY", 1f),
+                ObjectAnimator.OfFloat(this.LogoImage, "translationY", 0f)
+            });
             set.Start();
 
             AnimatorSet set2 = new AnimatorSet();
@@ -182,8 +184,8 @@ namespace AdMaiora.Chatty
             set2.SetTarget(this.InputLayout);
             set2.SetDuration(duration);
             set2.PlayTogether(new[] {
-                    ObjectAnimator.OfFloat(this.InputLayout, "translationY", 0f)
-                    });
+                ObjectAnimator.OfFloat(this.InputLayout, "translationY", 0f)
+            });
             set2.Start();
         }
 

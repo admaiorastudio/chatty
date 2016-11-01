@@ -25,6 +25,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>true</MtouchProfiling>
+    <CodesignKey>iPhone Developer: Francesco Colombo (H9JWRT77L7)</CodesignKey>
+    <CodesignProvision>d427c254-03b2-4aa1-bd84-249c31830b10</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -35,7 +37,8 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Francesco Colombo (EJ5V48D3MF)</CodesignKey>
+    <CodesignProvision>e533f874-f302-4517-b41f-c978e9418af7</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -46,6 +49,8 @@
     <MtouchArch>i386</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
+    <CodesignKey>iPhone Distribution: Francesco Colombo (EJ5V48D3MF)</CodesignKey>
+    <CodesignProvision>e533f874-f302-4517-b41f-c978e9418af7</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,11 +64,12 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>true</MtouchProfiling>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Francesco Colombo (H9JWRT77L7)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>d427c254-03b2-4aa1-bd84-249c31830b10</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdMaiora.AppKit.Core, Version=1.0.6115.23671, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AdMaiora.AppKit.Core, Version=1.0.6148.37478, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\Xamarin.iOS10\AdMaiora.AppKit.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -71,7 +77,7 @@
       <HintPath>..\..\packages\AdMaiora.AppKit.1.0.6\lib\Xamarin.iOS10\AdMaiora.AppKit.Core.iOS.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6117.28697, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6148.37518, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.4\lib\Xamarin.iOS10\AdMaiora.AppKit.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -200,6 +206,7 @@
     <InterfaceDefinition Include="Resources\Layouts\Registration0ViewController.xib" />
     <InterfaceDefinition Include="Resources\Layouts\Registration1ViewController.xib" />
     <InterfaceDefinition Include="Resources\Layouts\RegistrationDoneViewController.xib" />
+    <InterfaceDefinition Include="UI\ChatViewCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -242,12 +249,10 @@
     <Compile Include="UI\SubControllers\RegistrationDoneViewController.designer.cs">
       <DependentUpon>RegistrationDoneViewController.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="azure-messaging">
-      <Visible>False</Visible>
-      <Version>1.2.5.1</Version>
-    </XamarinComponentReference>
+    <Compile Include="UI\ChatViewCell.cs" />
+    <Compile Include="UI\ChatViewCell.designer.cs">
+      <DependentUpon>ChatViewCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chatty.Api\Chatty.Api.Core\Chatty.Api.Core.csproj">
@@ -259,7 +264,9 @@
       <Name>Chatty.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\Raws\sound_ding.wav" />
+  </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\button_send.png" />
     <BundleResource Include="Resources\icon_cat.png" />
@@ -277,6 +284,15 @@
     <BundleResource Include="Resources\image_cat.png" />
     <BundleResource Include="Resources\image_cat2.png" />
     <BundleResource Include="Resources\image_cat3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="azure-messaging">
+      <Visible>False</Visible>
+      <Version>1.2.5.1</Version>
+    </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Layouts\Cells\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
