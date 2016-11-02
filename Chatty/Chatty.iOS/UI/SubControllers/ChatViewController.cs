@@ -301,9 +301,7 @@ namespace AdMaiora.Chatty
 
                 // Ready to send new message
                 this.MessageText.Text = String.Empty;
-                AdjustMessageTextHeight();
-
-                PlaySound();
+                AdjustMessageTextHeight();                
             }
         }
 
