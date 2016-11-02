@@ -200,7 +200,7 @@ namespace AdMaiora.Chatty
             this.MessageText.Changed += MessageText_Changed;
 
             this.MessageList.RowHeight = UITableView.AutomaticDimension;
-            this.MessageList.EstimatedRowHeight = 90;            
+            this.MessageList.EstimatedRowHeight = 74;            
             this.MessageList.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             this.MessageList.BackgroundColor = ViewBuilder.ColorFromARGB(AppController.Colors.Snow);
             this.MessageList.TableFooterView = new UIView(CoreGraphics.CGRect.Empty);            
