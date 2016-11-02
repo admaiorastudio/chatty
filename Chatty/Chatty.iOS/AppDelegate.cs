@@ -63,7 +63,13 @@
 
             // Setup push notifications
             RegisterForRemoteNotifications(launchOptions);
-            
+
+            // Setup Facebook
+            Facebook.CoreKit.Settings.AppID = "1111406372229015";
+            Facebook.CoreKit.Settings.DisplayName = "Chatty";
+            Facebook.CoreKit.Profile.EnableUpdatesOnAccessTokenChange(true);
+            Facebook.CoreKit.ApplicationDelegate.SharedInstance.FinishedLaunching(application, launchOptions);
+
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
             return RegisterMainLauncher(new SplashViewController(), launchOptions);            

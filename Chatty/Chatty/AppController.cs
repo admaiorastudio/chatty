@@ -136,7 +136,7 @@
             public const int SplashScreenTimeout = 2000;
 
             // Base URL for service client endpoints
-            public const string ServicesBaseUrl = "http://chatty-api.azurewebsites.net/";            
+            public const string ServicesBaseUrl = "https://chatty-api.azurewebsites.net/";            
             // Default service client timeout in seconds
             public const int ServicesDefaultRequestTimeout = 60;
 
@@ -224,6 +224,7 @@
         {
             _services = new ServiceClient(servicePlatform, AppController.Globals.ServicesBaseUrl);
             _services.RequestTimeout = AppController.Globals.ServicesDefaultRequestTimeout;
+            _services.AccessTokenName = "x-zumo-auth";
         }
 
         #endregion

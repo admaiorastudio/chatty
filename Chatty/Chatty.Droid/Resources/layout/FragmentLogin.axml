@@ -25,7 +25,7 @@
             android:id="@+id/InputLayout"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/LogoImage"
-            android:layout_marginTop="64dp">
+            android:layout_marginTop="32dp">
             <EditText
                 android:layout_width="300dp"
                 android:layout_height="32dp"

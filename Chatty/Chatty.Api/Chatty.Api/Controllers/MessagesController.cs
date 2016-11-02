@@ -13,11 +13,12 @@
     using System.Configuration;
 
     using AdMaiora.Chatty.Api.Models;
-    using AdMaiora.Chatty.Api.DataObjects;    
+    using AdMaiora.Chatty.Api.DataObjects;
 
     using Microsoft.Azure.Mobile.Server;
     using Microsoft.Azure.Mobile.Server.Config;
     using Microsoft.Azure.NotificationHubs;
+    using System.Security.Claims;
 
     // Use the MobileAppController attribute for each ApiController you want to use  
     // from your mobile clients     
@@ -48,9 +49,6 @@
         [HttpPost, Route("messages/send")]
         public IHttpActionResult SendMessage(Poco.Message message)
         {
-            //if (!UsersController.IsAuthorized(this.Request))
-            //    return Unauthorized();
-
             if (string.IsNullOrWhiteSpace(message.Sender))
                 return BadRequest("The sender is not valid!");
 
@@ -61,8 +59,8 @@
             {
                 using (var ctx = new ChattyDbContext())
                 {
-                    string authAccessToken = UsersController.GetRequestAuthAccessToken(this.Request);
-                    User user = ctx.Users.Single(x => x.AuthAccessToken == authAccessToken);
+                    string email = (this.User as ClaimsPrincipal).FindFirst(ClaimTypes.Email).Value;                    
+                    User user = ctx.Users.Single(x => x.Email == email);
                     user.LastActiveDate = DateTime.Now.ToUniversalTime();
 
                     Message m = new Message { Content = message.Content, Sender = message.Sender, SendDate = DateTime.Now.ToUniversalTime() };
@@ -105,9 +103,6 @@
         [HttpGet, Route("messages/new")]
         public IHttpActionResult GetNewMessages(int lastMessageId, string me)
         {
-            //if (!UsersController.IsAuthorized(this.Request))
-            //    return Unauthorized();
-
             if (lastMessageId == 0)
                 return InternalServerError(new InvalidOperationException("Invalid message Id"));
 
@@ -115,8 +110,8 @@
             {
                 using (var ctx = new ChattyDbContext())
                 {
-                    string authAccessToken = UsersController.GetRequestAuthAccessToken(this.Request);
-                    User user = ctx.Users.Single(x => x.AuthAccessToken == authAccessToken);
+                    string email = (this.User as ClaimsPrincipal).FindFirst(ClaimTypes.Email).Value;
+                    User user = ctx.Users.Single(x => x.Email == email);
                     user.LastActiveDate = DateTime.Now.ToUniversalTime();
                     ctx.SaveChanges();
 

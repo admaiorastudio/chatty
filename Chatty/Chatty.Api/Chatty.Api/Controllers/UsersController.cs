@@ -46,7 +46,10 @@
         // Numbers of logged user limit 
         public const int USERS_MAX_LOGGED = 50;
         // Interval to consider an user active (in minutes)
-        public const int USERS_MAX_INACTIVE_TIME = 30;        
+        public const int USERS_MAX_INACTIVE_TIME = 30;
+
+        public const string JWT_SECURITY_TOKEN_AUDIENCE = "https://chatty-api.azurewebsites.net/";
+        public const string JWT_SECURITY_TOKEN_ISSUER = "https://chatty-api.azurewebsites.net/";
 
         private NotificationHubClient _nhclient;
 
@@ -196,7 +199,7 @@
                 return InternalServerError(ex);
             }
         }
-
+        
         [HttpPost, Route("users/login")]
         public IHttpActionResult LoginUser(Poco.User credentials)
         {
@@ -512,36 +515,6 @@
         }
 
         [Authorize]
-        [HttpPost, Route("users/logout")]
-        public IHttpActionResult LogoutUser(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                return BadRequest("The email is not valid!");
-
-            try
-            {
-                using (var ctx = new ChattyDbContext())
-                {
-                    User user = ctx.Users.SingleOrDefault(x => x.Email == email);
-                    if (user == null)
-                        return Unauthorized();
-
-                    user.LoginDate = null;
-                    user.LastActiveDate = null;
-                    user.AuthAccessToken = null;
-                    user.AuthExpirationDate = null;
-                    ctx.SaveChanges();
-
-                    return Ok();
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        [Authorize]
         [HttpGet, Route("users/active")]
         public IHttpActionResult GetActiveUsers()
         {
@@ -578,9 +551,13 @@
                 new Claim(JwtRegisteredClaimNames.Email, email),
             };
 
+            // The WEBSITE_AUTH_SIGNING_KEY variable will be only available when
+            // you enable App Service Authentication in your App Service from the Azure back end
+            https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-dotnet-backend-how-to-use-server-sdk/#how-to-work-with-authentication
+
             var signingKey = Environment.GetEnvironmentVariable("WEBSITE_AUTH_SIGNING_KEY");
-            var audience = "https://chatty-api.azurewebsites.net/";
-            var issuer = "https://chatty-api.azurewebsites.net/";
+            var audience = UsersController.JWT_SECURITY_TOKEN_AUDIENCE;
+            var issuer = UsersController.JWT_SECURITY_TOKEN_ISSUER;
             
             var token = AppServiceLoginHandler.CreateToken(
                 claims,
@@ -591,31 +568,6 @@
                 );
 
             return token;
-        }
-
-        //public static bool IsAuthorized(HttpRequestMessage request)
-        //{
-        //    string authAccessToken = request.GetHeaderOrDefault("Authorization");
-        //    if (String.IsNullOrWhiteSpace(authAccessToken))
-        //        return false;
-
-        //    using (var ctx = new ChattyDbContext())
-        //    {
-        //        User user = ctx.Users.SingleOrDefault(x => x.AuthAccessToken == authAccessToken);
-        //        if (user == null)
-        //            return false;
-
-        //        if (DateTime.Now > user.AuthExpirationDate)
-        //            return false;
-
-        //        return true;
-        //    }
-        //}
-
-        public static string GetRequestAuthAccessToken(HttpRequestMessage request)
-        {
-            string authAccessToken = request.GetHeaderOrDefault("Authorization");
-            return authAccessToken;
         }
 
         #endregion
