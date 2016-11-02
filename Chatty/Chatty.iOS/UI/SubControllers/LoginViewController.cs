@@ -40,15 +40,17 @@
         private CancellationTokenSource _cts1;
 
         #endregion
-
+        
         #region Constructors
 
         public LoginViewController()
             : base("LoginViewController", null)
         {
+            _lm = new LoginManager();
         }
 
         #endregion
+        
 
         #region Properties
 

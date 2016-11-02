@@ -212,10 +212,18 @@ namespace AdMaiora.Chatty
             WaitConnection();
         }
 
-        public bool ViewWillPop()
+        public override bool BarButtonItemSelected(int index)
         {
-            QuitChat();
-            return true;
+            switch(index)
+            {
+                case UISubViewController.BarButtonBack:
+                    QuitChat();
+                    return true;
+
+                default:
+                    return base.BarButtonItemSelected(index);
+            }
+            
         }
 
         public override void ViewWillDisappear(bool animated)

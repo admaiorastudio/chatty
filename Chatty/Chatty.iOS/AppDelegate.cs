@@ -157,6 +157,13 @@
             PushNotificationReceived?.Invoke(this, new PushEventArgs(action, payload));
         }
 
+        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        {
+            // We need to handle URLs by passing them to FBSession in order for SSO authentication
+            // to work.                                        
+            return Facebook.CoreKit.ApplicationDelegate.SharedInstance.OpenUrl(application, url, sourceApplication, annotation);
+        }
+
         #endregion
 
         #region Azure Methods
