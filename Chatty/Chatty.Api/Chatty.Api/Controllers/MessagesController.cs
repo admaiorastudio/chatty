@@ -44,11 +44,12 @@
 
         #region Messages Endpoint Methods
 
+        [Authorize]
         [HttpPost, Route("messages/send")]
-        public IHttpActionResult SendMessage([FromBody] Poco.Message message)
+        public IHttpActionResult SendMessage(Poco.Message message)
         {
-            if (!UsersController.IsAuthorized(this.Request))
-                return Unauthorized();
+            //if (!UsersController.IsAuthorized(this.Request))
+            //    return Unauthorized();
 
             if (string.IsNullOrWhiteSpace(message.Sender))
                 return BadRequest("The sender is not valid!");
@@ -100,11 +101,12 @@
             }
         }
 
+        [Authorize]
         [HttpGet, Route("messages/new")]
         public IHttpActionResult GetNewMessages(int lastMessageId, string me)
         {
-            if (!UsersController.IsAuthorized(this.Request))
-                return Unauthorized();
+            //if (!UsersController.IsAuthorized(this.Request))
+            //    return Unauthorized();
 
             if (lastMessageId == 0)
                 return InternalServerError(new InvalidOperationException("Invalid message Id"));

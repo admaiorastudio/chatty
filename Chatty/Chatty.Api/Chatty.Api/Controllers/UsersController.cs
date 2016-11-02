@@ -15,16 +15,21 @@
     using System.Data.Entity;
     using System.Threading.Tasks;
     using System.Configuration;
+    using System.Security.Claims;
 
     using AdMaiora.Chatty.Api.Models;
-    using AdMaiora.Chatty.Api.DataObjects;    
+    using AdMaiora.Chatty.Api.DataObjects;
+
+    using RestSharp;
 
     using Microsoft.Azure.Mobile.Server;
     using Microsoft.Azure.Mobile.Server.Config;
+    using Microsoft.Azure.Mobile.Server.Login;
     using Microsoft.Azure.NotificationHubs;
 
     using SendGrid;
-    using SendGrid.Helpers.Mail;    
+    using SendGrid.Helpers.Mail;
+    using System.IdentityModel.Tokens;
 
     // Use the MobileAppController attribute for each ApiController you want to use  
     // from your mobile clients     
@@ -60,7 +65,7 @@
         #region Users Endpoint Methods
 
         [HttpPost, Route("users/register")]
-        public async Task<IHttpActionResult> RegisterUser([FromBody] Poco.User credentials)
+        public async Task<IHttpActionResult> RegisterUser(Poco.User credentials)
         {
             if (string.IsNullOrWhiteSpace(credentials.Email))
                 return BadRequest("The email is not valid!");
@@ -112,7 +117,7 @@
         }
 
         [HttpPost, Route("users/verify")]
-        public async Task<IHttpActionResult> VerifyUser([FromBody] Poco.User credentials)
+        public async Task<IHttpActionResult> VerifyUser(Poco.User credentials)
         {
             if (string.IsNullOrWhiteSpace(credentials.Email))
                 return BadRequest("The email is not valid!");
@@ -181,7 +186,7 @@
                     IHttpActionResult response;
                     //we want a 303 with the ability to set location
                     HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.RedirectMethod);
-                    responseMsg.Headers.Location = new Uri("http://www.admaiorastudio.com/chatty/chatty.php");
+                    responseMsg.Headers.Location = new Uri("http://www.admaiorastudio.com/chatty.php");
                     response = ResponseMessage(responseMsg);
                     return response;
                 }
@@ -193,7 +198,7 @@
         }
 
         [HttpPost, Route("users/login")]
-        public IHttpActionResult LoginUser([FromBody] Poco.User credentials)
+        public IHttpActionResult LoginUser(Poco.User credentials)
         {
             if (string.IsNullOrWhiteSpace(credentials.Email))
                 return BadRequest("The email is not valid!");
@@ -211,6 +216,9 @@
 
                     if (!user.IsConfirmed)
                         return InternalServerError(new InvalidOperationException("You must confirm your email first!"));
+
+                    if (!String.IsNullOrWhiteSpace(user.FacebookId) && user.Password == null)
+                        return InternalServerError(new InvalidOperationException("You must login via Facebook!"));
 
                     string p1 = FormsAuthentication.HashPasswordForStoringInConfigFile(user.Password, "MD5");
                     string p2 = FormsAuthentication.HashPasswordForStoringInConfigFile(credentials.Password, "MD5");
@@ -246,7 +254,7 @@
 
                     user.LoginDate = DateTime.Now.ToUniversalTime();
                     user.LastActiveDate = user.LoginDate;
-                    user.AuthAccessToken = Guid.NewGuid().ToString();
+                    user.AuthAccessToken = GetAuthenticationTokenForUser(user.Email).RawData;
                     user.AuthExpirationDate = DateTime.Now.AddDays(UsersController.AUTH_TOKEN_MAX_DURATION);
                     ctx.SaveChanges();
 
@@ -259,6 +267,150 @@
                             )), String.Concat("!", user.Email));
 
                     _nhclient.SendAppleNativeNotificationAsync(
+                        Newtonsoft.Json.JsonConvert.SerializeObject(Push.iOS.Make(
+                            "New user connected",
+                            String.Format("User {0} has joined the chat.", credentials.Email.Split('@')[0]),
+                            2,
+                            credentials.Email.Split('@')[0]
+                            )), String.Concat("!", user.Email));
+
+                    return Ok(Dto.Wrap(new Poco.User
+                    {
+                        UserId = user.UserId,
+                        Email = user.Email,
+                        LoginDate = user.LoginDate,
+                        AuthAccessToken = user.AuthAccessToken,
+                        AuthExpirationDate = user.AuthExpirationDate
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost, Route("users/login/fb")]
+        public async Task<IHttpActionResult> LoginUser(Facebook.Credentials credentials)
+        {
+            if (string.IsNullOrWhiteSpace(credentials.UserId))
+                return BadRequest("The Facebook User ID is not valid!");
+
+            if (string.IsNullOrWhiteSpace(credentials.Email))
+                return BadRequest("The email is not valid!");
+
+            if (string.IsNullOrWhiteSpace(credentials.Token))
+                return BadRequest("The Facebook token is not valid!");
+
+            try
+            {
+                RestClient c = new RestClient(new Uri("https://graph.facebook.com/"));
+
+                // To login via facebook token, we need first to validate the token passed
+                // To validate the token we must check if it belongs to our FB application
+                // Reference: http://stackoverflow.com/questions/5406859/facebook-access-token-server-side-validation-for-iphone-app
+
+                // Access token request
+                RestRequest tr = new RestRequest("oauth/access_token", Method.GET);
+                tr.AddParameter("client_id", ConfigurationManager.AppSettings["FB_APP_ID"]);
+                tr.AddParameter("client_secret", ConfigurationManager.AppSettings["FB_APP_SECRET"]);
+                tr.AddParameter("grant_type", "client_credentials");
+                var r1 = await c.ExecuteTaskAsync(tr);
+
+                if (r1.StatusCode != HttpStatusCode.OK)
+                    return InternalServerError(new InvalidOperationException("Unable to login via Facebook"));
+
+                if (String.IsNullOrWhiteSpace(r1.Content)
+                    || !r1.Content.Contains("access_token="))
+                {
+                    return InternalServerError(new InvalidOperationException("Unable to login via Facebook"));
+                }
+
+                string accessToken = r1.Content.Split('=')[1];
+
+                // Validation request
+                RestRequest vr = new RestRequest("debug_token", Method.GET);
+                vr.AddParameter("input_token", credentials.Token);
+                vr.AddParameter("access_token", accessToken);                
+                var r2 = await c.ExecuteTaskAsync<Facebook.DebugToken>(vr);
+                if (r2.StatusCode != HttpStatusCode.OK)
+                    return InternalServerError(new InvalidOperationException("Unable to login via Facebook"));
+                
+                if(r2.Data.data.app_id != ConfigurationManager.AppSettings["FB_APP_ID"]                    
+                    || r2.Data.data.user_id != credentials.UserId
+                    || !r2.Data.data.is_valid)
+                {
+                    return InternalServerError(new InvalidOperationException("Unable to login via Facebook"));
+                }
+
+                using (var ctx = new ChattyDbContext())
+                {
+                    // Check if we have already registered the user, if not this login method will take care of it
+                    User user = ctx.Users.SingleOrDefault(x => x.Email == credentials.Email);
+                    if (user == null)
+                    {
+                        user = new User
+                        {
+                            FacebookId = credentials.UserId,
+                            Email = credentials.Email,
+                            Password = null,
+                            Ticket = Guid.NewGuid().ToString(),
+                            IsConfirmed = true
+                        };
+
+                        ctx.Users.Add(user);
+                        ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        user.FacebookId = credentials.UserId;                        
+                        user.IsConfirmed = true;
+
+                        ctx.SaveChanges();
+                    }
+
+                    int activeUsers =
+                        ctx.Users.Count(x => x.LastActiveDate.HasValue
+                            && DbFunctions.DiffDays(DateTime.Now, x.AuthExpirationDate.Value) < UsersController.AUTH_TOKEN_MAX_DURATION);
+
+                    if (activeUsers == USERS_MAX_LOGGED)
+                    {
+                        // Check if we can kick out a user marked as not active
+                        User userToKick = ctx.Users
+                            .Where(x => x.LastActiveDate.HasValue)
+                            .Where(x => DbFunctions.DiffMinutes(DateTime.Now, x.LastActiveDate.Value) >= USERS_MAX_INACTIVE_TIME)
+                            .OrderBy(x => x.LastActiveDate.GetValueOrDefault())
+                            .SingleOrDefault();
+
+                        // We got a candidate?
+                        if (userToKick != null)
+                        {
+                            userToKick.LoginDate = null;
+                            userToKick.LastActiveDate = null;
+                            userToKick.AuthAccessToken = null;
+                            userToKick.AuthExpirationDate = null;
+                        }
+                        else
+                        {
+                            return InternalServerError(new InvalidOperationException("Max user logged reached. Please retry later!"));
+                        }
+                    }
+
+                    user.LoginDate = DateTime.Now.ToUniversalTime();
+                    user.LastActiveDate = user.LoginDate;
+                    user.AuthAccessToken = user.AuthAccessToken = GetAuthenticationTokenForUser(user.Email).RawData;
+                    user.AuthExpirationDate = DateTime.Now.AddDays(UsersController.AUTH_TOKEN_MAX_DURATION);
+                    ctx.SaveChanges();
+
+                    await _nhclient.SendGcmNativeNotificationAsync(
+                        Newtonsoft.Json.JsonConvert.SerializeObject(Push.Android.Make(
+                            "New user connected",
+                            String.Format("User {0} has joined the chat.", credentials.Email.Split('@')[0]),
+                            2,
+                            credentials.Email.Split('@')[0]
+                            )), String.Concat("!", user.Email));
+
+                    await _nhclient.SendAppleNativeNotificationAsync(
                         Newtonsoft.Json.JsonConvert.SerializeObject(Push.iOS.Make(
                             "New user connected",
                             String.Format("User {0} has joined the chat.", credentials.Email.Split('@')[0]),
@@ -359,12 +511,10 @@
             }
         }
 
+        [Authorize]
         [HttpPost, Route("users/logout")]
         public IHttpActionResult LogoutUser(string email)
         {
-            if (!UsersController.IsAuthorized(this.Request))
-                return Unauthorized();
-
             if (string.IsNullOrWhiteSpace(email))
                 return BadRequest("The email is not valid!");
 
@@ -391,12 +541,10 @@
             }
         }
 
+        [Authorize]
         [HttpGet, Route("users/active")]
         public IHttpActionResult GetActiveUsers()
         {
-            if (!UsersController.IsAuthorized(this.Request))
-                return Unauthorized();
-
             try
             {
                 using (var ctx = new ChattyDbContext())
@@ -422,24 +570,47 @@
 
         #region Methods
 
-        public static bool IsAuthorized(HttpRequestMessage request)
+        private JwtSecurityToken GetAuthenticationTokenForUser(string email)
         {
-            string authAccessToken = request.GetHeaderOrDefault("Authorization");
-            if (String.IsNullOrWhiteSpace(authAccessToken))
-                return false;
-
-            using (var ctx = new ChattyDbContext())
+            var claims = new Claim[]
             {
-                User user = ctx.Users.SingleOrDefault(x => x.AuthAccessToken == authAccessToken);
-                if (user == null)
-                    return false;
+                new Claim(JwtRegisteredClaimNames.Sub, email.Split('@')[0]),
+                new Claim(JwtRegisteredClaimNames.Email, email),
+            };
 
-                if (DateTime.Now > user.AuthExpirationDate)
-                    return false;
+            var signingKey = Environment.GetEnvironmentVariable("WEBSITE_AUTH_SIGNING_KEY");
+            var audience = "https://chatty-api.azurewebsites.net/";
+            var issuer = "https://chatty-api.azurewebsites.net/";
+            
+            var token = AppServiceLoginHandler.CreateToken(
+                claims,
+                signingKey,
+                audience,
+                issuer,
+                TimeSpan.FromHours(24)
+                );
 
-                return true;
-            }
+            return token;
         }
+
+        //public static bool IsAuthorized(HttpRequestMessage request)
+        //{
+        //    string authAccessToken = request.GetHeaderOrDefault("Authorization");
+        //    if (String.IsNullOrWhiteSpace(authAccessToken))
+        //        return false;
+
+        //    using (var ctx = new ChattyDbContext())
+        //    {
+        //        User user = ctx.Users.SingleOrDefault(x => x.AuthAccessToken == authAccessToken);
+        //        if (user == null)
+        //            return false;
+
+        //        if (DateTime.Now > user.AuthExpirationDate)
+        //            return false;
+
+        //        return true;
+        //    }
+        //}
 
         public static string GetRequestAuthAccessToken(HttpRequestMessage request)
         {

@@ -21,8 +21,13 @@ namespace AdMaiora.Chatty
 
     using AdMaiora.AppKit.UI;
 
+    using Xamarin.Facebook;
+    using Xamarin.Facebook.Login;    
+
+    using Org.Json;
+
     #pragma warning disable CS4014
-    public class LoginFragment : AdMaiora.AppKit.UI.App.Fragment
+    public class LoginFragment : AdMaiora.AppKit.UI.App.Fragment, IFacebookCallback, GraphRequest.IGraphJSONObjectCallback
     {
         #region Inner Classes
         #endregion
@@ -31,6 +36,9 @@ namespace AdMaiora.Chatty
 
         private string _email;
         private string _password;
+
+        // This is FB SDK stuff        
+        private ICallbackManager _callbackManager;
 
         // This flag check if we are already calling the login REST service
         private bool _isLogginUser;
@@ -41,7 +49,6 @@ namespace AdMaiora.Chatty
         private bool _isConfirmingUser;
         // This cancellation token is used to cancel the rest login request
         private CancellationTokenSource _cts1;
-
 
         #endregion
 
@@ -62,6 +69,9 @@ namespace AdMaiora.Chatty
         [Widget]
         private Button LoginButton;
 
+        [Widget]
+        private Button FacebookLoginButton;
+    
         [Widget]
         private Button RegisterButton;
 
@@ -87,6 +97,8 @@ namespace AdMaiora.Chatty
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            _callbackManager = CallbackManagerFactory.Create();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -110,6 +122,8 @@ namespace AdMaiora.Chatty
             this.PasswordText.EditorAction += PasswordText_EditorAction;
 
             this.LoginButton.Click += LoginButton_Click;
+
+            this.FacebookLoginButton.Click += FacebookLoginButton_Click;
 
             this.RegisterButton.Click += RegisterButton_Click;
 
@@ -173,6 +187,13 @@ namespace AdMaiora.Chatty
             set2.Start();
         }
 
+        public override void OnActivityResult(int requestCode, int resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            _callbackManager.OnActivityResult(requestCode, (int)resultCode, data);
+        }
+
         public override void OnDestroyView()
         {
             base.OnDestroyView();
@@ -186,10 +207,90 @@ namespace AdMaiora.Chatty
             StopNotifyKeyboardStatus();
 
             this.PasswordText.EditorAction -= PasswordText_EditorAction;
-
             this.LoginButton.Click -= LoginButton_Click;
-
+            this.FacebookLoginButton.Click -= FacebookLoginButton_Click;
             this.RegisterButton.Click -= RegisterButton_Click;
+            this.VerifyButton.Click -= VerifyButton_Click;
+        }
+
+        #endregion
+
+        #region Facebook Methods
+
+        public void OnSuccess(Java.Lang.Object result)
+        {
+            // Login Success
+
+            if (AccessToken.CurrentAccessToken == null)
+                return;
+
+            GetFacebookData();
+        }
+
+        public void OnCancel()
+        {
+            // Login Cancelled
+            ((MainActivity)this.Activity).UnblockUI();
+        }
+
+        public void OnError(FacebookException ex)
+        {
+            // Login Error
+            ((MainActivity)this.Activity).UnblockUI();
+        }
+
+        public void OnCompleted(JSONObject json, GraphResponse response)
+        {                        
+            try
+            {
+                string fbId = json.GetString("id");
+                string fbToken = AccessToken.CurrentAccessToken.Token;
+                string fbEmail = json.GetString("email");
+
+                _email = fbEmail;
+
+                // Create a new cancellation token for this request                
+                _cts0 = new CancellationTokenSource();
+                AppController.LoginUser(_cts0, fbId, fbEmail, fbToken,
+                    // Service call success                 
+                    (data) =>
+                    {
+                        AppController.Settings.LastLoginUsernameUsed = _email;
+                        AppController.Settings.AuthAccessToken = data.AuthAccessToken;
+                        AppController.Settings.AuthExpirationDate = data.AuthExpirationDate.GetValueOrDefault().ToLocalTime();
+
+                        ((ChattyApplication)this.Activity.Application).RegisterToNotificationsHub();
+
+                        var f = new ChatFragment();
+                        f.Arguments = new Bundle();
+                        f.Arguments.PutString("Email", _email);
+                        this.FragmentManager.BeginTransaction()
+                            .AddToBackStack("BeforeChatFragment")
+                            .Replace(Resource.Id.ContentLayout, f, "ChatFragment")
+                            .Commit();
+                    },
+                    // Service call error
+                    (error) =>
+                    {
+                        Toast.MakeText(this.Activity.Application, error, ToastLength.Long).Show();
+                    },
+                    // Service call finished 
+                    () =>
+                    {                       
+                        // Allow user to tap views
+                        ((MainActivity)this.Activity).UnblockUI();
+                    });
+            }
+            catch (Exception ex)
+            {
+                ((MainActivity)this.Activity).UnblockUI();
+
+                Toast.MakeText(this.Activity.ApplicationContext, "Error", ToastLength.Long).Show();                
+            }
+            finally
+            {
+                LoginManager.Instance.LogOut();
+            }
         }
 
         #endregion
@@ -313,6 +414,23 @@ namespace AdMaiora.Chatty
             return true;
         }
 
+        private void LoginInFacebook()
+        {
+            ((MainActivity)this.Activity).BlockUI();
+
+            LoginManager.Instance.RegisterCallback(_callbackManager, this);
+            LoginManager.Instance.LogInWithReadPermissions(this, new[] { "public_profile", "email" });
+        }
+
+        private void GetFacebookData()
+        {
+            GraphRequest request = GraphRequest.NewMeRequest(AccessToken.CurrentAccessToken, this);
+            Bundle param = new Bundle();
+            param.PutString("fields", "id,name,email");
+            request.Parameters = param;
+            request.ExecuteAsync();
+        }
+
         #endregion
 
         #region Event Handlers     
@@ -334,6 +452,13 @@ namespace AdMaiora.Chatty
             LoginUser();
 
             DismissKeyboard();            
+        }
+
+        private void FacebookLoginButton_Click(object sender, EventArgs e)
+        {
+            LoginInFacebook();
+
+            DismissKeyboard();
         }
 
         private void RegisterButton_Click(object sender, EventArgs e)

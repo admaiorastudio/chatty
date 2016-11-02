@@ -76,6 +76,9 @@
 
             // Setup push notifications
             RegisterForRemoteNotifications(AppController.Globals.GoogleGcmSenderID);
+
+            // Setup Facebook
+            Xamarin.Facebook.FacebookSdk.SdkInitialize(this.ApplicationContext);
         }
 
         public override void OnResume()

@@ -53,7 +53,7 @@
                     TokenHandler = config.GetAppServiceTokenHandler()
                 });
             }
-            app.UseWebApi(config);
+            app.UseWebApi(config);            
         }
     }
 
