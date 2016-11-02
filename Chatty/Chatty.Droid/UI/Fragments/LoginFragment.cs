@@ -144,9 +144,9 @@ namespace AdMaiora.Chatty
             set1.SetTarget(this.LogoImage);
             set1.SetDuration(duration);
             set1.PlayTogether(new[] {
-                ObjectAnimator.OfFloat(this.LogoImage, "scaleX", .5f),
-                ObjectAnimator.OfFloat(this.LogoImage, "scaleY", .5f),
-                ObjectAnimator.OfFloat(this.LogoImage, "translationY", ViewBuilder.AsPixels(-38f))
+                ObjectAnimator.OfFloat(this.LogoImage, "scaleX", .45f),
+                ObjectAnimator.OfFloat(this.LogoImage, "scaleY", .45f),
+                ObjectAnimator.OfFloat(this.LogoImage, "translationY", ViewBuilder.AsPixels(-58f))
             });
             set1.Start();
 
