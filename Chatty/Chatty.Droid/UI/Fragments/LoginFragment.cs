@@ -22,8 +22,7 @@ namespace AdMaiora.Chatty
     using AdMaiora.AppKit.UI;
 
     using Xamarin.Facebook;
-    using Xamarin.Facebook.Login;
-    using Xamarin.Facebook.Login.Widget;
+    using Xamarin.Facebook.Login;    
 
     using Org.Json;
 
@@ -38,8 +37,7 @@ namespace AdMaiora.Chatty
         private string _email;
         private string _password;
 
-        // This is FB SDK stuff
-        private string _facebookId;        
+        // This is FB SDK stuff        
         private ICallbackManager _callbackManager;
 
         // This flag check if we are already calling the login REST service
@@ -242,19 +240,56 @@ namespace AdMaiora.Chatty
         }
 
         public void OnCompleted(JSONObject json, GraphResponse response)
-        {
-            LoginManager.Instance.LogOut();
-
+        {                        
             try
             {
-                _email = json.GetString("email");
-                _facebookId = json.GetString("id");                
+                string fbId = json.GetString("id");
+                string fbToken = AccessToken.CurrentAccessToken.Token;
+                string fbEmail = json.GetString("email");
+
+                _email = fbEmail;
+
+                // Create a new cancellation token for this request                
+                _cts0 = new CancellationTokenSource();
+                AppController.LoginUser(_cts0, fbId, fbEmail, fbToken,
+                    // Service call success                 
+                    (data) =>
+                    {
+                        AppController.Settings.LastLoginUsernameUsed = _email;
+                        AppController.Settings.AuthAccessToken = data.AuthAccessToken;
+                        AppController.Settings.AuthExpirationDate = data.AuthExpirationDate.GetValueOrDefault().ToLocalTime();
+
+                        ((ChattyApplication)this.Activity.Application).RegisterToNotificationsHub();
+
+                        var f = new ChatFragment();
+                        f.Arguments = new Bundle();
+                        f.Arguments.PutString("Email", _email);
+                        this.FragmentManager.BeginTransaction()
+                            .AddToBackStack("BeforeChatFragment")
+                            .Replace(Resource.Id.ContentLayout, f, "ChatFragment")
+                            .Commit();
+                    },
+                    // Service call error
+                    (error) =>
+                    {
+                        Toast.MakeText(this.Activity.Application, error, ToastLength.Long).Show();
+                    },
+                    // Service call finished 
+                    () =>
+                    {                       
+                        // Allow user to tap views
+                        ((MainActivity)this.Activity).UnblockUI();
+                    });
             }
             catch (Exception ex)
             {
                 ((MainActivity)this.Activity).UnblockUI();
 
                 Toast.MakeText(this.Activity.ApplicationContext, "Error", ToastLength.Long).Show();                
+            }
+            finally
+            {
+                LoginManager.Instance.LogOut();
             }
         }
 
@@ -419,6 +454,13 @@ namespace AdMaiora.Chatty
             DismissKeyboard();            
         }
 
+        private void FacebookLoginButton_Click(object sender, EventArgs e)
+        {
+            LoginInFacebook();
+
+            DismissKeyboard();
+        }
+
         private void RegisterButton_Click(object sender, EventArgs e)
         {            
             var f = new Registration0Fragment();            
@@ -433,13 +475,6 @@ namespace AdMaiora.Chatty
         private void VerifyButton_Click(object sender, EventArgs e)
         {
             VerifyUser();
-
-            DismissKeyboard();
-        }
-
-        private void FacebookLoginButton_Click(object sender, EventArgs e)
-        {
-            LoginInFacebook();
 
             DismissKeyboard();
         }

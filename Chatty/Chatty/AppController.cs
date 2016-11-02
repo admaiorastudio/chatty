@@ -336,6 +336,64 @@
             }
         }
 
+        public static async Task LoginUser(CancellationTokenSource cts,
+            string fbId,
+            string fbEmail,
+            string fbToken,            
+            Action<Poco.User> success,
+            Action<string> error,
+            Action finished)
+        {
+            try
+            {
+                var response = await _services.Request<Dto.Response<Poco.User>>(
+                    // Resource to call
+                    "users/login/fb",
+                    // HTTP method
+                    Method.POST,
+                    // Cancellation token
+                    cts.Token,
+                    // Content Type,
+                    RequestContentType.ApplicationJson,
+                    // Payload
+                    new
+                    {
+                        UserId = fbId,
+                        Email = fbEmail,
+                        Token = fbToken
+                    });
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string accessToken = response.Data.Content.AuthAccessToken;
+                    DateTime accessExpirationDate = response.Data.Content.AuthExpirationDate.GetValueOrDefault().ToLocalTime();
+
+                    // Refresh access token for further service calls
+                    _services.RefreshAccessToken(accessToken, accessExpirationDate);
+
+                    if (success != null)
+                        success(response.Data.Content);
+                }
+                else
+                {
+                    if (error != null)
+                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+
+                if (error != null)
+                    error("Internal error :(");
+            }
+            finally
+            {
+                if (finished != null)
+                    finished();
+            }
+        }
+
         public static async Task VerifyUser(CancellationTokenSource cts,
             string email,
             string password,
