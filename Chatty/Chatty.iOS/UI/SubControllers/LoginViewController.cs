@@ -105,11 +105,11 @@
                 () =>
                 {
                     this.LogoImage.Transform =
-                        CGAffineTransform.MakeScale(.5f, .5f) *
+                        CGAffineTransform.MakeScale(.45f, .45f) *
                         CGAffineTransform.MakeTranslation(0f, -38);
 
                     this.InputLayout.Transform =
-                        CGAffineTransform.MakeTranslation(0f, -110f);
+                        CGAffineTransform.MakeTranslation(0f, -84f);
                 },
                 () =>
                 {
@@ -351,7 +351,14 @@
         {
             ((MainViewController)this.MainViewController).BlockUI();
 
-            _lm.LogInWithReadPermissions(new[] { "public_profile", "email" }, this, LoginRequestHandler);
+            if(AccessToken.CurrentAccessToken == null)
+            {
+                _lm.LogInWithReadPermissions(new[] { "public_profile", "email" }, this, LoginRequestHandler);
+            }
+            else
+            {
+                GetFacebookData();
+            }
         }
 
         private void GetFacebookData()
