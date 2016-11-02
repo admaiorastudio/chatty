@@ -16,6 +16,9 @@ namespace AdMaiora.Chatty
 		UIKit.UITextField EmailText { get; set; }
 
 		[Outlet]
+		UIKit.UIButton FacebookLoginButton { get; set; }
+
+		[Outlet]
 		UIKit.UIView InputLayout { get; set; }
 
 		[Outlet]
@@ -38,6 +41,21 @@ namespace AdMaiora.Chatty
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (EmailText != null) {
+				EmailText.Dispose ();
+				EmailText = null;
+			}
+
+			if (InputLayout != null) {
+				InputLayout.Dispose ();
+				InputLayout = null;
+			}
+
+			if (LoginButton != null) {
+				LoginButton.Dispose ();
+				LoginButton = null;
+			}
+
 			if (LoginLayout != null) {
 				LoginLayout.Dispose ();
 				LoginLayout = null;
@@ -48,24 +66,9 @@ namespace AdMaiora.Chatty
 				LogoImage = null;
 			}
 
-			if (InputLayout != null) {
-				InputLayout.Dispose ();
-				InputLayout = null;
-			}
-
-			if (EmailText != null) {
-				EmailText.Dispose ();
-				EmailText = null;
-			}
-
 			if (PasswordText != null) {
 				PasswordText.Dispose ();
 				PasswordText = null;
-			}
-
-			if (LoginButton != null) {
-				LoginButton.Dispose ();
-				LoginButton = null;
 			}
 
 			if (RegisterButton != null) {
@@ -76,6 +79,11 @@ namespace AdMaiora.Chatty
 			if (VerifyButton != null) {
 				VerifyButton.Dispose ();
 				VerifyButton = null;
+			}
+
+			if (FacebookLoginButton != null) {
+				FacebookLoginButton.Dispose ();
+				FacebookLoginButton = null;
 			}
 		}
 	}
