@@ -16,7 +16,7 @@
     using Facebook.CoreKit;
     using Facebook.LoginKit;
 
-#pragma warning disable CS4014
+    #pragma warning disable CS4014
     public partial class LoginViewController : AdMaiora.AppKit.UI.App.UISubViewController
     {
         #region Inner Classes
@@ -84,6 +84,8 @@
 
             this.LoginButton.TouchUpInside += LoginButton_TouchUpInside;
 
+            this.FacebookLoginButton.TouchUpInside += FacebookLoginButton_TouchUpInside;
+
             this.RegisterButton.TouchUpInside += RegisterButton_TouchUpInside;
 
             this.VerifyButton.Hidden = true;
@@ -147,11 +149,9 @@
             StopNotifyKeyboardStatus();
 
             this.PasswordText.ShouldReturn -= PasswordText_ShouldReturn;
-
             this.LoginButton.TouchUpInside -= LoginButton_TouchUpInside;
-
-            this.RegisterButton.TouchUpInside -= RegisterButton_TouchUpInside;
-                       
+            this.FacebookLoginButton.TouchUpInside -= FacebookLoginButton_TouchUpInside;
+            this.RegisterButton.TouchUpInside -= RegisterButton_TouchUpInside;                       
             this.VerifyButton.TouchUpInside -= VerifyButton_TouchUpInside;
         }
 
