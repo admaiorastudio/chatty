@@ -9,12 +9,14 @@
     using Microsoft.Azure.Mobile.Server;
     using Microsoft.Azure.Mobile.Server.Authentication;
     using Microsoft.Azure.Mobile.Server.Config;
-
+       
     using Owin;
 
     using AdMaiora.Chatty.Api.DataObjects;
     using AdMaiora.Chatty.Api.Models;
 
+    using Swashbuckle.Application;
+  
     public partial class Startup
     {
         public static void ConfigureMobileApp(IAppBuilder app)
@@ -25,6 +27,7 @@
             config.EnableSystemDiagnosticsTracing();
             config.MapHttpAttributeRoutes();
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+            config.EnableSwagger(x => x.SingleApiVersion("v1", "AdMaiora.Chatty.Api")).EnableSwaggerUi();
 
             new MobileAppConfiguration()
                 .UseDefaultConfiguration()
@@ -50,7 +53,7 @@
                     TokenHandler = config.GetAppServiceTokenHandler()
                 });
             }
-            app.UseWebApi(config);
+            app.UseWebApi(config);            
         }
     }
 

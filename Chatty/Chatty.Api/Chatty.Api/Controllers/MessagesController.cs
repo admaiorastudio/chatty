@@ -10,6 +10,7 @@
     using System.IO;
     using System.Web;
     using System.Linq;
+    using System.Configuration;
 
     using AdMaiora.Chatty.Api.Models;
     using AdMaiora.Chatty.Api.DataObjects;    
@@ -36,18 +37,19 @@
         public MessagesController()
         {            
             _nhclient = NotificationHubClient.CreateClientFromConnectionString(
-                "Endpoint=sb://admaiora.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=Bee6TFs/KoDfbzMMtzUSJ7vJ00Pk7/uPOX4qpK80AKs=", "Chatty");
+                ConfigurationManager.ConnectionStrings["MS_NotificationHubConnectionString"].ConnectionString, "Chatty");
         }
 
         #endregion
 
         #region Messages Endpoint Methods
 
+        [Authorize]
         [HttpPost, Route("messages/send")]
-        public IHttpActionResult SendMessage([FromBody] Poco.Message message)
+        public IHttpActionResult SendMessage(Poco.Message message)
         {
-            if (!UsersController.IsAuthorized(this.Request))
-                return Unauthorized();
+            //if (!UsersController.IsAuthorized(this.Request))
+            //    return Unauthorized();
 
             if (string.IsNullOrWhiteSpace(message.Sender))
                 return BadRequest("The sender is not valid!");
@@ -76,6 +78,14 @@
                             m.MessageId.ToString()
                     )), String.Concat("!", user.Email));
 
+                    _nhclient.SendAppleNativeNotificationAsync(
+                        Newtonsoft.Json.JsonConvert.SerializeObject(Push.iOS.Make(
+                            "New messages",
+                            "You have new unread messages!",
+                            1,
+                            m.MessageId.ToString()
+                    )), String.Concat("!", user.Email));
+
                     return Ok(Dto.Wrap(new Poco.Message
                     {
                         MessageId = m.MessageId,
@@ -91,11 +101,12 @@
             }
         }
 
+        [Authorize]
         [HttpGet, Route("messages/new")]
         public IHttpActionResult GetNewMessages(int lastMessageId, string me)
         {
-            if (!UsersController.IsAuthorized(this.Request))
-                return Unauthorized();
+            //if (!UsersController.IsAuthorized(this.Request))
+            //    return Unauthorized();
 
             if (lastMessageId == 0)
                 return InternalServerError(new InvalidOperationException("Invalid message Id"));
@@ -132,51 +143,6 @@
                 return InternalServerError(ex);
             }
         }
-
-        //[HttpGet, Route("messages/new")]
-        //public IHttpActionResult GetNewMessages(DateTime? moment, string me)
-        //{
-        //    if (!UsersController.IsAuthorized(this.Request))
-        //        return Unauthorized();
-
-        //    DateTime from = moment.GetValueOrDefault(DateTime.Now);
-        //    if (from == default(DateTime))
-        //        from = DateTime.Now.ToUniversalTime();
-
-        //    DateTime now = DateTime.Now.ToUniversalTime();
-
-        //    try
-        //    {
-        //        using (var ctx = new ChattyDbContext())
-        //        {
-        //            string authAccessToken = UsersController.GetRequestAuthAccessToken(this.Request);
-        //            User user = ctx.Users.Single(x => x.AuthAccessToken == authAccessToken);
-        //            user.LastActiveDate = DateTime.Now.ToUniversalTime();
-        //            ctx.SaveChanges();
-
-        //            return Ok(Dto.Wrap(new Poco.Bulk
-        //            {
-        //                Messages = ctx.Messages
-        //                .Where(x => x.Sender != me && x.SendDate >= from && x.SendDate <= now)
-        //                .Select(x => new Poco.Message
-        //                {
-        //                    MessageId = x.MessageId,
-        //                    Content = x.Content,
-        //                    Sender = x.Sender,
-        //                    SendDate = x.SendDate
-        //                })
-        //                .ToArray(),
-
-        //                Moment = now
-
-        //            }));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return InternalServerError(ex);
-        //    }
-        //}
 
         #endregion
     }

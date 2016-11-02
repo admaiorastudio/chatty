@@ -14,6 +14,12 @@
             set;
         }
 
+        public string FacebookId
+        {
+            get;
+            set;
+        }
+
         public string Email
         {
             get;

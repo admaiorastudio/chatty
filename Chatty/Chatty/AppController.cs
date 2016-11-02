@@ -10,7 +10,39 @@
     using AdMaiora.AppKit.Data;
     using AdMaiora.AppKit.Services;
 
-    using AdMaiora.Chatty.Api;  
+    using AdMaiora.Chatty.Api;
+
+    public class PushEventArgs : EventArgs
+    {
+        public int Action
+        {
+            get;
+            private set;
+        }
+
+        public string Payload
+        {
+            get;
+            private set;
+        }
+
+        public Exception Error
+        {
+            get;
+            private set;
+        }
+
+        public PushEventArgs(int action, string payload)
+        {
+            this.Action = action;
+            this.Payload = payload;
+        }
+
+        public PushEventArgs(Exception error)
+        {
+            this.Error = error;
+        }
+    }
 
     public class AppSettings
     {
@@ -112,7 +144,7 @@
             public const string GoogleGcmSenderID = "294853768960";
 
             public const string AzureNHubName = "Chatty";
-            public const string AzureNHubConnectionString = "Endpoint=sb://admaiora.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=zLp5bXQbzoPvQ3959bwy01ufXUp95iEY0/U6TE+oCzM=";
+            public const string AzureNHubConnectionString = "Endpoint=sb://admaiora.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=C2SgrWbcyZ8lvpLdnUGVvwY7jia8HDFRKYhGRjXGB3s=";
         }
 
         public static class Colors
@@ -271,6 +303,64 @@
                     {
                         email = email,
                         password = password
+                    });
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string accessToken = response.Data.Content.AuthAccessToken;
+                    DateTime accessExpirationDate = response.Data.Content.AuthExpirationDate.GetValueOrDefault().ToLocalTime();
+
+                    // Refresh access token for further service calls
+                    _services.RefreshAccessToken(accessToken, accessExpirationDate);
+
+                    if (success != null)
+                        success(response.Data.Content);
+                }
+                else
+                {
+                    if (error != null)
+                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+
+                if (error != null)
+                    error("Internal error :(");
+            }
+            finally
+            {
+                if (finished != null)
+                    finished();
+            }
+        }
+
+        public static async Task LoginUser(CancellationTokenSource cts,
+            string fbId,
+            string fbEmail,
+            string fbToken,            
+            Action<Poco.User> success,
+            Action<string> error,
+            Action finished)
+        {
+            try
+            {
+                var response = await _services.Request<Dto.Response<Poco.User>>(
+                    // Resource to call
+                    "users/login/fb",
+                    // HTTP method
+                    Method.POST,
+                    // Cancellation token
+                    cts.Token,
+                    // Content Type,
+                    RequestContentType.ApplicationJson,
+                    // Payload
+                    new
+                    {
+                        UserId = fbId,
+                        Email = fbEmail,
+                        Token = fbToken
                     });
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)

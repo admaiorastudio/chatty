@@ -76,6 +76,17 @@
                 android:background="@drawable/image_button0"
                 android:fontFamily="sans-serif-light" />
             <Button
+                android:text="LOGIN WITH FACEBOOK"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:id="@+id/FacebookLoginButton"
+                android:layout_below="@+id/LoginButton"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-light"
+                android:background="#3b5998" />
+            <Button
                 android:text="I'm not registered!"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
@@ -83,7 +94,7 @@
                 android:background="@null"
                 android:textSize="20dp"
                 android:fontFamily="sans-serif-light"
-                android:layout_below="@+id/LoginButton"
+                android:layout_below="@+id/FacebookLoginButton"
                 android:layout_marginTop="24dp"
                 android:textColor="@color/color_snow" />
             <Button
