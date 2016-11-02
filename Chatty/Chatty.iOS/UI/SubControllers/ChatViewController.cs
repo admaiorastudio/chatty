@@ -9,11 +9,12 @@ namespace AdMaiora.Chatty
     using Foundation;
     using UIKit;
     using AudioToolbox;
+    using AVFoundation;
 
     using AdMaiora.AppKit.UI;
     using AdMaiora.AppKit.UI.App;
 
-    using AdMaiora.Chatty.Api;    
+    using AdMaiora.Chatty.Api;
 
     #pragma warning disable CS4014
     public partial class ChatViewController : AdMaiora.AppKit.UI.App.UISubViewController
@@ -332,13 +333,17 @@ namespace AdMaiora.Chatty
                     _email,
                     (data) =>
                     {
-                        if (cts.IsCancellationRequested)
+                        if ((cts?.IsCancellationRequested).GetValueOrDefault(true))
                             return;
 
                         lock (ReceiverLock)
                         {
-                            newMessages = data.Messages?.ToArray();
-                            _lastMessageId = (newMessages?.Last().MessageId).GetValueOrDefault(0);
+                            newMessages = data?.Messages?.ToArray();
+                            if(newMessages?.Length > 0) 
+                            {
+                                var lm = newMessages.Last();
+                                _lastMessageId = lm.MessageId;
+                            }
                         }
                     },
                     (error) =>
@@ -347,7 +352,7 @@ namespace AdMaiora.Chatty
                     },
                     () =>
                     {
-                        if (cts.IsCancellationRequested)
+                        if ((cts?.IsCancellationRequested).GetValueOrDefault(true))
                             return;
 
                         lock (ReceiverLock)
@@ -431,6 +436,7 @@ namespace AdMaiora.Chatty
 
         private void InitSound()
         {
+            AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.PlayAndRecord);
             _sound = SystemSound.FromFile(NSUrl.FromString(NSBundle.MainBundle.PathForResource("Raws/sound_ding", "wav")));
         }
 
