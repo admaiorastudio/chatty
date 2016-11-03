@@ -16,6 +16,7 @@
     using System.Threading.Tasks;
     using System.Configuration;
     using System.Security.Claims;
+    using System.IdentityModel.Tokens;
 
     using AdMaiora.Chatty.Api.Models;
     using AdMaiora.Chatty.Api.DataObjects;
@@ -28,8 +29,7 @@
     using Microsoft.Azure.NotificationHubs;
 
     using SendGrid;
-    using SendGrid.Helpers.Mail;
-    using System.IdentityModel.Tokens;
+    using SendGrid.Helpers.Mail;    
 
     // Use the MobileAppController attribute for each ApiController you want to use  
     // from your mobile clients     
@@ -98,7 +98,7 @@
                     Content content = new Content("text/plain",
                         String.Format("Hi {0},\n\nYou registration on Chatty is almost complete. Please click on this link to confirm your registration!\n\n{1}",
                         user.Email.Split('@')[0],
-                        String.Format("http://chatty-api.azurewebsites.net/users/confirm?ticket={0}", user.Ticket)));
+                        String.Format("https://chatty-api.azurewebsites.net/users/confirm?ticket={0}", user.Ticket)));
                     Mail mail = new Mail(from, subject, to, content);
 
                     dynamic response = await mc.client.mail.send.post(requestBody: mail.Get());
@@ -153,7 +153,7 @@
                     Content content = new Content("text/plain",
                         String.Format("Hi {0},\n\nYou registration on Chatty is almost complete. Please click on this link to confirm your registration!\n\n{1}",
                         user.Email.Split('@')[0],
-                        String.Format("http://chatty-api.azurewebsites.net/users/confirm?ticket={0}", user.Ticket)));
+                        String.Format("https://chatty-api.azurewebsites.net/users/confirm?ticket={0}", user.Ticket)));
                     Mail mail = new Mail(from, subject, to, content);
                  
                     dynamic response = await mc.client.mail.send.post(requestBody: mail.Get());
@@ -255,10 +255,11 @@
                         }
                     }
 
+                    var token = GetAuthenticationTokenForUser(user.Email);
                     user.LoginDate = DateTime.Now.ToUniversalTime();
                     user.LastActiveDate = user.LoginDate;
-                    user.AuthAccessToken = GetAuthenticationTokenForUser(user.Email).RawData;
-                    user.AuthExpirationDate = DateTime.Now.AddDays(UsersController.AUTH_TOKEN_MAX_DURATION);
+                    user.AuthAccessToken = token.RawData;
+                    user.AuthExpirationDate = token.ValidTo;
                     ctx.SaveChanges();
 
                     _nhclient.SendGcmNativeNotificationAsync(
@@ -399,10 +400,11 @@
                         }
                     }
 
+                    var token = GetAuthenticationTokenForUser(user.Email);
                     user.LoginDate = DateTime.Now.ToUniversalTime();
                     user.LastActiveDate = user.LoginDate;
-                    user.AuthAccessToken = user.AuthAccessToken = GetAuthenticationTokenForUser(user.Email).RawData;
-                    user.AuthExpirationDate = DateTime.Now.AddDays(UsersController.AUTH_TOKEN_MAX_DURATION);
+                    user.AuthAccessToken = token.RawData;
+                    user.AuthExpirationDate = token.ValidTo;
                     ctx.SaveChanges();
 
                     await _nhclient.SendGcmNativeNotificationAsync(
@@ -564,7 +566,7 @@
                 signingKey,
                 audience,
                 issuer,
-                TimeSpan.FromHours(24)
+                TimeSpan.FromDays(UsersController.AUTH_TOKEN_MAX_DURATION)
                 );
 
             return token;
