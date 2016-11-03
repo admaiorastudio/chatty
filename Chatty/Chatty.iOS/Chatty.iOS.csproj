@@ -210,7 +210,7 @@
     <InterfaceDefinition Include="Resources\Layouts\Registration0ViewController.xib" />
     <InterfaceDefinition Include="Resources\Layouts\Registration1ViewController.xib" />
     <InterfaceDefinition Include="Resources\Layouts\RegistrationDoneViewController.xib" />
-    <InterfaceDefinition Include="UI\ChatViewCell.xib" />
+    <InterfaceDefinition Include="Resources\Layouts\Cells\ChatViewCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -253,8 +253,8 @@
     <Compile Include="UI\SubControllers\RegistrationDoneViewController.designer.cs">
       <DependentUpon>RegistrationDoneViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ChatViewCell.cs" />
-    <Compile Include="UI\ChatViewCell.designer.cs">
+    <Compile Include="Resources\Layouts\Cells\ChatViewCell.cs" />
+    <Compile Include="Resources\Layouts\Cells\ChatViewCell.designer.cs">
       <DependentUpon>ChatViewCell.cs</DependentUpon>
     </Compile>
   </ItemGroup>
