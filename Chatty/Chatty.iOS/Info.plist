@@ -11,7 +11,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Chatty</key>
-	<string>App1.iOS</string>	
+	<string>App1.iOS</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
@@ -32,6 +32,7 @@
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
@@ -55,7 +56,7 @@
 				<string>fb1111406372229015</string>
 			</array>
 		</dict>
-	</array>	
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -63,7 +64,7 @@
 			<key>facebook.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
-				<true/>                
+				<true/>
 				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
 				<false/>
 			</dict>
@@ -90,7 +91,7 @@
 		<string>fbapi20130410</string>
 		<string>fbapi20130702</string>
 		<string>fbapi20131010</string>
-		<string>fbapi20131219</string>    
+		<string>fbapi20131219</string>
 		<string>fbapi20140410</string>
 		<string>fbapi20140116</string>
 		<string>fbapi20150313</string>
@@ -100,6 +101,6 @@
 		<string>fb-messenger-api</string>
 		<string>fbshareextension</string>
 		<string>fb-messenger-api20140430</string>
-	</array>		
+	</array>
 </dict>
 </plist>

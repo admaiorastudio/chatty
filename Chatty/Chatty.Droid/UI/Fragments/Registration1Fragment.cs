@@ -61,14 +61,17 @@ namespace AdMaiora.Chatty
             _email = this.Arguments.GetString("Email");
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnCreateView(LayoutInflater inflater, ViewGroup container)
         {
+            base.OnCreateView(inflater, container);
+
             #region Desinger Stuff
 
-            View view = inflater.InflateWithWidgets(Resource.Layout.FragmentRegistration1, this, container, false);
-            this.HasOptionsMenu = true;
-
+            SetContentView(Resource.Layout.FragmentRegistration1, inflater, container);
+            
             SlideUpToShowKeyboard();
+
+            this.HasOptionsMenu = true;
 
             #endregion
 
@@ -77,8 +80,6 @@ namespace AdMaiora.Chatty
             this.PasswordText.Text = _password;
             this.PasswordText.RequestFocus();
             this.PasswordText.EditorAction += PasswordText_EditorAction;
-
-            return view;
         }
 
         public override void OnStart()

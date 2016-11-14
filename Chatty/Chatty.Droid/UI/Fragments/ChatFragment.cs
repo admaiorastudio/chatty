@@ -22,40 +22,9 @@ namespace AdMaiora.Chatty
     using AdMaiora.Chatty.Api;
 
     #pragma warning disable CS4014
-    public class ChatFragment : AdMaiora.AppKit.UI.App.Fragment, IBackButton
+    public class ChatFragment : AdMaiora.AppKit.UI.App.Fragment
     {
         #region Inner Classes
-
-        class Message 
-        {
-            #region Properties
-
-            public int MessageId
-            {
-                get;
-                set;
-            }
-
-            public string Content
-            {
-                get;
-                set;
-            }
-
-            public DateTime SendDate
-            {
-                get;
-                set;
-            }
-
-            public string Sender
-            {
-                get;
-                set;
-            }
-
-            #endregion
-        }
 
         class ChatAdapter : ItemRecyclerAdapter<ChatAdapter.ChatViewHolder, Message>
         {
@@ -95,7 +64,7 @@ namespace AdMaiora.Chatty
 
             #region Constructors
 
-            public ChatAdapter(Activity context, IEnumerable<Message> source) 
+            public ChatAdapter(AdMaiora.AppKit.UI.App.Fragment context, IEnumerable<Message> source) 
                 : base(context, Resource.Layout.CellChat, source)
             {
                 _rnd = new Random(DateTime.Now.Second);
@@ -213,21 +182,26 @@ namespace AdMaiora.Chatty
             _email = this.Arguments.GetString("Email");
             _username = _email.Split('@')[0];            
 
-            _adapter = new ChatAdapter(this.Activity, new Message[0]);            
+            _adapter = new ChatAdapter(this, new Message[0]);            
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnCreateView(LayoutInflater inflater, ViewGroup container)
         {
-            #region Desinger Stuff
-            
-            View view = inflater.InflateWithWidgets(Resource.Layout.FragmentChat, this, container, false);
-            this.HasOptionsMenu = true;
+            base.OnCreateView(inflater, container);
 
-            ResizeToShowKeyboard();            
+            #region Desinger Stuff
+
+            SetContentView(Resource.Layout.FragmentChat, inflater, container);
+            
+            ResizeToShowKeyboard();
+
+            this.HasOptionsMenu = true;
 
             #endregion
 
             ((ChattyApplication)this.Activity.Application).PushNotificationReceived += Application_PushNotificationReceived;
+
+            this.Title = "Chatty";
 
             this.ActionBar.Show();
 
@@ -239,9 +213,7 @@ namespace AdMaiora.Chatty
 
             RefreshMessages();
 
-            WaitConnection();           
-
-            return view;
+            WaitConnection();
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -257,7 +229,7 @@ namespace AdMaiora.Chatty
             }            
         }
 
-        public bool OnBackButton()
+        public override bool OnBackButton()
         {
             QuitChat();
             return true;

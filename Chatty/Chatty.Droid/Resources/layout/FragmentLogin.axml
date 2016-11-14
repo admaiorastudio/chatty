@@ -42,7 +42,8 @@
                 android:layout_centerHorizontal="true"
                 android:fontFamily="sans-serif-light"
                 android:textSize="20dp"
-                android:privateImeOptions="noMicrophoneKey" />
+                android:privateImeOptions="noMicrophoneKey"
+                android:saveEnabled="false" />
             <EditText
                 android:inputType="textPassword"
                 android:layout_width="300dp"
@@ -62,7 +63,8 @@
                 android:layout_centerHorizontal="true"
                 android:fontFamily="sans-serif-light"
                 android:textSize="20dp"
-                android:imeOptions="actionDone" />
+                android:imeOptions="actionDone"
+                android:saveEnabled="false" />
             <Button
                 android:text="LOGIN"
                 android:layout_width="300dp"
@@ -96,7 +98,7 @@
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/FacebookLoginButton"
                 android:layout_marginTop="24dp"
-                android:textColor="@color/color_snow" />
+                android:textColor="@color/color_pictonblue" />
             <Button
                 android:text="Resend confirmation email"
                 android:layout_width="300dp"

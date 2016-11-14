@@ -59,7 +59,7 @@
             #region Desinger Stuff
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.ActivityMain, Resource.Id.Toolbar);
+            SetContentView(Resource.Layout.ActivityMain, Resource.Id.ContentLayout, Resource.Id.Toolbar);
 
             this.SupportActionBar.SetDisplayShowHomeEnabled(true);
             this.SupportActionBar.SetDisplayHomeAsUpEnabled(true);            
@@ -81,7 +81,7 @@
                 _userRestored = this.Arguments.GetBoolean("UserRestored", false);
                 if (_userRestored)
                 {
-                    _email = this.Intent.GetStringExtra("Email");
+                    _email = this.Arguments.GetString("Email");
 
                     var f = new ChatFragment();
                     f.Arguments = new Bundle();
@@ -92,18 +92,6 @@
                         .Commit();
                 }
             }
-        }
-
-        public override void OnBackPressed()
-        {
-            var f = this.SupportFragmentManager.FindFragmentById(Resource.Id.ContentLayout);
-            if(f is IBackButton)
-            {
-                if (((IBackButton)f).OnBackButton())
-                    return;
-            }
-
-            base.OnBackPressed();
         }
 
         protected override void OnDestroy()

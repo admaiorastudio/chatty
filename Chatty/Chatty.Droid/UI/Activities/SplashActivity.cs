@@ -143,9 +143,6 @@ namespace AdMaiora.Chatty
                 {
                     Toast.MakeText(this.Application, error, ToastLength.Long).Show();
 
-                    //StartActivity(typeof(MainActivity));
-                    //Finish();           
-
                     MakeRoot(typeof(MainActivity));
                 },
                 // Service call finished 

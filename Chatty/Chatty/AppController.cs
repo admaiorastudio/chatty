@@ -114,6 +114,37 @@
         #endregion
     }
 
+    public class Message
+    {
+        #region Properties
+
+        public int MessageId
+        {
+            get;
+            set;
+        }
+
+        public string Content
+        {
+            get;
+            set;
+        }
+
+        public DateTime SendDate
+        {
+            get;
+            set;
+        }
+
+        public string Sender
+        {
+            get;
+            set;
+        }
+
+        #endregion
+    }
+
     public static class AppController
     {
         #region Inner Classes
@@ -215,9 +246,9 @@
             _settings = new AppSettings(new UserSettings(userSettingsPlatform));
         }
 
-        public static void EnableUtilities(IExecutorPlatform utiltiyPlatform)
+        public static void EnableUtilities(IExecutorPlatform utilityPlatform)
         {
-            _utility = new Executor(utiltiyPlatform);
+            _utility = new Executor(utilityPlatform);
         }
 
         public static void EnableServices(IServiceClientPlatform servicePlatform)
@@ -510,23 +541,6 @@
             Action<string> error,
             Action finished)
         {
-            // Create the rest client
-            var client = _services.GetRestClient();
-            // Create the rest request
-            var request = _services.GetRestRequest(
-                // Resource to call
-                "messages/send",
-                // HTTP method
-                Method.POST,
-                // Content Type,
-                RequestContentType.ApplicationJson,
-                // Parameters as anonymous object. Will be jsonized
-                new
-                {
-                    sender = sender,
-                    content = content
-                });
-
             try
             {
                 var response = await _services.Request<Dto.Response<Poco.Message>>(

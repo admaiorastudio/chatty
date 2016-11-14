@@ -50,11 +50,13 @@ namespace AdMaiora.Chatty
             base.OnCreate(savedInstanceState);
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnCreateView(LayoutInflater inflater, ViewGroup container)
         {
+            base.OnCreateView(inflater, container);
+
             #region Desinger Stuff
 
-            View view = inflater.InflateWithWidgets(Resource.Layout.FragmentRegistrationDone, this, container, false);
+            SetContentView(Resource.Layout.FragmentRegistrationDone, inflater, container);
 
             ResizeToShowKeyboard();
 
@@ -62,9 +64,7 @@ namespace AdMaiora.Chatty
 
             this.ActionBar.Show();
 
-            this.GoToLoginButton.Click += GoToLoginButton_Click;       
-
-            return view;
+            this.GoToLoginButton.Click += GoToLoginButton_Click;
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

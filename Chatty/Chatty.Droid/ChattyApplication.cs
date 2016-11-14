@@ -25,6 +25,7 @@
 #else
     [Application(Name = "admaiora.chatty.ChattyApplication", Debuggable = false)]
 #endif
+
     #pragma warning disable CS4014
     public class ChattyApplication : AppKitApplication
     {

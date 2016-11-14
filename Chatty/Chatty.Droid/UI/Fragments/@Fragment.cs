@@ -14,7 +14,7 @@ namespace AdMaiora.Chatty
     using Android.Views;
     using Android.Widget;
 
-    public class _Fragment : Android.Support.V4.App.Fragment
+    public class _Fragment : AdMaiora.AppKit.UI.App.Fragment
     {
         #region Inner Classes
         #endregion

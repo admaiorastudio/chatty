@@ -21,37 +21,6 @@ namespace AdMaiora.Chatty
     {
         #region Inner Classes
 
-        class Message
-        {
-            #region Properties
-
-            public int MessageId
-            {
-                get;
-                set;
-            }
-
-            public string Content
-            {
-                get;
-                set;
-            }
-
-            public DateTime SendDate
-            {
-                get;
-                set;
-            }
-
-            public string Sender
-            {
-                get;
-                set;
-            }
-
-            #endregion
-        }
-
         private class ChatViewSource : UIItemListViewSource<Message>
         {
             #region Constants and Fields
@@ -192,9 +161,7 @@ namespace AdMaiora.Chatty
             this.Title = "Chatty";
 
             this.NavigationController.SetNavigationBarHidden(false, true);
-
-            this.MessageList.Source = _source;
-
+            
             this.SendButton.TouchUpInside += SendButton_TouchUpInside;
 
             this.MessageText.Constraints.Single(x => x.GetIdentifier() == "Height").Constant = 30f;                       
@@ -204,7 +171,8 @@ namespace AdMaiora.Chatty
             this.MessageList.EstimatedRowHeight = 74;            
             this.MessageList.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             this.MessageList.BackgroundColor = ViewBuilder.ColorFromARGB(AppController.Colors.Snow);
-            this.MessageList.TableFooterView = new UIView(CoreGraphics.CGRect.Empty);            
+            this.MessageList.TableFooterView = new UIView(CoreGraphics.CGRect.Empty);
+            this.MessageList.Source = _source;
 
             InitSound();
 

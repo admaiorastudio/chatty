@@ -101,12 +101,14 @@ namespace AdMaiora.Chatty
             _callbackManager = CallbackManagerFactory.Create();
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnCreateView(LayoutInflater inflater, ViewGroup container)
         {
+            base.OnCreateView(inflater, container);
+
             #region Desinger Stuff
 
             // Use this to return your custom view for this Fragment
-            var view = inflater.InflateWithWidgets(Resource.Layout.FragmentLogin, this, container, false);
+            SetContentView(Resource.Layout.FragmentLogin, inflater, container);
 
             SlideUpToShowKeyboard();
 
@@ -115,10 +117,10 @@ namespace AdMaiora.Chatty
             #endregion            
 
             this.ActionBar.Hide();
-           
+
             this.EmailText.Text = AppController.Settings.LastLoginUsernameUsed;
 
-            this.PasswordText.Text = String.Empty;            
+            this.PasswordText.Text = String.Empty;
             this.PasswordText.EditorAction += PasswordText_EditorAction;
 
             this.LoginButton.Click += LoginButton_Click;
@@ -129,8 +131,6 @@ namespace AdMaiora.Chatty
 
             this.VerifyButton.Visibility = ViewStates.Gone;
             this.VerifyButton.Click += VerifyButton_Click;
-
-            return view;
         }
 
         public override void OnKeyboardShow()

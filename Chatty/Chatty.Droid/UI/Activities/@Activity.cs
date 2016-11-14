@@ -22,7 +22,7 @@ namespace AdMaiora.Chatty
             ConfigChanges.Orientation | ConfigChanges.ScreenSize |
             ConfigChanges.KeyboardHidden | ConfigChanges.Keyboard
     )]
-    public class _Activity : Activity
+    public class _Activity : AdMaiora.AppKit.UI.App.AppCompactActivity
     {
         #region Inner Classes
         #endregion
