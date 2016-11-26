@@ -22,10 +22,10 @@ namespace AdMaiora.Chatty
     using AdMaiora.AppKit.UI;
 
     using Xamarin.Facebook;
-    using Xamarin.Facebook.Login;    
+    using Xamarin.Facebook.Login;
 
     using Org.Json;
-
+    
     #pragma warning disable CS4014
     public class LoginFragment : AdMaiora.AppKit.UI.App.Fragment, IFacebookCallback, GraphRequest.IGraphJSONObjectCallback
     {
@@ -123,8 +123,8 @@ namespace AdMaiora.Chatty
             this.PasswordText.Text = String.Empty;
             this.PasswordText.EditorAction += PasswordText_EditorAction;
 
-            this.LoginButton.Click += LoginButton_Click;
-
+            this.LoginButton.Click += LoginButton_Click;            
+         
             this.FacebookLoginButton.Click += FacebookLoginButton_Click;
 
             this.RegisterButton.Click += RegisterButton_Click;

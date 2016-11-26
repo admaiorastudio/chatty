@@ -51,29 +51,40 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <ConsolePause>false</ConsolePause>
     <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyStore>chatty.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>ch@tty2016</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>chatty</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>ch@tty2016</AndroidSigningKeyPass>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <BundleAssemblies>False</BundleAssemblies>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+    <Debugger>Xamarin</Debugger>
+    <AotAssemblies>False</AotAssemblies>
+    <EnableLLVM>False</EnableLLVM>
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
+    <EnableProguard>False</EnableProguard>
+    <DebugSymbols>False</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdMaiora.AppKit.Core, Version=1.0.6159.29760, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.7\lib\MonoAndroid10\AdMaiora.AppKit.Core.dll</HintPath>
+    <Reference Include="AdMaiora.AppKit.Core, Version=1.0.6170.30919, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.8\lib\MonoAndroid10\AdMaiora.AppKit.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AdMaiora.AppKit.Core.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.7\lib\MonoAndroid10\AdMaiora.AppKit.Core.Android.dll</HintPath>
+      <HintPath>..\..\packages\AdMaiora.AppKit.1.0.8\lib\MonoAndroid10\AdMaiora.AppKit.Core.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6159.21983, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.5\lib\MonoAndroid10\AdMaiora.AppKit.UI.dll</HintPath>
+    <Reference Include="AdMaiora.AppKit.UI, Version=1.0.6171.27890, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.9\lib\MonoAndroid10\AdMaiora.AppKit.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AdMaiora.AppKit.UI.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.5\lib\MonoAndroid10\AdMaiora.AppKit.UI.Android.dll</HintPath>
+      <HintPath>..\..\packages\AdMaiora.AppKit.UI.1.0.9\lib\MonoAndroid10\AdMaiora.AppKit.UI.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Bolts.AppLinks, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -300,34 +311,10 @@
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\image_button0.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\image_button1.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\image_button2.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\image_cat2.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\image_cat3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\image_button3.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\color\color_pictonblue.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\color\color_jet.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\color\color_ogreodor.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\color\color_snow.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_launcher.png" />

@@ -44,15 +44,15 @@ namespace AdMaiora.Chatty
 
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnCreateView(LayoutInflater inflater, ViewGroup container)
         {
+            base.OnCreateView(inflater, container);
+
             #region Desinger Stuff
 
-            View view = inflater.Inflate(0, container, false);
+            SetContentView(0, inflater, container);            
 
             #endregion           
-
-            return view;
         }
 
         public override void OnDestroyView()

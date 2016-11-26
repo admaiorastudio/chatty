@@ -46,7 +46,7 @@
         #region Messages Endpoint Methods
 
         [Authorize]
-        [HttpPost, Route("messages/send")]
+        [HttpPut, Route("messages/send")]
         public IHttpActionResult SendMessage(Poco.Message message)
         {
             if (string.IsNullOrWhiteSpace(message.Sender))

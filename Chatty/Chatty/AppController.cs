@@ -275,12 +275,12 @@
                     // Resource to call
                     "users/register",
                     // HTTP method
-                    Method.POST,
+                    Method.PUT,
                     // Cancellation token
                     cts.Token,
-                    // Content Type,
-                    RequestContentType.ApplicationJson,
-                    // Payload
+                    // Parameters handling
+                    ParametersHandling.Body,
+                    // Parameters
                     new
                     {
                         email = email,
@@ -295,7 +295,7 @@
                 else
                 {
                     if (error != null)
-                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                        error(response.Data.ExceptionMessage ?? response.Data.Message ?? response.StatusDescription);
                 }
             }
             catch (Exception ex)
@@ -328,9 +328,9 @@
                     Method.POST,
                     // Cancellation token
                     cts.Token,
-                    // Content Type,
-                    RequestContentType.ApplicationJson,
-                    // Payload
+                    // Parameters handling
+                    ParametersHandling.Body,
+                    // Parameters
                     new
                     {
                         email = email,
@@ -351,7 +351,7 @@
                 else
                 {
                     if (error != null)
-                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                        error(response.Data.ExceptionMessage ?? response.Data.Message ?? response.StatusDescription);
                 }
             }
             catch (Exception ex)
@@ -385,9 +385,9 @@
                     Method.POST,
                     // Cancellation token
                     cts.Token,
-                    // Content Type,
-                    RequestContentType.ApplicationJson,
-                    // Payload
+                    // Parameters handling
+                    ParametersHandling.Body,
+                    // Parameters
                     new
                     {
                         UserId = fbId,
@@ -409,7 +409,7 @@
                 else
                 {
                     if (error != null)
-                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                        error(response.Data.ExceptionMessage ?? response.Data.Message ?? response.StatusDescription);
                 }
             }
             catch (Exception ex)
@@ -442,9 +442,9 @@
                     Method.POST,
                     // Cancellation token
                     cts.Token,
-                    // Content Type,
-                    RequestContentType.ApplicationJson,
-                    // Payload
+                    // Parameters handling
+                    ParametersHandling.Body,
+                    // Parameters
                     new
                     {
                         email = email,
@@ -460,7 +460,7 @@
                 else
                 {
                     if (error != null)
-                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                        error(response.Data.ExceptionMessage ?? response.Data.Message ?? response.StatusDescription);
                 }
             }
             catch (Exception ex)
@@ -492,9 +492,9 @@
                     Method.GET,
                     // Cancellation token
                     cts.Token,
-                    // Content Type,
-                    RequestContentType.ApplicationJson,
-                    // Payload
+                    // Parameters handling
+                    ParametersHandling.Default,
+                    // Parameters
                     new
                     {
                         accessToken = accessToken
@@ -513,7 +513,7 @@
                 else
                 {
                     if (error != null)
-                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                        error(response.Data.ExceptionMessage ?? response.Data.Message ?? response.StatusDescription);
                 }
             }
             catch (Exception ex)
@@ -547,12 +547,12 @@
                     // Resource to call
                     "messages/send",
                     // HTTP method
-                    Method.POST,
+                    Method.PUT,
                     // Cancellation token
                     cts.Token,
-                    // Content Type,
-                    RequestContentType.ApplicationJson,
-                    // Payload
+                    // Parameters handling
+                    ParametersHandling.Body,
+                    // Parameters
                     new
                     {
                         sender = sender,
@@ -567,7 +567,7 @@
                 else
                 {
                     if (error != null)
-                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                        error(response.Data.ExceptionMessage ?? response.Data.Message ?? response.StatusDescription);
                 }
             }
             catch (Exception ex)
@@ -600,9 +600,9 @@
                     Method.GET,
                     // Cancellation token
                     cts.Token,
-                    // Content Type,
-                    RequestContentType.ApplicationJson,
-                    // Payload
+                    // Parameters handling
+                    ParametersHandling.Default,
+                    // Parameters
                     new
                     {
                         lastMessageId = lastMessageId,
@@ -617,7 +617,7 @@
                 else
                 {
                     if (error != null)
-                        error(response.Data.ExceptionMessage ?? response.StatusDescription);
+                        error(response.Data.ExceptionMessage ?? response.Data.Message ?? response.StatusDescription);
                 }
             }
             catch (Exception ex)

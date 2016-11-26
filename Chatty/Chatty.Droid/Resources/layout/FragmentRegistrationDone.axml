@@ -28,7 +28,7 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:id="@+id/GoToLoginButton"
-        android:background="@drawable/image_button2"
+        android:background="@color/Jet"
         android:textColor="@color/White"
         android:textSize="20dp"
         android:fontFamily="sans-serif-light"

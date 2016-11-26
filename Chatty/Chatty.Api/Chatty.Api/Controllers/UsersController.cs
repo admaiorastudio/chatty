@@ -67,7 +67,7 @@
 
         #region Users Endpoint Methods
 
-        [HttpPost, Route("users/register")]
+        [HttpPut, Route("users/register")]
         public async Task<IHttpActionResult> RegisterUser(Poco.User credentials)
         {
             if (string.IsNullOrWhiteSpace(credentials.Email))
@@ -189,7 +189,7 @@
                     IHttpActionResult response;
                     //we want a 303 with the ability to set location
                     HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.RedirectMethod);
-                    responseMsg.Headers.Location = new Uri("http://www.admaiorastudio.com/chatty.php");
+                    responseMsg.Headers.Location = new Uri("http://www.admaiorastudio.com/chatty");
                     response = ResponseMessage(responseMsg);
                     return response;
                 }

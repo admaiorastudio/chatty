@@ -110,7 +110,7 @@ namespace AdMaiora.Chatty
         // This cancellation token is used to cancel the UI blocking until connection is done
         private CancellationTokenSource _cts0;
 
-        // This flag check if we are already calling the login REST service
+        // This flag check if we are already calling the send message REST service
         private bool _isSendingMessage;
         // This cancellation token is used to cancel the rest send message request
         private CancellationTokenSource _cts1;
@@ -387,16 +387,31 @@ namespace AdMaiora.Chatty
             AppController.Utility.ExecuteOnAsyncTask(_cts0.Token,
                 () =>
                 {
+                    int awaited = 0;
                     while (!_cts0.IsCancellationRequested)
                     {
                         System.Threading.Tasks.Task.Delay(100, _cts0.Token).Wait();
+                        awaited += 100;
+
                         if (((AppDelegate)UIApplication.SharedApplication.Delegate).IsNotificationHubConnected)
+                            break;
+
+                        if (awaited > 10000)
                             break;
                     }
                 },
                 () =>
                 {
                     ((MainViewController)this.MainViewController).UnblockUI();
+
+                    if (!((AppDelegate)UIApplication.SharedApplication.Delegate).IsNotificationHubConnected)
+                    {                        
+                        this.MessageText.Editable = false;
+                        this.SendButton.Enabled = false;
+
+                        UIToast.MakeText("Unable to connect to the message hub!", UIToastLength.Long).Show();
+                    }
+
                 });
         }
 

@@ -2293,18 +2293,6 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f080014
 			public const int cardview_shadow_start_color = 2131230740;
 			
-			// aapt resource value: 0x7f080072
-			public const int color_jet = 2131230834;
-			
-			// aapt resource value: 0x7f080073
-			public const int color_ogreodor = 2131230835;
-			
-			// aapt resource value: 0x7f080074
-			public const int color_pictonblue = 2131230836;
-			
-			// aapt resource value: 0x7f080075
-			public const int color_snow = 2131230837;
-			
 			// aapt resource value: 0x7f08004f
 			public const int com_facebook_blue = 2131230799;
 			
@@ -2341,8 +2329,8 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f08005a
 			public const int com_facebook_button_send_background_color_pressed = 2131230810;
 			
-			// aapt resource value: 0x7f080076
-			public const int com_facebook_button_text_color = 2131230838;
+			// aapt resource value: 0x7f080072
+			public const int com_facebook_button_text_color = 2131230834;
 			
 			// aapt resource value: 0x7f08005b
 			public const int com_facebook_device_auth_text = 2131230811;
@@ -2359,8 +2347,8 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f08005f
 			public const int com_facebook_messenger_blue = 2131230815;
 			
-			// aapt resource value: 0x7f080077
-			public const int com_facebook_send_button_text_color = 2131230839;
+			// aapt resource value: 0x7f080073
+			public const int com_facebook_send_button_text_color = 2131230835;
 			
 			// aapt resource value: 0x7f080060
 			public const int com_facebook_share_button_text_color = 2131230816;
@@ -2368,8 +2356,8 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f080008
 			public const int common_action_bar_splitter = 2131230728;
 			
-			// aapt resource value: 0x7f080078
-			public const int common_google_signin_btn_text_dark = 2131230840;
+			// aapt resource value: 0x7f080074
+			public const int common_google_signin_btn_text_dark = 2131230836;
 			
 			// aapt resource value: 0x7f080009
 			public const int common_google_signin_btn_text_dark_default = 2131230729;
@@ -2383,8 +2371,8 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f08000a
 			public const int common_google_signin_btn_text_dark_pressed = 2131230730;
 			
-			// aapt resource value: 0x7f080079
-			public const int common_google_signin_btn_text_light = 2131230841;
+			// aapt resource value: 0x7f080075
+			public const int common_google_signin_btn_text_light = 2131230837;
 			
 			// aapt resource value: 0x7f08000d
 			public const int common_google_signin_btn_text_light_default = 2131230733;
@@ -2398,8 +2386,8 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f08000e
 			public const int common_google_signin_btn_text_light_pressed = 2131230734;
 			
-			// aapt resource value: 0x7f08007a
-			public const int common_plus_signin_btn_text_dark = 2131230842;
+			// aapt resource value: 0x7f080076
+			public const int common_plus_signin_btn_text_dark = 2131230838;
 			
 			// aapt resource value: 0x7f080000
 			public const int common_plus_signin_btn_text_dark_default = 2131230720;
@@ -2413,8 +2401,8 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f080001
 			public const int common_plus_signin_btn_text_dark_pressed = 2131230721;
 			
-			// aapt resource value: 0x7f08007b
-			public const int common_plus_signin_btn_text_light = 2131230843;
+			// aapt resource value: 0x7f080077
+			public const int common_plus_signin_btn_text_light = 2131230839;
 			
 			// aapt resource value: 0x7f080004
 			public const int common_plus_signin_btn_text_light_default = 2131230724;
@@ -2542,11 +2530,11 @@ namespace AdMaiora.Chatty
 			// aapt resource value: 0x7f08004c
 			public const int switch_thumb_disabled_material_light = 2131230796;
 			
-			// aapt resource value: 0x7f08007c
-			public const int switch_thumb_material_dark = 2131230844;
+			// aapt resource value: 0x7f080078
+			public const int switch_thumb_material_dark = 2131230840;
 			
-			// aapt resource value: 0x7f08007d
-			public const int switch_thumb_material_light = 2131230845;
+			// aapt resource value: 0x7f080079
+			public const int switch_thumb_material_light = 2131230841;
 			
 			// aapt resource value: 0x7f08004d
 			public const int switch_thumb_normal_material_dark = 2131230797;
@@ -3334,88 +3322,76 @@ namespace AdMaiora.Chatty
 			public const int image_admaiora = 2130837651;
 			
 			// aapt resource value: 0x7f020094
-			public const int image_button0 = 2130837652;
+			public const int image_callout = 2130837652;
 			
 			// aapt resource value: 0x7f020095
-			public const int image_button1 = 2130837653;
+			public const int image_callout_lb = 2130837653;
 			
 			// aapt resource value: 0x7f020096
-			public const int image_button2 = 2130837654;
+			public const int image_callout_lm = 2130837654;
 			
 			// aapt resource value: 0x7f020097
-			public const int image_button3 = 2130837655;
+			public const int image_callout_lt = 2130837655;
 			
 			// aapt resource value: 0x7f020098
-			public const int image_callout = 2130837656;
+			public const int image_callout_mb = 2130837656;
 			
 			// aapt resource value: 0x7f020099
-			public const int image_callout_lb = 2130837657;
+			public const int image_callout_mm = 2130837657;
 			
 			// aapt resource value: 0x7f02009a
-			public const int image_callout_lm = 2130837658;
+			public const int image_callout_mt = 2130837658;
 			
 			// aapt resource value: 0x7f02009b
-			public const int image_callout_lt = 2130837659;
+			public const int image_callout_rb = 2130837659;
 			
 			// aapt resource value: 0x7f02009c
-			public const int image_callout_mb = 2130837660;
+			public const int image_callout_rm = 2130837660;
 			
 			// aapt resource value: 0x7f02009d
-			public const int image_callout_mm = 2130837661;
+			public const int image_callout_rt = 2130837661;
 			
 			// aapt resource value: 0x7f02009e
-			public const int image_callout_mt = 2130837662;
+			public const int image_callout_v = 2130837662;
 			
 			// aapt resource value: 0x7f02009f
-			public const int image_callout_rb = 2130837663;
+			public const int image_cat = 2130837663;
 			
 			// aapt resource value: 0x7f0200a0
-			public const int image_callout_rm = 2130837664;
+			public const int image_cat2 = 2130837664;
 			
 			// aapt resource value: 0x7f0200a1
-			public const int image_callout_rt = 2130837665;
+			public const int image_cat3 = 2130837665;
 			
 			// aapt resource value: 0x7f0200a2
-			public const int image_callout_v = 2130837666;
+			public const int messenger_bubble_large_blue = 2130837666;
 			
 			// aapt resource value: 0x7f0200a3
-			public const int image_cat = 2130837667;
+			public const int messenger_bubble_large_white = 2130837667;
 			
 			// aapt resource value: 0x7f0200a4
-			public const int image_cat2 = 2130837668;
+			public const int messenger_bubble_small_blue = 2130837668;
 			
 			// aapt resource value: 0x7f0200a5
-			public const int image_cat3 = 2130837669;
+			public const int messenger_bubble_small_white = 2130837669;
 			
 			// aapt resource value: 0x7f0200a6
-			public const int messenger_bubble_large_blue = 2130837670;
+			public const int messenger_button_blue_bg_round = 2130837670;
 			
 			// aapt resource value: 0x7f0200a7
-			public const int messenger_bubble_large_white = 2130837671;
+			public const int messenger_button_blue_bg_selector = 2130837671;
 			
 			// aapt resource value: 0x7f0200a8
-			public const int messenger_bubble_small_blue = 2130837672;
+			public const int messenger_button_send_round_shadow = 2130837672;
 			
 			// aapt resource value: 0x7f0200a9
-			public const int messenger_bubble_small_white = 2130837673;
+			public const int messenger_button_white_bg_round = 2130837673;
 			
 			// aapt resource value: 0x7f0200aa
-			public const int messenger_button_blue_bg_round = 2130837674;
+			public const int messenger_button_white_bg_selector = 2130837674;
 			
 			// aapt resource value: 0x7f0200ab
-			public const int messenger_button_blue_bg_selector = 2130837675;
-			
-			// aapt resource value: 0x7f0200ac
-			public const int messenger_button_send_round_shadow = 2130837676;
-			
-			// aapt resource value: 0x7f0200ad
-			public const int messenger_button_white_bg_round = 2130837677;
-			
-			// aapt resource value: 0x7f0200ae
-			public const int messenger_button_white_bg_selector = 2130837678;
-			
-			// aapt resource value: 0x7f0200af
-			public const int notification_template_icon_bg = 2130837679;
+			public const int notification_template_icon_bg = 2130837675;
 			
 			static Drawable()
 			{

@@ -75,7 +75,7 @@
                 android:layout_centerHorizontal="true"
                 android:textColor="#FFFFFF"
                 android:textSize="20dp"
-                android:background="@drawable/image_button0"
+                android:background="@color/PictonBlue"
                 android:fontFamily="sans-serif-light" />
             <Button
                 android:text="LOGIN WITH FACEBOOK"
@@ -98,7 +98,7 @@
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/FacebookLoginButton"
                 android:layout_marginTop="24dp"
-                android:textColor="@color/color_pictonblue" />
+                android:textColor="@color/PictonBlue" />
             <Button
                 android:text="Resend confirmation email"
                 android:layout_width="300dp"
@@ -109,7 +109,7 @@
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/RegisterButton"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/color_ogreodor" />
+                android:textColor="@color/OgreOdor" />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
