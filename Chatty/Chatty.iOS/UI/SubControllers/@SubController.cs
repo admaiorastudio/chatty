@@ -8,7 +8,7 @@ namespace AdMaiora.Chatty
     using Foundation;
     using UIKit;
 
-    public partial class _SubController : UIViewController
+    public partial class _SubController : AdMaiora.AppKit.UI.App.UIMainViewController
     {
         #region Inner Classes
         #endregion
